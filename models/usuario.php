@@ -14,6 +14,7 @@ class Usuario{
     private $username;
     private $password;
     private $privilegio;
+    private $estado;
     private $db;
 
     ///CONSTRUCTOR///
@@ -70,6 +71,10 @@ class Usuario{
         return $this->privilegio;
     }
 
+    public function getEstado(){
+        return $this->estado;
+    }
+
     public function getPassword(){
         return password_hash($this->db->real_escape_string($this->password),PASSWORD_BCRYPT,['cost'=>4]);
     }
@@ -123,6 +128,10 @@ class Usuario{
         $this->privilegio = $privilegio;
     }
 
+    public function setEstado($estado){
+        $this->estado= $estado;
+    }
+
     public function setPassword($password){
         $this->password =  $this->db->real_escape_string($password);
     }
@@ -140,13 +149,32 @@ class Usuario{
                 . ', email:' . $this->email 
                 . ', direccion:' . $this->direccion 
                 . ', username:' . $this->username
-                . ', privilegio:' . $this->privilegio 
+                . ', privilegio:' . $this->privilegio
+                . ', estado:' . $this->estado 
                 . ', password:' . $this->getPassword();
     }
 
+    public function getAll(){
+        $sql="SELECT id, v_NumeroDocumento as numeroDocumento, v_Nombres as nombre, " 
+        . " v_Apellidos as apellidos, v_Telefono as telefono, b_Estado as estado FROM USUARIO ";
+        $usuarios=$this->db->query($sql);
+        return $usuarios;
+    }
+
+    public function getOne(){
+        $sql="SELECT id, v_TipoUsuario as tipoUsuario, v_NumeroDocumento as numeroDocumento, " 
+        . " v_Nombres as nombre,"
+        . " v_Apellidos as apellidos, v_Ocupacion as ocupacion, c_Sexo as sexo, v_Telefono as telefono, "
+        . " v_Email as email, v_Direccion as direccion, v_Username as username, " 
+        . " i_IdPrivilegio as privilegio, "
+        . " b_Estado as estado FROM USUARIO WHERE id={$this->getId()}";
+        $usuario=$this->db->query($sql);
+        return $usuario->fetch_object();
+    }
+
     public function save(){
-        $sql="INSERT INTO usuario (v_TipoUsuario, v_NumeroDocumento, v_Nombres, v_Apellidos, v_Ocupacion, c_Sexo, v_Telefono, v_Email, v_Direccion, v_Username, v_Password, i_IdPrivilegio) ";
-        $sql.="VALUES('admin', '{$this->numeroDocumento}', '{$this->nombre}','{$this->apellidos}','{$this->ocupacion}','{$this->sexo}','{$this->telefono}','{$this->email}','{$this->direccion}','{$this->username}','{$this->getPassword()}','{$this->privilegio}')";
+        $sql="INSERT INTO usuario (v_TipoUsuario, v_NumeroDocumento, v_Nombres, v_Apellidos, v_Ocupacion, c_Sexo, v_Telefono, v_Email, v_Direccion, v_Username, v_Password, i_IdPrivilegio, b_Estado) ";
+        $sql.="VALUES('admin', '{$this->numeroDocumento}', '{$this->nombre}','{$this->apellidos}','{$this->ocupacion}','{$this->sexo}','{$this->telefono}','{$this->email}','{$this->direccion}','{$this->username}','{$this->getPassword()}','{$this->privilegio}','1')";
         $save=$this->db->query($sql);
 
         $result=false;
@@ -156,6 +184,8 @@ class Usuario{
 
         return $result;
     }
+
+
 }
 
 ?>

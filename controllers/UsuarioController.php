@@ -10,6 +10,10 @@ class UsuarioController{
 
     public function lista(){
         require_once 'views/usuario/header.php';
+
+        $usuario = new Usuario();
+        $usuarios = $usuario->getAll();
+
         require_once 'views/usuario/lista.php';
     }
 
@@ -116,6 +120,37 @@ class UsuarioController{
             }
         }
     }
+
+    public function edit(){
+        require_once 'views/usuario/header.php';
+
+        if(isset($_REQUEST["id"])){
+            $usuario = new Usuario();
+            $usuario->setId($_REQUEST["id"]);
+            $usuario = $usuario->getOne();
+        }
+
+        require_once 'views/usuario/register.php';
+    }
+
+    public function cancel(){
+        require_once 'views/usuario/header.php';
+
+        $usuario = new Usuario();
+        $usuarios = $usuario->getAll();
+
+        require_once 'views/usuario/lista.php';
+    }
+
+    public function delete(){
+        require_once 'views/usuario/header.php';
+
+        $usuario = new Usuario();
+        $usuarios = $usuario->getAll();
+
+        require_once 'views/usuario/lista.php';
+    }
+
 }
 
 ?>

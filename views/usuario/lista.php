@@ -28,60 +28,36 @@
                             <th class="text-center">NOMBRES</th>
                             <th class="text-center">APELLIDOS</th>
                             <th class="text-center">TELÉFONO</th>
-                            <th class="text-center">A. CUENTA</th>
-                            <th class="text-center">A. DATOS</th>
+                            <th class="text-center">ANULAR</th>
+                            <th class="text-center">EDITAR</th>
                             <th class="text-center">ELIMINAR</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php while($usuario = $usuarios->fetch_object()): ?>
                         <tr>
-                            <td>1</td>
-                            <td>7890987651</td>
-                            <td>Nombres</td>
-                            <td>Apellidos</td>
-                            <td>Telefono</td>
+                            <td><?=$usuario->id?></td>
+                            <td><?=$usuario->numeroDocumento?></td>
+                            <td><?=$usuario->nombre?></td>
+                            <td><?=$usuario->apellidos?></td>
+                            <td><?=$usuario->telefono?></td>
                             <td>
-                                <a href="#!" class="btn btn-success btn-raised btn-xs">
+                                <a href="<?=base_url?>usuario/cancel?id=<?=$usuario->id?>" class="btn btn-success btn-raised btn-xs">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="<?=base_url?>usuario/edit?id=<?=$usuario->id?>" class="btn btn-success btn-raised btn-xs">
                                     <i class="zmdi zmdi-refresh"></i>
                                 </a>
                             </td>
                             <td>
-                                <a href="#!" class="btn btn-success btn-raised btn-xs">
-                                    <i class="zmdi zmdi-refresh"></i>
+                                <a href="<?=base_url?>usuario/delete?id=<?=$usuario->id?>" class="btn btn-danger btn-raised btn-xs">
+                                    <i class="zmdi zmdi-delete"></i>
                                 </a>
-                            </td>
-                            <td>
-                                <form>
-                                    <button type="submit" class="btn btn-danger btn-raised btn-xs">
-                                        <i class="zmdi zmdi-delete"></i>
-                                    </button>
-                                </form>
                             </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>7890987651</td>
-                            <td>Nombres</td>
-                            <td>Apellidos</td>
-                            <td>Telefono</td>
-                            <td>
-                                <a href="#!" class="btn btn-success btn-raised btn-xs">
-                                    <i class="zmdi zmdi-refresh"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="#!" class="btn btn-success btn-raised btn-xs">
-                                    <i class="zmdi zmdi-refresh"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <form>
-                                    <button type="submit" class="btn btn-danger btn-raised btn-xs">
-                                        <i class="zmdi zmdi-delete"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                        <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>
