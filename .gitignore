@@ -1,2 +1,7 @@
 config
+<<<<<<< HEAD
 conexion_parametros.txt
+=======
+config/parameters.php
+config/db.php
+>>>>>>> b868eec98ce8a894a1afbda97315511b2512d48a

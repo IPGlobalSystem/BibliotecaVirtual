@@ -173,8 +173,8 @@ class Usuario{
     }
 
     public function save(){
-        $sql="INSERT INTO usuario (v_TipoUsuario, v_NumeroDocumento, v_Nombres, v_Apellidos, v_Ocupacion, c_Sexo, v_Telefono, v_Email, v_Direccion, v_Username, v_Password, i_IdPrivilegio, b_Estado) ";
-        $sql.="VALUES('admin', '{$this->numeroDocumento}', '{$this->nombre}','{$this->apellidos}','{$this->ocupacion}','{$this->sexo}','{$this->telefono}','{$this->email}','{$this->direccion}','{$this->username}','{$this->getPassword()}','{$this->privilegio}','1')";
+        $sql="INSERT INTO usuario (v_TipoUsuario, v_NumeroDocumento, v_Nombres, v_Apellidos, v_Ocupacion, c_Sexo, v_Telefono, v_Email, v_Direccion, v_Username, v_Password, i_IdPrivilegio) ";
+        $sql.="VALUES('admin', '{$this->numeroDocumento}', '{$this->nombre}','{$this->apellidos}','{$this->ocupacion}','{$this->sexo}','{$this->telefono}','{$this->email}','{$this->direccion}','{$this->username}','{$this->getPassword()}','{$this->privilegio}')";
         $save=$this->db->query($sql);
 
         $result=false;
