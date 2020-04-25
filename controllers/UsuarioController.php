@@ -91,7 +91,7 @@ class UsuarioController{
             }
 
             if(count($errores)==0){
-               
+                
                 $usuario= new Usuario();
                 $usuario->setNumeroDocumento($dni);
                 $usuario->setNombre($nombre);
@@ -103,7 +103,7 @@ class UsuarioController{
                 $usuario->setEmail($email);
                 $usuario->setSexo($genero);
                 $usuario->setPrivilegio($privilegio);
-
+                
                 $save = $usuario->save();
 
                 if($save){

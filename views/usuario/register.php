@@ -100,13 +100,13 @@
                                     <label class="control-label">Genero</label>
                                     <div class="radio radio-primary">
                                         <label>
-                                            <input type="radio" name="optionsGenero" id="optionsRadios1" value="Masculino" checked="">
+                                            <input type="radio" name="optionsGenero" id="optionsRadios1" value="M" checked="">
                                             <i class="zmdi zmdi-male-alt"></i> &nbsp; Masculino
                                         </label>
                                     </div>
                                     <div class="radio radio-primary">
                                         <label>
-                                            <input type="radio" name="optionsGenero" id="optionsRadios2" value="Femenino">
+                                            <input type="radio" name="optionsGenero" id="optionsRadios2" value="F">
                                             <i class="zmdi zmdi-female"></i> &nbsp; Femenino
                                         </label>
                                     </div>

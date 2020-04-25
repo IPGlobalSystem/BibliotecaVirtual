@@ -1,9 +1,11 @@
 create database bibliotecavirtual;
+set 
 SET SQL_SAFE_UPDATES = 0;
+use bibliotecavirtual;
 create table PRIVILEGIO_USUARIO(
 id int auto_increment,
 v_Descripcion varchar(300),
-constraint PK_PRIVILEGIO_USUARIO primary key(idPrivilegio),
+constraint PK_PRIVILEGIO_USUARIO primary key(id),
 constraint UQ_PRIVILEGIO_USUARIO_DESCRIPCION unique(v_Descripcion)
 );
 insert into PRIVILEGIO_USUARIO values (null,'Control total del sistema'),(null,'Permiso para registro y actualización'),(null,'Permiso para registro');
@@ -28,3 +30,7 @@ constraint UQ_Username unique key(v_Username),
 constraint FK_USUARIO_PRIVILEGIO_USUARIO foreign key(i_IdPrivilegio) references PRIVILEGIO_USUARIO(idPrivilegio)
 );
 alter table usuario add b_Estado bit default 1;
+ALTER TABLE `bibliotecavirtual`.`usuario` 
+CHANGE COLUMN `v_Ocupacion` `v_Ocupacion` VARCHAR(50) NULL ;
+alter table `bibliotecavirtual`.`usuario`
+CHANGE COLUMN `v_Password` `v_Password` varchar(200) NOT NULL;
