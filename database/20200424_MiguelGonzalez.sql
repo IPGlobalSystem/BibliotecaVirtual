@@ -28,3 +28,7 @@ constraint UQ_Username unique key(v_Username),
 constraint FK_USUARIO_PRIVILEGIO_USUARIO foreign key(i_IdPrivilegio) references PRIVILEGIO_USUARIO(idPrivilegio)
 );
 alter table usuario add b_Estado bit default 1;
+ALTER TABLE `bibliotecavirtual`.`usuario` 
+CHANGE COLUMN `v_Ocupacion` `v_Ocupacion` VARCHAR(50) NULL ;
+alter table `bibliotecavirtual`.`usuario`
+CHANGE COLUMN `v_Password` `v_Password` varchar(200) NOT NULL;
