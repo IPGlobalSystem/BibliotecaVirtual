@@ -154,23 +154,25 @@ class Usuario{
                 . ', password:' . $this->getPassword();
     }
 
-    private function checkExists(){
-        $result=true;
-        $sql ="SELECT count(*) FROM usuario WHERE (v_NumeroDocumento='{$this->numeroDocumento}' or v_Email='{$this->email}' or v_Username='{$this->username}') ";
-        $count=$this->db->query($sql);
-        if($count>0)
-            $result=false;
-        return $result; 
+    public function getByDocument(){
+        $sql ="SELECT *,v_NumeroDocumento as numeroDocumento FROM usuario WHERE v_NumeroDocumento='{$this->numeroDocumento}'";
+        $user =$this->db->query($sql);
+        return $user; 
     }
 
-    public function getAll(){
-        $sql="SELECT id, v_NumeroDocumento as numeroDocumento, v_Nombres as nombre, " 
-        . " v_Apellidos as apellidos, v_Telefono as telefono, b_Estado as estado FROM USUARIO ";
-        $usuarios=$this->db->query($sql);
-        return $usuarios;
+    public function getByEmail(){
+        $sql ="SELECT *,v_Email as email FROM usuario WHERE v_Email='{$this->email}'";
+        $user=$this->db->query($sql);
+        return $user; 
     }
 
-    public function getOne(){
+    public function getByUsername(){
+        $sql ="SELECT *,v_Username as username FROM usuario WHERE v_Username='{$this->username}'";
+        $user=$this->db->query($sql);
+        return $user; 
+    }
+
+    public function getOneById(){
         $sql="SELECT id, v_TipoUsuario as tipoUsuario, v_NumeroDocumento as numeroDocumento," 
         . " v_Nombres as nombre,"
         . " v_Apellidos as apellidos, v_Ocupacion as ocupacion, c_Sexo as sexo, v_Telefono as telefono,"
@@ -182,9 +184,54 @@ class Usuario{
         return $usuario->fetch_object();
     }
 
+    public function getByAll($search){
+        $sql="SELECT id, " 
+        . "v_NumeroDocumento as numeroDocumento, " 
+        . "v_Nombres as nombre, "
+        . "v_Apellidos as apellidos, " 
+        . "v_Telefono as telefono "
+        // . "v_TipoUsuario as tipoUsuario, "
+        // . "v_Ocupacion as ocupacion, " 
+        // . "c_Sexo as sexo, " 
+        // . "v_Email as email, " 
+        // . "v_Direccion as direccion, " 
+        // . "v_Username as username " 
+        // . "i_IdPrivilegio as privilegio, "
+        // . "b_Estado as estado " 
+        . "FROM USUARIO " 
+        . " WHERE v_NumeroDocumento LIKE '%{$search}%'"
+        . " OR v_Nombres LIKE '%{$search}%'"
+        . " OR v_Apellidos LIKE '%{$search}%'"
+        . " OR v_Ocupacion LIKE '%{$search}%'" 
+        . " OR v_Telefono LIKE '%{$search}%'"  
+        . " OR v_Email LIKE '%{$search}%'"  
+        . " OR v_Direccion LIKE '%{$search}%'"  
+        . " OR v_Username LIKE '%{$search}%'";
+        $usuarios=$this->db->query($sql);
+        return $usuarios;
+    }
+
+    public function getAll(){
+        $sql="SELECT id, " 
+        . "v_NumeroDocumento as numeroDocumento, " 
+        . "v_Nombres as nombre, " 
+        . "v_Apellidos as apellidos, " 
+        . "v_Telefono as telefono " 
+        // . "v_TipoUsuario as tipoUsuario, "
+        // . "v_Ocupacion as ocupacion, " 
+        // . "c_Sexo as sexo, " 
+        // . "v_Email as email, " 
+        // . "v_Direccion as direccion, " 
+        // . "v_Username as username " 
+        // . "i_IdPrivilegio as privilegio, "
+        // . "b_Estado as estado " 
+        . "FROM USUARIO ";
+        $usuarios=$this->db->query($sql);
+        return $usuarios;
+    }
+
     public function save(){
         $result=false;
-        // if($this->checkExists(0)){
             $sql="INSERT INTO usuario (v_TipoUsuario, v_NumeroDocumento, v_Nombres, v_Apellidos, v_Ocupacion, c_Sexo, v_Telefono, v_Email, v_Direccion, v_Username, v_Password, i_IdPrivilegio) ";
             $sql.="VALUES('admin', '{$this->numeroDocumento}', '{$this->nombre}','{$this->apellidos}','{$this->ocupacion}','{$this->sexo}','{$this->telefono}','{$this->email}','{$this->direccion}','{$this->username}','{$this->getPassword()}','{$this->privilegio}')";
             $save=$this->db->query($sql);
@@ -192,14 +239,12 @@ class Usuario{
             if($save){
                 $result=true;
             }
-        // }
 
         return $result;
     }
 
     public function edit(){
         $result=false;
-        // if($this->checkExists($this->id)){
             $sql="UPDATE usuario SET "  
             . "v_NumeroDocumento='{$this->numeroDocumento}', "
             . "v_Nombres='{$this->nombre}', "
@@ -219,11 +264,10 @@ class Usuario{
             if($save){
                 $result=true;
             }
-        // }
 
         return $result;
     }
-
+    
     public function delete(){
         $result=false;
         $sql = "DELETE FROM usuario WHERE id='{$this->id}'";

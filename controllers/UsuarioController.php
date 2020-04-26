@@ -16,39 +16,23 @@ class UsuarioController{
     public function search(){
         require_once 'views/usuario/header.php';
         require_once 'views/usuario/search.php';
+        $usuario = new Usuario();
+        $usuarios = $usuario->getAll();
         require_once 'views/usuario/list.php';
     }
 
-    
-    public function cancel(){
+    public function searching(){
         require_once 'views/usuario/header.php';
 
         $usuario = new Usuario();
-        if(isset($_GET["id"])){
-            $usuario = new Usuario();
-            $usuario->setId($_GET["id"]);
-            $usuario->cancel();
-            
-            $_SESSION["register"] = "complete";
-            $_SESSION["mensaje"] = "Registro anulado con exito!";
+        $usuarios = $usuario->getAll();
+        if(isset($_POST['search'])){
+            $search=$_POST["search"];
+       
+            $usuarios = $usuario->getByAll($search);
+            require_once 'views/usuario/searching.php';
         }
-
-        header('Location:'.base_url.'usuario/list');
-    }
-
-    public function delete(){
-        require_once 'views/usuario/header.php';
-        $usuario = new Usuario();
-
-        if(isset($_GET["id"])){
-            $usuario = new Usuario();
-            $usuario->setId($_GET["id"]);
-            $usuario->delete();
-            
-            $_SESSION["register"] = "complete";
-            $_SESSION["mensaje"] = "Registro eliminado con exito!";
-        }
-        header('Location:'.base_url.'usuario/list');
+        require_once 'views/usuario/list.php';
     }
 
     public function register(){
@@ -141,20 +125,26 @@ class UsuarioController{
                 $errores["password_confirm"] = "El password debe ser igual al primero digitado";
             }
 
-            if(count($errores)==0){
-                
-                $usuario= new Usuario();
-                $usuario->setNumeroDocumento($dni);
-                $usuario->setNombre($nombre);
-                $usuario->setApellidos($apellido);
-                $usuario->setTelefono($telefono);
-                $usuario->setDireccion($direccion);
-                $usuario->setUsername($user);
-                $usuario->setPassword($password);
-                $usuario->setEmail($email);
-                $usuario->setSexo($genero);
-                $usuario->setPrivilegio($privilegio);
+            $usuario= new Usuario();
+            $usuario->setNumeroDocumento($dni);
+            $usuario->setNombre($nombre);
+            $usuario->setApellidos($apellido);
+            $usuario->setTelefono($telefono);
+            $usuario->setDireccion($direccion);
+            $usuario->setUsername($user);
+            $usuario->setPassword($password);
+            $usuario->setEmail($email);
+            $usuario->setSexo($sexo);
+            $usuario->setPrivilegio($privilegio);
+            if($usuario->getByDocument()->num_rows > 0){
+                $errores["dni"]="El dni/cedula ya existe en la base de datos";
+            }else if ($usuario->getByEmail()->num_rows > 0){
+                $errores["email"]="El email ya existe en la base de datos";
+            }else if ($usuario->getByUsername()->num_rows > 0){
+                $errores["usuario"]="El usuario ya existe en la base de datos";
+            }
 
+            if(count($errores)==0){
                 $save = $usuario->save();
 
                 if($save){
@@ -174,7 +164,38 @@ class UsuarioController{
         }
     }
 
-    public function edit(){
+    public function cancel(){
+        require_once 'views/usuario/header.php';
+
+        $usuario = new Usuario();
+        $usuarios = $usuario->getAll();
+        if(isset($_GET["id"])){
+            $id = $_GET["id"];
+            $title = "ANULAR ADMINISTRADOR";
+            $action = "ANULAR";
+            require_once 'views/usuario/delete.php';
+        }
+
+        require_once 'views/usuario/list.php';
+    }
+
+
+    public function canceling(){
+        require_once 'views/usuario/header.php';
+
+        $usuario = new Usuario();
+        if(isset($_GET["id"])){
+            $usuario->setId($_GET["id"]);
+            $usuario->cancel();
+            
+            $_SESSION["register"] = "complete";
+            $_SESSION["mensaje"] = "Registro anulado con exito!";
+        }
+
+        header('Location:'.base_url.'usuario/list');
+    }
+
+    public function select(){
         require_once 'views/usuario/header.php';
 
         $edit = true;
@@ -197,7 +218,7 @@ class UsuarioController{
                 $_SESSION["form"]=null;
             }else{
                 $usuario->setId($_GET["id"]);
-                $user = $usuario->getOne();
+                $user = $usuario->getOneById();
                 $usuario->setNumeroDocumento($user->numeroDocumento);
                 $usuario->setNombre($user->nombre);
                 $usuario->setApellidos($user->apellidos);
@@ -213,7 +234,7 @@ class UsuarioController{
         require_once 'views/usuario/register.php';
     }
 
-    public function editSave(){
+    public function edit(){
         if(isset($_POST)){
             //Recibo los datos
             $id = isset($_POST['id']) ? $_POST['id'] : false;
@@ -284,7 +305,7 @@ class UsuarioController{
                 $errores["password_confirm"] = "El password debe ser igual al primero digitado";
             }
 
-            if(count($errores)==0 && isset($id)){
+            if(isset($id)){
                 
                 $usuario= new Usuario();
                 $usuario->setId($id);
@@ -296,27 +317,71 @@ class UsuarioController{
                 $usuario->setUsername($user);
                 $usuario->setPassword($password);
                 $usuario->setEmail($email);
-                $usuario->setSexo($genero);
+                $usuario->setSexo($sexo);
                 $usuario->setPrivilegio($privilegio);
-               
-                $edit = $usuario->edit();
+                if($usuario->getByDocument()->fetch_object()->numeroDocumento != $dni){
+                    $errores["dni"]="El dni/cedula ya existe en la base de datos";
+                }else if($usuario->getByEmail()->fetch_object()->email != $email){
+                    $errores["email"]="El email ya existe en la base de datos";
+                }else if($usuario->getByUsername()->fetch_object()->username != $user){
+                    $errores["usuario"]="El usuario ya existe en la base de datos";
+                }
 
-                if($edit){
-                    $_SESSION["register"] = "complete";
-                    $_SESSION["mensaje"] = "Registro guardado con exito!";
-                    header("Location:".base_url.'usuario/list'); 
+                if(count($errores)==0){
+                    
+                    $edit = $usuario->edit();
+
+                    if($edit){
+                        $_SESSION["register"] = "complete";
+                        $_SESSION["mensaje"] = "Registro actualizado con exito!";
+                        header("Location:".base_url.'usuario/list'); 
+                    }else{
+                        $_SESSION["register"] = "failed";
+                        $_SESSION["form"] = $form;
+                        header("Location:".base_url."usuario/edit&id=". $id);
+                    }
                 }else{
+                    $_SESSION["errores"] = $errores;
                     $_SESSION["register"] = "failed";
-                    $_SESSION["form"] = $form;
                     header("Location:".base_url."usuario/edit&id=". $id);
                 }
             }else{
-                $_SESSION["errores"] = $errores;
                 $_SESSION["register"] = "failed";
                 header("Location:".base_url."usuario/list");
             }
         }
     }
+
+    public function remove(){
+        require_once 'views/usuario/header.php';
+
+        if(isset($_GET["id"])){
+            $id = $_GET["id"];
+            $title = "ELIMINAR ADMINISTRADOR";
+            $action = "ELIMINAR";
+            require_once 'views/usuario/delete.php';
+        }
+
+        $usuario = new Usuario();
+        $usuarios = $usuario->getAll();
+
+        require_once 'views/usuario/list.php';
+    }
+
+    public function delete(){
+        require_once 'views/usuario/header.php';
+        $usuario = new Usuario();
+
+        if(isset($_GET["id"])){
+            $usuario = new Usuario();
+            $usuario->setId($_GET["id"]);
+            $usuario->delete();
+            
+            $_SESSION["register"] = "complete";
+            $_SESSION["mensaje"] = "Registro eliminado con exito!";
+        }
+        header('Location:'.base_url.'usuario/list');
+    }   
 }
 
 ?>

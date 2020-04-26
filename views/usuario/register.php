@@ -19,7 +19,7 @@
             <h3 class="panel-title"><i class="zmdi zmdi-plus"></i> &nbsp; NUEVO ADMINISTRADOR</h3>
         </div>
         <div class="panel-body">
-            <form action="<?=base_url?><?= !isset($edit) ? 'usuario/save' : 'usuario/editSave' ?>"  method="POST" onsubmit="return valida(this)">
+            <form action="<?=base_url?><?= !isset($edit) ? 'usuario/save' : 'usuario/edit' ?>"  method="POST" onsubmit="return valida(this)">
                 <input type="hidden" name="id" value="<?=$usuario->getId(); ?>" />
                 <fieldset>
                     <legend><i class="zmdi zmdi-account-box"></i> &nbsp; Información personal</legend>
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                </fieldset>
+                </fieldset> 
                 <br>
                 <fieldset>
                     <legend><i class="zmdi zmdi-key"></i> &nbsp; Datos de la cuenta</legend>

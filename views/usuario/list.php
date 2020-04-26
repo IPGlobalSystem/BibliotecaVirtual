@@ -47,12 +47,12 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="<?=base_url?>usuario/edit&id=<?=$usuario->id?>" class="btn btn-success btn-raised btn-xs">
+                                <a href="<?=base_url?>usuario/select&id=<?=$usuario->id?>" class="btn btn-success btn-raised btn-xs">
                                     <i class="zmdi zmdi-refresh"></i>
                                 </a>
                             </td>
                             <td>
-                                <a href="<?=base_url?>usuario/delete&id=<?=$usuario->id?>" class="btn btn-danger btn-raised btn-xs">
+                                <a href="<?=base_url?>usuario/remove&id=<?=$usuario->id?>" class="btn btn-danger btn-raised btn-xs">
                                     <i class="zmdi zmdi-delete"></i>
                                 </a>
                             </td>
