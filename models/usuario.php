@@ -154,9 +154,9 @@ class Usuario{
                 . ', password:' . $this->getPassword();
     }
 
-    private function checkExists($id){
+    private function checkExists(){
         $result=true;
-        $sql ="SELECT count(*) FROM usuario WHERE (v_NumeroDocumento='{$this->numeroDocumento}' or v_Email='{$this->email}' or v_Username='{$this->username}') and id!='{$id}'";
+        $sql ="SELECT count(*) FROM usuario WHERE (v_NumeroDocumento='{$this->numeroDocumento}' or v_Email='{$this->email}' or v_Username='{$this->username}') ";
         $count=$this->db->query($sql);
         if($count>0)
             $result=false;
@@ -184,7 +184,7 @@ class Usuario{
 
     public function save(){
         $result=false;
-        if($this->checkExists(0)){
+        // if($this->checkExists(0)){
             $sql="INSERT INTO usuario (v_TipoUsuario, v_NumeroDocumento, v_Nombres, v_Apellidos, v_Ocupacion, c_Sexo, v_Telefono, v_Email, v_Direccion, v_Username, v_Password, i_IdPrivilegio) ";
             $sql.="VALUES('admin', '{$this->numeroDocumento}', '{$this->nombre}','{$this->apellidos}','{$this->ocupacion}','{$this->sexo}','{$this->telefono}','{$this->email}','{$this->direccion}','{$this->username}','{$this->getPassword()}','{$this->privilegio}')";
             $save=$this->db->query($sql);
@@ -192,7 +192,7 @@ class Usuario{
             if($save){
                 $result=true;
             }
-        }
+        // }
 
         return $result;
     }
@@ -232,6 +232,23 @@ class Usuario{
         if($delete){
             $result=true;
         }
+
+        return $result;
+    }
+
+    public function cancel(){
+        $result=false;
+        // if($this->checkExists($this->id)){
+            $sql="UPDATE usuario SET "  
+            . "b_Estado=0 "
+            . "WHERE id='{$this->id}' ";
+            
+            $save=$this->db->query($sql);
+
+            if($save){
+                $result=true;
+            }
+        // }
 
         return $result;
     }

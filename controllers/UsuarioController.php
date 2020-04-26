@@ -24,9 +24,16 @@ class UsuarioController{
         require_once 'views/usuario/header.php';
 
         $usuario = new Usuario();
-        $usuarios = $usuario->getAll();
+        if(isset($_GET["id"])){
+            $usuario = new Usuario();
+            $usuario->setId($_GET["id"]);
+            $usuario->cancel();
+            
+            $_SESSION["register"] = "complete";
+            $_SESSION["mensaje"] = "Registro anulado con exito!";
+        }
 
-        require_once 'views/usuario/list.php';
+        header('Location:'.base_url.'usuario/list');
     }
 
     public function delete(){
@@ -36,14 +43,10 @@ class UsuarioController{
         if(isset($_GET["id"])){
             $usuario = new Usuario();
             $usuario->setId($_GET["id"]);
-            $deleted= $usuario->delete();
+            $usuario->delete();
             
-            if($deleted){
-                $_SESSION["register"] = "complete";
-                $_SESSION["mensaje"] = "Registro eliminado con exito!";
-            }{
-                $_SESSION["register"] = "failed";
-            }
+            $_SESSION["register"] = "complete";
+            $_SESSION["mensaje"] = "Registro eliminado con exito!";
         }
         header('Location:'.base_url.'usuario/list');
     }
