@@ -1,4 +1,1 @@
-config
-config/parameters.php
-config/db.php
-config/db_parameter.txt
+conexion_parametros.txt

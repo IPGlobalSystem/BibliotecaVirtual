@@ -1,5 +1,4 @@
 create database bibliotecavirtual;
-set 
 SET SQL_SAFE_UPDATES = 0;
 use bibliotecavirtual;
 create table PRIVILEGIO_USUARIO(

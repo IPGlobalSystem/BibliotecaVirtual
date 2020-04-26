@@ -15,7 +15,7 @@
             </a>
         </li>
         <li>
-            <a href="<?=base_url?>usuario/lista" class="btn btn-success">
+            <a href="<?=base_url?>usuario/list" class="btn btn-success">
                 <i class="zmdi zmdi-format-list-bulleted"></i> &nbsp; LISTA DE ADMINISTRADORES
             </a>
         </li>

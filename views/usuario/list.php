@@ -4,7 +4,7 @@
     <div class='alert alert-success alert-dismissible' role='alert'>
     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
     <span aria-hidden='true'>&times;</span></button>
-    <strong>Exitosa!</strong> Registro guardado con exito! </div>
+    <strong>Exitosa!</strong> <?= $_SESSION["mensaje"] ?>  </div>
 <?php elseif(isset($_SESSION["register"]) && $_SESSION["register"] == 'failed'): ?>
     <div class='alert alert-warning alert-dismissible' role='alert'>
     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -42,17 +42,17 @@
                             <td><?=$usuario->apellidos?></td>
                             <td><?=$usuario->telefono?></td>
                             <td>
-                                <a href="<?=base_url?>usuario/cancel?id=<?=$usuario->id?>" class="btn btn-success btn-raised btn-xs">
+                                <a href="<?=base_url?>usuario/cancel&id=<?=$usuario->id?>" class="btn btn-success btn-raised btn-xs">
                                     <i class="zmdi zmdi-delete"></i>
                                 </a>
                             </td>
                             <td>
-                                <a href="<?=base_url?>usuario/edit?id=<?=$usuario->id?>" class="btn btn-success btn-raised btn-xs">
+                                <a href="<?=base_url?>usuario/select&id=<?=$usuario->id?>" class="btn btn-success btn-raised btn-xs">
                                     <i class="zmdi zmdi-refresh"></i>
                                 </a>
                             </td>
                             <td>
-                                <a href="<?=base_url?>usuario/delete?id=<?=$usuario->id?>" class="btn btn-danger btn-raised btn-xs">
+                                <a href="<?=base_url?>usuario/remove&id=<?=$usuario->id?>" class="btn btn-danger btn-raised btn-xs">
                                     <i class="zmdi zmdi-delete"></i>
                                 </a>
                             </td>
