@@ -46,7 +46,7 @@
 							<a href="company.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i> Empresa</a>
 						</li>
 						<li>
-							<a href="category.html"><i class="zmdi zmdi-labels zmdi-hc-fw"></i> Categorías</a>
+							<a href="<?=base_url?>categoria/list"><i class="zmdi zmdi-labels zmdi-hc-fw"></i> Categorías</a>
 						</li>
 						<li>
 							<a href="provider.html"><i class="zmdi zmdi-truck zmdi-hc-fw"></i> Proveedores</a>
