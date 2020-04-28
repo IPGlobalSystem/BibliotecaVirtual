@@ -34,6 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php if ($usuarios->num_rows > 0 ): ?>
                         <?php while($usuario = $usuarios->fetch_object()): ?>
                         <tr>
                             <td><?=$usuario->id?></td>
@@ -58,6 +59,9 @@
                             </td>
                         </tr>
                         <?php endwhile; ?>
+                        <?php else: ?>
+                            <td colspan="8" > No hay ningun registro </td>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
