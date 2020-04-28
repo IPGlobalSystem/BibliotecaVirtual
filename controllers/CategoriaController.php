@@ -1,4 +1,5 @@
 <?php
+require_once 'models/categoria.php';
 
 class CategoriaController{
 
@@ -20,13 +21,16 @@ class CategoriaController{
              //declaro arrays que posteriormente sera una variables de session
             $errores = Array();
 
-            //Validar los datos
+            //VALIDAR DATOS
             if(!empty($nombre)){
                 $errores['nombre'] = "El nombre no debe estar vacio";    
             }
 
             if(count($errores)==0){
                 ///QUE HAGA EL REGISTRO
+                $categoria = new Categoria();
+                
+
             }else{
                 $_SESSION["errores"] = $errores;
                 header("location:" . base_url . "categoria/register");
