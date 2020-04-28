@@ -1,6 +1,7 @@
 <?php
 
 class Utils{
+
     public static function mostrarError($errores,$campo){
         $alerta='';
         
