@@ -1,4 +1,3 @@
-
 <!-- Content page -->
 <div class="container-fluid">
     <div class="page-header">

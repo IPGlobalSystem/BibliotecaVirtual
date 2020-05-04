@@ -1,31 +1,17 @@
 <div class="container-fluid">
-        <form class="well">
-            <div class="row">
-                <div class="col-xs-12 col-md-8 col-md-offset-2">
-                    <div class="form-group label-floating">
-                        <span class="control-label">¿A quién estas buscando?</span>
-                        <input class="form-control" type="text" name="search_client_init" required="">
-                    </div>
-                </div>
-                <div class="col-xs-12">
-                    <p class="text-center">
-                        <button type="submit" class="btn btn-primary btn-raised btn-sm"><i class="zmdi zmdi-search"></i> &nbsp; Buscar</button>
-                    </p>
+    <form class="well" action="<?=base_url?>cliente/searching" method="POST">
+        <div class="row">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
+                <div class="form-group label-floating">
+                    <span class="control-label">¿A quién estas buscando?</span>
+                    <input class="form-control" type="text" name="search" required="">
                 </div>
             </div>
-        </form>
-    </div>
-
-    <div class="container-fluid">
-        <form class="well">
-            <p class="lead text-center">Su última búsqueda  fue <strong>“Busqueda”</strong></p>
-            <div class="row">
-                <input class="form-control" type="hidden" name="search_client_destroy" required="">
-                <div class="col-xs-12">
-                    <p class="text-center">
-                        <button type="submit" class="btn btn-danger btn-raised btn-sm"><i class="zmdi zmdi-delete"></i> &nbsp; Eliminar búsqueda</button>
-                    </p>
-                </div>
+            <div class="col-xs-12">
+                <p class="text-center">
+                    <button type="submit" class="btn btn-primary btn-raised btn-sm"><i class="zmdi zmdi-search"></i> &nbsp; Buscar</button>
+                </p>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>

@@ -18,6 +18,12 @@ class Utils{
         $_SESSION["mensaje"]= null;
         // session_unset($_SESSION["errores"]);
     }
+
+    public static function verSession(){
+        if($_SESSION["Login_id"]==null){
+            header("location:".base_url."usuario/login");
+        }
+    }
 }
 
 ?>

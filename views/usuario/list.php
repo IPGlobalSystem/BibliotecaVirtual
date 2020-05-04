@@ -60,7 +60,9 @@
                         </tr>
                         <?php endwhile; ?>
                         <?php else: ?>
-                            <td colspan="8" > No hay ningun registro </td>
+                            <tr>
+                                <td colspan="8" > No hay ningun registro </td>
+                            </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>

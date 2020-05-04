@@ -1,4 +1,11 @@
-<?php
+parametros 
+
+define("base_url", "http://localhost:81/Libreria/BibliotecaVirtual/");
+define("controller_default","HomeController");
+define("action_default","index");
+
+
+conexion 
 
 class Database{
     static public function connect(){
@@ -8,5 +15,3 @@ class Database{
         return $db;
     }
 }
-
-?>

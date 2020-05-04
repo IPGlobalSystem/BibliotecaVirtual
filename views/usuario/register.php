@@ -19,7 +19,7 @@
             <h3 class="panel-title"><i class="zmdi zmdi-plus"></i> &nbsp; NUEVO ADMINISTRADOR</h3>
         </div>
         <div class="panel-body">
-            <form action="<?=base_url?><?= !isset($edit) ? 'usuario/save' : 'usuario/edit' ?>"  method="POST" onsubmit="return valida(this)">
+            <form action="<?=base_url?>usuario<?= !isset($edit) ? '/save' : '/edit' ?>"  method="POST" onsubmit="return valida(this)">
                 <input type="hidden" name="id" value="<?=$usuario->getId(); ?>" />
                 <fieldset>
                     <legend><i class="zmdi zmdi-account-box"></i> &nbsp; Información personal</legend>
@@ -75,19 +75,24 @@
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'usuario') ?>                                
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Contraseña *</label>
-                                    <input id="password1" class="form-control" type="password" name="password1-reg" required="" maxlength="70">
-                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'password') ?>                                
+                            <div class="col-xs-12 col-sm-12" id="divCambiarContraseña" style="<?= isset($edit) ? 'display:block' : 'display:none' ?>" >
+                                <a href="#" id="contraseña_confirm">Cambiar contraseña</a>
+                            </div> 
+                            <div id="contraseñas" style="<?= !isset($edit) ? 'display:block' : 'display:none' ?>">
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Contraseña *</label>
+                                        <input id="password1" class="form-control" type="password" name="password1-reg" maxlength="70">
+                                        <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'password') ?>                                
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Repita la contraseña *</label>
-                                    <input id="password2" class="form-control" type="password" name="password2-reg" required="" maxlength="70">
-                                    <div id="validar_password" class="valid_form"></div>
-                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'password_confirm') ?>                                
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Repita la contraseña *</label>
+                                        <input id="password2" class="form-control" type="password" name="password2-reg" maxlength="70">
+                                        <div id="validar_password" class="valid_form"></div>
+                                        <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'password_confirm') ?>                                
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
@@ -166,6 +171,12 @@
 </div>
 <script type="text/javascript">
     
+    var contraseña_confirm = document.getElementById('contraseña_confirm');
+    contraseña_confirm.addEventListener('click',function(){
+        document.querySelector('#contraseñas').style.display="block";
+        document.querySelector('#divCambiarContraseña').style.display="none";
+    });
+
     function valida(f){
         var ok = true;
         var pass1 = document.querySelector("#password1");
@@ -178,4 +189,5 @@
         }
         return ok;
     }
+
 </script>

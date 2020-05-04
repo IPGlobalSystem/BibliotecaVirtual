@@ -1,68 +1,46 @@
-<?php 
+<?php
 
 require_once 'models/usuario.php';
 
-class UsuarioController{
-
-    public function login(){
-        $_SESSION["Login_id"] = null;
-        require_once 'views/usuario/login.php';
-    }
-
-    public function logining(){
-        ///HACER EL LOGIN AQUI 
-        $_SESSION["Login_id"] = "1";
-        header("Location:".base_url."home/index");
-    }
-
-    public function mi_cuenta(){
-        require_once 'views/mi_cuenta/header.php';
-        require_once 'views/mi_cuenta/update.php';
-    }
-
-    public function mis_datos(){
-        require_once 'views/mis_datos/header.php';
-        require_once 'views/mis_datos/update.php';
-    }
+class ClienteController{
 
     public function list(){
-        require_once 'views/usuario/header.php';
-
+        require_once 'views/cliente/header.php';
         $usuario = new Usuario();
-        $usuarios = $usuario->getAll('admin');
-
-        require_once 'views/usuario/list.php';
+        $usuarios= $usuario->getAll('user');
+        require_once 'views/cliente/list.php';
     }
 
     public function search(){
-        require_once 'views/usuario/header.php';
-        require_once 'views/usuario/search.php';
+        require_once 'views/cliente/header.php';
+        require_once 'views/cliente/search.php';
         $usuario = new Usuario();
-        $usuarios = $usuario->getAll('admin');
-        require_once 'views/usuario/list.php';
+        $usuarios= $usuario->getAll('user');
+        require_once 'views/cliente/list.php';
     }
 
     public function searching(){
-        require_once 'views/usuario/header.php';
+        require_once 'views/cliente/header.php';
 
         $usuario = new Usuario();
-        $usuarios = $usuario->getAll('admin');
+        $usuarios = $usuario->getAll('user');
         if(isset($_POST['search'])){
             $search=$_POST["search"];
        
             $usuarios = $usuario->getByAll($search);
-            require_once 'views/usuario/searching.php';
+            require_once 'views/cliente/searching.php';
         }
-        require_once 'views/usuario/list.php';
+        require_once 'views/cliente/list.php';
     }
 
     public function register(){
-        require_once 'views/usuario/header.php';
-        
+        require_once 'views/cliente/header.php';
+
         $usuario = new Usuario();
         if(isset($_SESSION["form"]) && $_SESSION["form"] != null){
             $form=$_SESSION["form"];
             $usuario->setNumeroDocumento($form["dni"]);
+            $usuario->setOcupacion($form["ocupacion"]);
             $usuario->setNombre($form["nombre"]);
             $usuario->setApellidos($form["apellido"]);
             $usuario->setTelefono($form["telefono"]);
@@ -70,49 +48,46 @@ class UsuarioController{
             $usuario->setUsername($form["user"]);
             $usuario->setEmail($form["email"]);
             $usuario->setSexo($form["sexo"]);
-            $usuario->setPrivilegio($form["privilegio"]);
             $_SESSION["form"]=null;
         }
 
-        require_once 'views/usuario/register.php';
+        require_once 'views/cliente/register.php';
     }
-    
+
     public function save(){
-        if(isset($_POST)){
-            //Recibo los datos
-            $dni = isset($_POST['dni-reg']) ? $_POST['dni-reg'] : false;
-            $nombre= isset($_POST['nombre-reg']) ? $_POST['nombre-reg'] : false;
-            $apellido = isset($_POST['apellido-reg']) ? $_POST['apellido-reg'] : false;
-            $telefono = isset($_POST['telefono-reg']) ? $_POST['telefono-reg'] : false;
-            $direccion = isset($_POST['direccion-reg']) ? $_POST['direccion-reg'] : false;
-            $user = isset($_POST['usuario-reg']) ? $_POST['usuario-reg'] : false;
-            $password = isset($_POST['password1-reg']) ? $_POST['password1-reg'] : false;
-            $password_confirm = isset($_POST['password2-reg']) ? $_POST['password2-reg'] : false;
-            $email = isset($_POST['email-reg']) ? $_POST['email-reg'] : false;
-            $sexo = isset($_POST['sexo']) ? $_POST['sexo']:false;
-            $privilegio = isset($_POST['privilegio']) ? $_POST['privilegio']:false;
+        if($_POST){
+            $dni = isset($_POST["dni"]) ? $_POST["dni"] : false;
+            $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : false;
+            $apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : false;
+            $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : false;
+            $ocupacion = isset($_POST["ocupacion"]) ? $_POST["ocupacion"] : false;
+            $direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : false;
+            $user = isset($_POST["usuario"]) ? $_POST["usuario"] : false;
+            $password1 = isset($_POST["password1"]) ? $_POST["password1"] : false;
+            $password2 = isset($_POST["password2"]) ? $_POST["password2"] : false;
+            $email = isset($_POST["email"]) ? $_POST["email"] : false;
+            $sexo = isset($_POST["sexo"]) ? $_POST["sexo"] : false;
 
             //declaro arrays que posteriormente sera una variables de session
             $errores = array();
             $form = array();
-            $form["dni"]=$dni;
-            $form["nombre"]=$nombre;
-            $form["apellido"]=$apellido;
-            $form["telefono"]=$telefono;
-            $form["direccion"]=$direccion;
-            $form["user"]=$user;
-            $form["email"]=$email;
-            $form["sexo"]=$sexo;
-            $form["privilegio"]=$privilegio;
+            $form["dni"] = $dni;
+            $form["nombre"] = $nombre;
+            $form["apellido"] = $apellido;
+            $form["telefono"] = $telefono;
+            $form["ocupacion"] = $ocupacion;
+            $form["direccion"] = $direccion;
+            $form["email"] = $email;
+            $form["user"] = $user;
+            $form["sexo"] = $sexo;
 
-            //Validar los datos
             if(empty(trim($dni)) || !is_numeric($dni) || !preg_match("/[0-9]/",$dni)){
                 $errores["dni"] = "El formato de dni no es el correcto";
-            }
+            } 
 
             if(empty(trim($nombre)) || is_numeric($nombre) || preg_match("/[0-9]/",$nombre)){
-                $errores["nombre"] = "El formato de nombre no es el correcto";
-            }
+                $errores["nombre"] = "El formato de dni no es el correcto";
+            } 
 
             if(empty(trim($apellido)) || is_numeric($apellido) || preg_match("/[0-9]/",$apellido)){
                 $errores["apellido"] = "El formato de apellido no es el correcto";
@@ -122,42 +97,43 @@ class UsuarioController{
                 $errores["telefono"] = "El formato de telefono no es el correcto";
             }
 
-            if(empty(trim($direccion))){
-                $errores["direccion"] = "Debe completar direccion";
+            if(empty(trim($ocupacion)) || is_numeric($ocupacion) || preg_match("/[0-9]/",$ocupacion)){
+                $errores["ocupacion"] = "El formato de ocupacion no es el correcto";
             }
 
-            if(empty(trim($email)) || !filter_var($email,FILTER_VALIDATE_EMAIL)){
-                $errores["email"] = "El formato email no es el correcto";
+            if(empty(trim($direccion))){
+                $errores["direccion"] = "El formato de direccion no es el correcto";
+            }
+
+            if(empty(trim($email)) || !filter_var($email, FILTER_VALIDATE_EMAIL) ){
+                $errores["email"] = "El formato de email no es el correcto";
             }
 
             if(empty(trim($user))){
                 $errores["usuario"] = "Debe completar usuario";
             }
 
-            if(empty($password)){
-                $errores["password"] = "Debe completar password";
+            if(empty($password1)){
+                $errores["password1"] = "Debe completar password";
             }
 
-            if(empty($password_confirm)){
-                $errores["password_confirm"] = "Debe completar password";
+            if($password1 != $password2){
+                $errores["password2"] = "Debe repetir la misma contraseña";
             }
-
-            if($password != $password_confirm){
-                $errores["password_confirm"] = "Debe repetir la misma contraseña";
-            }
-
+            
             //anexa los datos de usuario al objeto
-            $usuario= new Usuario();
+            $usuario = new Usuario();
             $usuario->setNumeroDocumento($dni);
             $usuario->setNombre($nombre);
             $usuario->setApellidos($apellido);
             $usuario->setTelefono($telefono);
             $usuario->setDireccion($direccion);
             $usuario->setUsername($user);
-            $usuario->setPassword($password);
+            $usuario->setPassword($password1);
             $usuario->setEmail($email);
             $usuario->setSexo($sexo);
-            $usuario->setPrivilegio($privilegio);
+            $usuario->setOcupacion($ocupacion);
+            $usuario->setPrivilegio(3);
             if($usuario->getByDocument()->num_rows > 0){
                 $errores["dni"]="El dni/cedula ya existe en la base de datos";
             }else if ($usuario->getByEmail()->num_rows > 0){
@@ -166,44 +142,44 @@ class UsuarioController{
                 $errores["usuario"]="El usuario ya existe en la base de datos";
             }
 
-            if(count($errores)==0){
-                $save = $usuario->save('admin');
+            if(count($errores) == 0){
+                //EJECUTAR EL REGISTRO DE CLIENTES
+                $save = $usuario->save('user');
 
                 if($save){
-                    $_SESSION["register"] = "complete";
-                    $_SESSION["mensaje"] = "Registro guardado con exito!";
-                    header("Location:".base_url.'usuario/list'); 
+                    $_SESSION["register"]="complete";
+                    $_SESSION["mensaje"]= "Registro guardado con exito!";
+                    header("Location:".base_url.'cliente/list'); 
                 }else{
-                    $_SESSION["register"] = "failed";
-                    $_SESSION["form"] = $form;
-                    header("Location:".base_url."usuario/register");
+                    $_SESSION["register"]="failed";
+                    $_SESSION["form"]=$form;
+                    header("Location:". base_url. "cliente/register");
                 }
             }else{
                 $_SESSION["errores"] = $errores;
-                $_SESSION["form"] = $form;
-                header("Location:".base_url."usuario/register");
+                $_SESSION["form"]=$form;
+                header("Location:". base_url. "cliente/register");
             }
         }
     }
 
     public function cancel(){
-        require_once 'views/usuario/header.php';
+        require_once 'views/cliente/header.php';
 
         $usuario = new Usuario();
-        $usuarios = $usuario->getAll('admin');
+        $usuarios = $usuario->getAll('user');
         if(isset($_GET["id"])){
             $id = $_GET["id"];
-            $title = "ANULAR ADMINISTRADOR";
+            $title = "ANULAR USUARIO";
             $action = "ANULAR";
-            require_once 'views/usuario/delete.php';
+            require_once 'views/cliente/delete.php';
         }
 
-        require_once 'views/usuario/list.php';
+        require_once 'views/cliente/list.php';
     }
 
-
     public function canceling(){
-        require_once 'views/usuario/header.php';
+        require_once 'views/cliente/header.php';
 
         $usuario = new Usuario();
         if(isset($_GET["id"])){
@@ -214,11 +190,11 @@ class UsuarioController{
             $_SESSION["mensaje"] = "Registro anulado con exito!";
         }
 
-        header('Location:'.base_url.'usuario/list');
+        header('Location:'.base_url.'cliente/list');
     }
 
     public function select(){
-        require_once 'views/usuario/header.php';
+        require_once 'views/cliente/header.php';
 
         $edit = true;
 
@@ -236,7 +212,7 @@ class UsuarioController{
                 $usuario->setUsername($form["user"]);
                 $usuario->setEmail($form["email"]);
                 $usuario->setSexo($form["sexo"]);
-                $usuario->setPrivilegio($form["privilegio"]);
+                $usuario->setOcupacion($form["ocupacion"]);
                 $_SESSION["form"]=null;
             }else{
                 $usuario->setId($_GET["id"]);
@@ -249,43 +225,44 @@ class UsuarioController{
                 $usuario->setUsername($user->username);
                 $usuario->setEmail($user->email);
                 $usuario->setSexo($user->sexo);
-                $usuario->setPrivilegio($user->privilegio);
+                $usuario->setOcupacion($user->ocupacion);
             }
         }
 
-        require_once 'views/usuario/register.php';
+        require_once 'views/cliente/register.php';
     }
 
     public function edit(){
+
         if(isset($_POST)){
-            $editarPassword = false;
             //Recibo los datos
+            $editarPassword = false;
+
             $id = isset($_POST['id']) ? $_POST['id'] : false;
-            $dni = isset($_POST['dni-reg']) ? $_POST['dni-reg'] : false;
-            $nombre= isset($_POST['nombre-reg']) ? $_POST['nombre-reg'] : false;
-            $apellido = isset($_POST['apellido-reg']) ? $_POST['apellido-reg'] : false;
-            $telefono = isset($_POST['telefono-reg']) ? $_POST['telefono-reg'] : false;
-            $direccion = isset($_POST['direccion-reg']) ? $_POST['direccion-reg'] : false;
-            $user = isset($_POST['usuario-reg']) ? $_POST['usuario-reg'] : false;
-            $password = isset($_POST['password1-reg']) ? $_POST['password1-reg'] : false;
-            $password_confirm = isset($_POST['password2-reg']) ? $_POST['password2-reg'] : false;
-            $email = isset($_POST['email-reg']) ? $_POST['email-reg'] : false;
-            $sexo = isset($_POST['sexo']) ? $_POST['sexo']:false;
-            $privilegio = isset($_POST['privilegio']) ? $_POST['privilegio']:false;
+            $dni = isset($_POST["dni"]) ? $_POST["dni"] : false;
+            $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : false;
+            $apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : false;
+            $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : false;
+            $ocupacion = isset($_POST["ocupacion"]) ? $_POST["ocupacion"] : false;
+            $direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : false;
+            $user = isset($_POST["usuario"]) ? $_POST["usuario"] : false;
+            $password1 = isset($_POST["password1"]) ? $_POST["password1"] : false;
+            $password2 = isset($_POST["password2"]) ? $_POST["password2"] : false;
+            $email = isset($_POST["email"]) ? $_POST["email"] : false;
+            $sexo = isset($_POST["sexo"]) ? $_POST["sexo"] : false;
 
             //declaro arrays que posteriormente sera una variables de session
             $errores = array();
             $form = array();
-            $form["id"]=$id;
-            $form["dni"]=$dni;
-            $form["nombre"]=$nombre;
-            $form["apellido"]=$apellido;
-            $form["telefono"]=$telefono;
-            $form["direccion"]=$direccion;
-            $form["user"]=$user;
-            $form["email"]=$email;
-            $form["sexo"]=$sexo;
-            $form["privilegio"]=$privilegio;
+            $form["dni"] = $dni;
+            $form["nombre"] = $nombre;
+            $form["apellido"] = $apellido;
+            $form["telefono"] = $telefono;
+            $form["ocupacion"] = $ocupacion;
+            $form["direccion"] = $direccion;
+            $form["email"] = $email;
+            $form["user"] = $user;
+            $form["sexo"] = $sexo;
 
             //Validar los datos
             if(empty(trim($dni)) || !is_numeric($dni) || !preg_match("/[0-9]/",$dni)){
@@ -304,8 +281,12 @@ class UsuarioController{
                 $errores["telefono"] = "El formato de telefono no es el correcto";
             }
 
+            if(empty(trim($ocupacion)) || is_numeric($ocupacion) || preg_match("/[0-9]/",$ocupacion)){
+                $errores["ocupacion"] = "El formato de ocupacion no es el correcto";
+            }
+
             if(empty(trim($direccion))){
-                $errores["direccion"] = "Debe completar direccion";
+                $errores["direccion"] = "El formato de direccion no es el correcto";
             }
 
             if(empty(trim($email)) || !filter_var($email,FILTER_VALIDATE_EMAIL)){
@@ -316,16 +297,16 @@ class UsuarioController{
                 $errores["usuario"] = "Debe completar usuario";
             }
 
-            if(!empty($password)){
-                if($password != $password_confirm){
-                    $errores["password_confirm"] = "Debe repetir la misma contraseña";
+            if(!empty($password1)){
+                if($password1 != $password2){
+                    $errores["password2"] = "Debe repetir la misma contraseña";
                 }
                 $editarPassword=true;
             }
 
             if(isset($id)){
-                
-                $usuario= new Usuario();
+                //anexa los datos de usuario al objeto
+                $usuario = new Usuario();
                 $usuario->setId($id);
                 $usuario->setNumeroDocumento($dni);
                 $usuario->setNombre($nombre);
@@ -333,15 +314,16 @@ class UsuarioController{
                 $usuario->setTelefono($telefono);
                 $usuario->setDireccion($direccion);
                 $usuario->setUsername($user);
-                $usuario->setPassword($password);
+                $usuario->setPassword($password1);
                 $usuario->setEmail($email);
                 $usuario->setSexo($sexo);
-                $usuario->setPrivilegio($privilegio);
+                $usuario->setOcupacion($ocupacion);
+                $usuario->setPrivilegio(3);
                 if($usuario->getByDocument()->num_rows > 0){
                     $errores["dni"]="El dni/cedula ya existe en la base de datos";
-                }else if($usuario->getByEmail()->num_rows > 0){
+                }else if ($usuario->getByEmail()->num_rows > 0){
                     $errores["email"]="El email ya existe en la base de datos";
-                }else if($usuario->getByUsername()->num_rows > 0){
+                }else if ($usuario->getByUsername()->num_rows > 0){
                     $errores["usuario"]="El usuario ya existe en la base de datos";
                 }
 
@@ -352,43 +334,42 @@ class UsuarioController{
                     if($edit){
                         $_SESSION["register"] = "complete";
                         $_SESSION["mensaje"] = "Registro actualizado con exito!";
-                        header("Location:".base_url.'usuario/list'); 
+                        header("Location:".base_url.'cliente/list'); 
                     }else{
                         $_SESSION["register"] = "failed";
                         $_SESSION["form"] = $form;
-                        header("Location:".base_url."usuario/select&id=". $id);
+                        header("Location:".base_url."cliente/select&id=". $id);
                     }
                 }else{
                     $_SESSION["errores"] = $errores;
-                    $_SESSION["form"] = $form;
                     $_SESSION["register"] = "failed";
-                    header("Location:".base_url."usuario/select&id=". $id);
+                    header("Location:".base_url."cliente/select&id=". $id);
                 }
             }else{
                 $_SESSION["register"] = "failed";
-                header("Location:".base_url."usuario/list");
+                header("Location:".base_url."cliente/list");
             }
         }
     }
 
     public function remove(){
-        require_once 'views/usuario/header.php';
+        require_once 'views/cliente/header.php';
 
         if(isset($_GET["id"])){
             $id = $_GET["id"];
-            $title = "ELIMINAR ADMINISTRADOR";
+            $title = "ELIMINAR USUARIO";
             $action = "ELIMINAR";
-            require_once 'views/usuario/delete.php';
+            require_once 'views/cliente/delete.php';
         }
 
         $usuario = new Usuario();
-        $usuarios = $usuario->getAll('admin');
+        $usuarios = $usuario->getAll('user');
 
-        require_once 'views/usuario/list.php';
+        require_once 'views/cliente/list.php';
     }
 
     public function delete(){
-        require_once 'views/usuario/header.php';
+        require_once 'views/cliente/header.php';
         $usuario = new Usuario();
 
         if(isset($_GET["id"])){
@@ -399,7 +380,7 @@ class UsuarioController{
             $_SESSION["register"] = "complete";
             $_SESSION["mensaje"] = "Registro eliminado con exito!";
         }
-        header('Location:'.base_url.'usuario/list');
+        header('Location:'.base_url.'cliente/list');
     }   
 }
 

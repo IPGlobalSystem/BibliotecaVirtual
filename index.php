@@ -4,10 +4,19 @@ require_once 'config/db.php';
 require_once 'autoload.php';
 require_once 'config/parameters.php';
 require_once 'helpers/utils.php';
-require_once 'views/layout/header.php';
-require_once 'views/layout/sidebar.php';
-require_once 'views/layout/navbar.php';
 
+if((isset($_GET['controller']) && (isset($_GET['action']) && $_GET['action']!= "login")) ||
+(!isset($_GET['controller']) && !isset($_GET['action'])) ) {
+    require_once 'views/layout/header.php';
+    require_once 'views/layout/sidebar.php';
+    require_once 'views/layout/navbar.php';
+}else{
+    if(isset($_GET['controller']) && $_GET['controller']!="usuario"){
+        show_error();
+        exit();
+    }
+}
+  
 function show_error(){
     $error = new ErrorController();
     $error->index();    
@@ -40,5 +49,7 @@ if(class_exists($nombre_controlador)){
     show_error();
 }
 
+///EL FOOTER DEL LOGIN ES EL MISMO QUE EL RESTO DE PAGINAS
 require_once 'views/layout/footer.php';
+
 ?>

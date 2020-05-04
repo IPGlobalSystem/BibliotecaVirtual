@@ -14,8 +14,8 @@ $(document).ready(function(){
 	$('.btn-exit-system').on('click', function(e){
 		e.preventDefault();
 		swal({
-		  	title: 'Are you sure?',
-		  	text: "The current session will be closed",
+		  	title: 'Esta seguro?',
+		  	text: "La session esta apunto de cerrarse",
 		  	type: 'warning',
 		  	showCancelButton: true,
 		  	confirmButtonColor: '#03A9F4',
@@ -23,7 +23,7 @@ $(document).ready(function(){
 		  	confirmButtonText: '<i class="zmdi zmdi-run"></i> Yes, Exit!',
 		  	cancelButtonText: '<i class="zmdi zmdi-close-circle"></i> No, Cancel!'
 		}).then(function () {
-			window.location.href="index.html";
+			window.location.href="login";
 		});
 	});
 	$('.btn-menu-dashboard').on('click', function(e){

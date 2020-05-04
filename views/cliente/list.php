@@ -1,3 +1,17 @@
+<!-- Content page -->
+<!--Mensaje de alerta o registro-->
+<?php if(isset($_SESSION["register"]) && $_SESSION["register"] == 'complete'):?>
+    <div class='alert alert-success alert-dismissible' role='alert'>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span></button>
+    <strong>Exitosa!</strong> <?= $_SESSION["mensaje"] ?>  </div>
+<?php elseif(isset($_SESSION["register"]) && $_SESSION["register"] == 'failed'): ?>
+    <div class='alert alert-warning alert-dismissible' role='alert'>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span></button>
+    <strong>Error!</strong> Registro fallido! </div>
+<?php endif; ?>
+
 <!-- Panel listado de clientes -->
 <div class="container-fluid">
     <div class="panel panel-success">
@@ -14,60 +28,42 @@
                             <th class="text-center">NOMBRES</th>
                             <th class="text-center">APELLIDOS</th>
                             <th class="text-center">TELÉFONO</th>
-                            <th class="text-center">A. CUENTA</th>
-                            <th class="text-center">A. DATOS</th>
+                            <th class="text-center">ANULAR</th>
+                            <th class="text-center">EDITAR</th>
                             <th class="text-center">ELIMINAR</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php if($usuarios->num_rows > 0):?>
+                        <?php while($cliente = $usuarios->fetch_object()):?>
                         <tr>
-                            <td>1</td>
-                            <td>0976541234</td>
-                            <td>Nombres</td>
-                            <td>Apellidos</td>
-                            <td>Telefono</td>
+                            <td><?=$cliente->id?></td>
+                            <td><?=$cliente->numeroDocumento?></td>
+                            <td><?=$cliente->nombre?></td>
+                            <td><?=$cliente->apellidos?></td>
+                            <td><?=$cliente->telefono?></td>
                             <td>
-                                <a href="#!" class="btn btn-success btn-raised btn-xs">
+                                <a href="<?=base_url?>cliente/cancel&id=<?=$cliente->id?>" class="btn btn-success btn-raised btn-xs">
                                     <i class="zmdi zmdi-refresh"></i>
                                 </a>
                             </td>
                             <td>
-                                <a href="#!" class="btn btn-success btn-raised btn-xs">
+                                <a href="<?=base_url?>cliente/select&id=<?=$cliente->id?>" class="btn btn-success btn-raised btn-xs">
                                     <i class="zmdi zmdi-refresh"></i>
                                 </a>
                             </td>
                             <td>
-                                <form>
-                                    <button type="submit" class="btn btn-danger btn-raised btn-xs">
-                                        <i class="zmdi zmdi-delete"></i>
-                                    </button>
-                                </form>
+                                <a href="<?=base_url?>cliente/remove&id=<?=$cliente->id?>" class="btn btn-danger btn-raised btn-xs">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>0976541234</td>
-                            <td>Nombres</td>
-                            <td>Apellidos</td>
-                            <td>Telefono</td>
-                            <td>
-                                <a href="#!" class="btn btn-success btn-raised btn-xs">
-                                    <i class="zmdi zmdi-refresh"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="#!" class="btn btn-success btn-raised btn-xs">
-                                    <i class="zmdi zmdi-refresh"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <form>
-                                    <button type="submit" class="btn btn-danger btn-raised btn-xs">
-                                        <i class="zmdi zmdi-delete"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                        <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="8" > No hay ningun registro </td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>

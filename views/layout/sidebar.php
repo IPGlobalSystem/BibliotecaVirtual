@@ -14,12 +14,12 @@
 				</figure>
 				<ul class="full-box list-unstyled text-center">
 					<li>
-						<a href="my-data.html" title="Mis datos">
+						<a href="<?=base_url?>usuario/mis_datos" title="Mis datos">
 							<i class="zmdi zmdi-account-circle"></i>
 						</a>
 					</li>
 					<li>
-						<a href="my-account.html" title="Mi cuenta">
+						<a href="<?=base_url?>usuario/mi_cuenta" title="Mi cuenta">
 							<i class="zmdi zmdi-settings"></i>
 						</a>
 					</li>
@@ -33,7 +33,7 @@
 			<!-- SideBar Menu -->
 			<ul class="list-unstyled full-box dashboard-sideBar-Menu">
 				<li>
-					<a href="<?=base_url?>">
+					<a href="<?=base_url?>home/index">
 						<i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i> Dashboard
 					</a>
 				</li>
@@ -62,10 +62,10 @@
 					</a>
 					<ul class="list-unstyled full-box">
 						<li>
-							<a href="<?=base_url?>usuario/register"><i class="zmdi zmdi-account zmdi-hc-fw"></i> Administradores</a>
+							<a href="<?=base_url?>usuario/list"><i class="zmdi zmdi-account zmdi-hc-fw"></i> Administradores</a>
 						</li>
 						<li>
-							<a href="<?=base_url?>cliente/register"><i class="zmdi zmdi-male-female zmdi-hc-fw"></i> Clientes</a>
+							<a href="<?=base_url?>cliente/list"><i class="zmdi zmdi-male-female zmdi-hc-fw"></i> Clientes</a>
 						</li>
 					</ul>
 				</li>
