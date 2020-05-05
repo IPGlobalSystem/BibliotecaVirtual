@@ -1,15 +1,14 @@
-parametros 
+parameter Pablo
 
-define("base_url", "http://localhost:81/Libreria/BibliotecaVirtual/");
+define("base_url", "http://localhost/BibliotecaVirtual/");
 define("controller_default","HomeController");
 define("action_default","index");
 
-
-conexion 
+config Pablo
 
 class Database{
     static public function connect(){
-        $db = new mysqli('localhost','root','root','bibliotecavirtual','3307');
+        $db = new mysqli('localhost','root','','bibliotecavirtual');
         $db->query("SET NAMES 'utf-8'");
 
         return $db;
@@ -21,7 +20,7 @@ htaccess
 <IfModule mod_rewrite.c>
     #Activar rewrite
     RewriteEngine on
-    ErrorDocument 404 http://localhost:81/Libreria/BibliotecaVirtual/error/
+    ErrorDocument 404 http://localhost/BibliotecaVirtual/error/
 
     RewriteCond  %{SCRIPT_FILENAME} !-d
     RewriteCond  %{SCRIPT_FILENAME} !-f

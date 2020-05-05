@@ -36,6 +36,24 @@ class Categoria{
                
     }
 
+    public function getByNombre(){
+        $sql = "SELECT * FROM categoria WHERE nombre='{$this->getNombre()}';";
+        $categoria = $this->db->query($sql);
+        return $categoria;
+    }
+
+    public function save(){
+        $result=false;
+        $sql = "INSERT INTO categoria(nombre) VALUES('{$this->nombre}')";
+        $save = $this->db->query($sql);
+
+        if($save){
+            $result=true;
+        }
+
+        return $result;
+    }
+
 }
 
 ?>
