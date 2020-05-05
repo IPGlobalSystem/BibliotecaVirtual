@@ -41,7 +41,7 @@ class CategoriaController{
                 $errores['nombre'] = "El nombre no debe estar vacio";    
             }
 
-            //anexa los datos de usuario al objeto
+            //anexa los datos de categoria al objeto
             $categoria = new Categoria();
             $categoria->setNombre($nombre);
             $categorias = $categoria->getByNombre();
