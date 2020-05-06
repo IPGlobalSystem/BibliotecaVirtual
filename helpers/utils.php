@@ -20,7 +20,7 @@ class Utils{
     }
 
     public static function verSession(){
-        if($_SESSION["Login_id"]==null){
+        if($_SESSION["identity"]==null){
             header("location:".base_url."usuario/login");
         }
     }

@@ -5,14 +5,32 @@ require_once 'models/usuario.php';
 class UsuarioController{
 
     public function login(){
-        $_SESSION["Login_id"] = null;
+        $_SESSION["identity"] = null;
         require_once 'views/usuario/login.php';
     }
 
     public function logining(){
         ///HACER EL LOGIN AQUI 
-        $_SESSION["Login_id"] = "1";
-        header("Location:".base_url."home/index");
+        if(isset($_POST)){
+            $usuario = new Usuario();
+            $usuario->setUsername($_POST["username"]);
+            $usuario->setEmail($_POST["username"]);
+            $usuario->setPassword($_POST["password"]);
+            $identity = $usuario->login();
+
+            if($identity && is_object($identity)){
+                $_SESSION["identity"] = $identity;
+
+                if($identity->rol == "admin"){
+                    $_SESSION['admin'] = true;
+                }
+            
+                header("Location:".base_url."home/index");
+            }else{
+                $_SESSION["error"]="Identificacion fallida!!!";
+                header("Location:".base_url."usuario/login");
+            }
+        }
     }
 
     public function mi_cuenta(){

@@ -287,15 +287,35 @@ class Usuario{
 
     public function cancel(){
         $result=false;
-            $sql="UPDATE usuario SET "  
-            . "b_Estado=0 "
-            . "WHERE id='{$this->id}' ";
-            
-            $save=$this->db->query($sql);
+        $sql="UPDATE usuario SET "  
+        . "b_Estado=0 "
+        . "WHERE id='{$this->id}' ";
+        
+        $save=$this->db->query($sql);
 
-            if($save){
-                $result=true;
+        if($save){
+            $result=true;
+        }
+
+        return $result;
+    }
+
+    public function login(){
+        $result = false;
+        //Comprueba si el usuario existe
+        $sql = "SELECT v_TipoUsuario as 'rol',id,i_IdPrivilegio as 'Privilegio',v_Password as 'password' FROM usuario " 
+        . "WHERE (v_Username='{$this->username}' or v_Email='{$this->email}') and b_Estado=1";
+        $login = $this->db->query($sql);
+
+        if($login && $login->num_rows == 1){
+            $usuario = $login->fetch_object();
+
+            $verify = password_verify($this->password, $usuario->password);
+
+            if($verify){
+                $result=$usuario;
             }
+        }
 
         return $result;
     }
