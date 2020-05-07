@@ -18,7 +18,7 @@
 		</div>
 		<div class="form-group label-floating">
 			<label class="control-label" for="UserPass">Contraseña</label>
-			<input class="form-control" id="UserPass" name="password" type="text">
+			<input class="form-control" id="UserPass" name="password" type="password">
 			<p class="help-block">Escribe tú contraseña</p>
 		</div>
 		<div class="form-group text-center">

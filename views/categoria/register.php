@@ -27,7 +27,7 @@
 							<div class="col-xs-12 col-sm-6">
 								<div class="form-group label-floating">
 									<label class="control-label">Código *</label>
-									<input pattern="[0-9]{1,7}" class="form-control" type="text" name="codigo" disabled maxlength="7">
+									<input pattern="[0-9]{1,7}" class="form-control" type="text" name="codigo" value='<?=$categoria->getId();?>' disabled maxlength="7">
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-6">

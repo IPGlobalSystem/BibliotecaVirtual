@@ -24,19 +24,19 @@
 					<thead>
 						<tr>
 							<th class="text-center">#</th>
-							<th class="text-center">CÓDIGO</th>
 							<th class="text-center">NOMBRE</th>
 							<th class="text-center">EDITAR</th>
 							<th class="text-center">ELIMINAR</th>
 						</tr>
 					</thead>
 					<tbody>
+						<?php if($categorias->num_rows>0) :?>
+						<?php while($categoria = $categorias->fetch_object()):?>
 						<tr>
-							<td>1</td>
-							<td>700</td>
-							<td>Desarrollo web</td>
+							<td><?=$categoria->id?></td>
+							<td><?=$categoria->nombre?></td>
 							<td>
-								<a href="#!" class="btn btn-success btn-raised btn-xs">
+								<a href="<?=base_url?>categoria/select&id=<?=$categoria->id?>" class="btn btn-success btn-raised btn-xs">
 									<i class="zmdi zmdi-refresh"></i>
 								</a>
 							</td>
@@ -48,23 +48,10 @@
 								</form>
 							</td>
 						</tr>
-						<tr>
-							<td>2</td>
-							<td>900</td>
-							<td>Diseño gráfico</td>
-							<td>
-								<a href="#!" class="btn btn-success btn-raised btn-xs">
-									<i class="zmdi zmdi-refresh"></i>
-								</a>
-							</td>
-							<td>
-								<form>
-									<button type="submit" class="btn btn-danger btn-raised btn-xs">
-										<i class="zmdi zmdi-delete"></i>
-									</button>
-								</form>
-							</td>
-						</tr>
+						<?php endwhile; ?>
+						<?php else : ?>
+							<td colspan="4">No hay ningun registro</td> 
+						<?php endif; ?>
 					</tbody>
 				</table>
 			</div>

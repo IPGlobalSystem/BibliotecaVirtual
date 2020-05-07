@@ -36,10 +36,23 @@ class Categoria{
                
     }
 
+    //CODIGO SQL 
+    public function getById(){
+        $sql = "SELECT * FROM categoria WHERE id='{$this->id}';";
+        $categoria = $this->db->query($sql);
+        return $categoria->fetch_object();
+    }
+
     public function getByNombre(){
         $sql = "SELECT * FROM categoria WHERE nombre='{$this->getNombre()}';";
         $categoria = $this->db->query($sql);
         return $categoria;
+    }
+
+    public function getAll(){
+        $sql = "SELECT * FROM categoria;";
+        $categorias = $this->db->query($sql);
+        return $categorias;
     }
 
     public function save(){
@@ -53,6 +66,7 @@ class Categoria{
 
         return $result;
     }
+
 
 }
 

@@ -11,21 +11,22 @@ $(document).ready(function(){
 			SubMenu.addClass('show-sideBar-SubMenu');
 		}
 	});
-	$('.btn-exit-system').on('click', function(e){
-		e.preventDefault();
-		swal({
-		  	title: 'Esta seguro?',
-		  	text: "La session esta apunto de cerrarse",
-		  	type: 'warning',
-		  	showCancelButton: true,
-		  	confirmButtonColor: '#03A9F4',
-		  	cancelButtonColor: '#F44336',
-		  	confirmButtonText: '<i class="zmdi zmdi-run"></i> Yes, Exit!',
-		  	cancelButtonText: '<i class="zmdi zmdi-close-circle"></i> No, Cancel!'
-		}).then(function () {
-			window.location.href="login";
-		});
-	});
+	// $('.btn-exit-system').on('click', function(e){
+	// 	e.preventDefault();
+	// 	swal({
+	// 	  	title: 'Esta seguro?',
+	// 	  	text: "La session esta apunto de cerrarse",
+	// 	  	type: 'warning',
+	// 	  	showCancelButton: true,
+	// 	  	confirmButtonColor: '#03A9F4',
+	// 	  	cancelButtonColor: '#F44336',
+	// 	  	confirmButtonText: '<i class="zmdi zmdi-run"></i> Yes, Salir!',
+	// 	  	cancelButtonText: '<i class="zmdi zmdi-close-circle"></i> No, Cancelar!'
+	// 	}).then(function () {
+	// 		// window.location.href="login";
+	// 		window.location.href="<?=base_url?>usuario/login";
+	// 	});
+	// });
 	$('.btn-menu-dashboard').on('click', function(e){
 		e.preventDefault();
 		var body=$('.dashboard-contentPage');

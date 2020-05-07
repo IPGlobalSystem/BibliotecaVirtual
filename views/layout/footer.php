@@ -11,5 +11,22 @@
 <script>
     $.material.init();
 </script>
+<script type='text/javascript'>
+	$('.btn-exit-system').on('click', function(e){
+		e.preventDefault();
+		swal({
+		  	title: 'Esta seguro?',
+		  	text: "La session esta apunto de cerrarse",
+		  	type: 'warning',
+		  	showCancelButton: true,
+		  	confirmButtonColor: '#03A9F4',
+		  	cancelButtonColor: '#F44336',
+		  	confirmButtonText: '<i class="zmdi zmdi-run"></i> Yes, Salir!',
+		  	cancelButtonText: '<i class="zmdi zmdi-close-circle"></i> No, Cancelar!'
+		}).then(function () {
+			window.location.href="<?=base_url?>usuario/login";
+		});
+    });
+</script>
 </body>
 </html>

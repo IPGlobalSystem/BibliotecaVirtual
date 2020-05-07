@@ -6,7 +6,8 @@ class CategoriaController{
     public function list(){
         require_once "views/categoria/header.php";
 
-        
+        $categoria =  new Categoria();
+        $categorias = $categoria->getAll();
 
         require_once "views/categoria/list.php";
     }
@@ -70,6 +71,16 @@ class CategoriaController{
         }
     }
 
+    public function select(){
+        require_once "views/categoria/header.php";
+        if(isset($_GET)){
+            $categoria = new Categoria();
+            $categoria->setId($_GET["id"]);
+            $cat = $categoria->getById();
+            $categoria->setNombre($cat->nombre);
+        }
+        require_once "views/categoria/register.php";
+    }
 
     
 }

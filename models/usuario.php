@@ -228,7 +228,7 @@ class Usuario{
         . "FROM USUARIO "
         . "WHERE v_TipoUsuario='{$tipoUsuario}'";
         $usuarios=$this->db->query($sql);
-        return $usuarios;
+       
     }
 
     public function save($tipoUsuario){
