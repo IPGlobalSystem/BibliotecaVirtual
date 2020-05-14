@@ -176,6 +176,7 @@ class UsuarioController{
             $usuario->setEmail($email);
             $usuario->setSexo($sexo);
             $usuario->setPrivilegio($privilegio);
+            //validar a nivel de base de datos
             if($usuario->getByDocument()->num_rows > 0){
                 $errores["dni"]="El dni/cedula ya existe en la base de datos";
             }else if ($usuario->getByEmail()->num_rows > 0){

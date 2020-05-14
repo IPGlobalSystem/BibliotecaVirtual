@@ -19,7 +19,7 @@
 			<h3 class="panel-title"><i class="zmdi zmdi-plus"></i> &nbsp; NUEVA CATEORÍA</h3>
 		</div>
 		<div class="panel-body">
-			<form action="<?=base_url?>categoria/save" method="POST">
+			<form action="<?=base_url?>categoria/<?=isset($edit) ? 'edit' : 'save' ?>" method="POST">
 				<fieldset>
 					<legend><i class="zmdi zmdi-assignment-o"></i> &nbsp; Información de la categoría</legend>
 					<div class="container-fluid">
@@ -41,7 +41,7 @@
 					</div>
 				</fieldset>
 				<p class="text-center" style="margin-top: 20px;">
-					<button type="submit" class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Guardar</button>
+					<button type="submit" class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i><?=isset($edit)?' Actualizar' : ' Guardar'?></button>
 				</p>
 			</form>
 			<?php Utils::borrarErrores();?>

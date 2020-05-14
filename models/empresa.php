@@ -8,6 +8,7 @@ class Empresa{
     private $telefono;
     private $email;
     private $direccion;
+    private $director;
     private $simbolo_moneda;
     private $anio;
     private $id_usuario;
@@ -41,6 +42,10 @@ class Empresa{
 
     public function getDireccion(){
         return $this->direccion;
+    }
+
+    public function getDirector(){
+        return $this->director;
     }
 
     public function getSimboloMoneda(){
@@ -80,6 +85,10 @@ class Empresa{
         $this->direccion = $direccion;
     }
 
+    public function setDirector($director){
+        $this->director = $director;
+    }
+
     public function setSimboloMoneda($simbolo_moneda){
         $this->simbolo_moneda = $simbolo_moneda;
     }
@@ -92,6 +101,7 @@ class Empresa{
         $this->id_usuario = $id_usuario;
     } 
 
+    //// TOSTRING //// 
     public function tostring(){
         return "id: " . $this->id
         . "codigo: " . $this->codigo
@@ -103,6 +113,8 @@ class Empresa{
         . "anio: " . $this->anio
         . "id_usuario: " . $this->id_usuario;
     }
+
+    //CODIGO SQL
 
 }
 

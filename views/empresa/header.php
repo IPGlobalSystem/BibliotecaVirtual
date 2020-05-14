@@ -9,12 +9,12 @@
 		<div class="container-fluid">
 			<ul class="breadcrumb breadcrumb-tabs">
 			  	<li>
-			  		<a href="company.html" class="btn btn-info">
+			  		<a href="<?=base_url?>empresa/register" class="btn btn-info">
 			  			<i class="zmdi zmdi-plus"></i> &nbsp; NUEVA EMPRESA
 			  		</a>
 			  	</li>
 			  	<li>
-			  		<a href="company-list.html" class="btn btn-success">
+			  		<a href="<?=base_url?>empresa/list" class="btn btn-success">
 			  			<i class="zmdi zmdi-format-list-bulleted"></i> &nbsp; LISTA DE EMPRESAS
 			  		</a>
 			  	</li>

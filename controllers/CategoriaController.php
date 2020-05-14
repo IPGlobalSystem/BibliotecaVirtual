@@ -73,6 +73,7 @@ class CategoriaController{
 
     public function select(){
         require_once "views/categoria/header.php";
+        $edit = true;
         if(isset($_GET)){
             $categoria = new Categoria();
             $categoria->setId($_GET["id"]);
@@ -80,6 +81,11 @@ class CategoriaController{
             $categoria->setNombre($cat->nombre);
         }
         require_once "views/categoria/register.php";
+    }
+
+    public function edit(){
+        var_dump($_POST);
+        die();
     }
 
     
