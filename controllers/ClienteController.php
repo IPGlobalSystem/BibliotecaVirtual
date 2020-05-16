@@ -27,7 +27,7 @@ class ClienteController{
         if(isset($_POST['search'])){
             $search=$_POST["search"];
        
-            $usuarios = $usuario->getByAll($search);
+            $usuarios = $usuario->getByAll('user',$search);
             require_once 'views/cliente/searching.php';
         }
         require_once 'views/cliente/list.php';

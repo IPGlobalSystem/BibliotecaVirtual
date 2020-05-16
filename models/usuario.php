@@ -184,7 +184,7 @@ class Usuario{
         return $usuario->fetch_object();
     }
 
-    public function getByAll($search){
+    public function getByAll($tipoUsuario,$search){
         $sql="SELECT id, " 
         . "v_NumeroDocumento as numeroDocumento, " 
         . "v_Nombres as nombre, "
@@ -199,14 +199,15 @@ class Usuario{
         // . "i_IdPrivilegio as privilegio, "
         // . "b_Estado as estado " 
         . "FROM USUARIO " 
-        . " WHERE v_NumeroDocumento LIKE '%{$search}%'"
+        . " WHERE v_TipoUsuario='{$tipoUsuario}'"
+        . " AND (v_NumeroDocumento LIKE '%{$search}%'"
         . " OR v_Nombres LIKE '%{$search}%'"
         . " OR v_Apellidos LIKE '%{$search}%'"
         . " OR v_Ocupacion LIKE '%{$search}%'" 
         . " OR v_Telefono LIKE '%{$search}%'"  
         . " OR v_Email LIKE '%{$search}%'"  
         . " OR v_Direccion LIKE '%{$search}%'"  
-        . " OR v_Username LIKE '%{$search}%'";
+        . " OR v_Username LIKE '%{$search}%')";
         $usuarios=$this->db->query($sql);
         return $usuarios;
     }
@@ -228,7 +229,7 @@ class Usuario{
         . "FROM USUARIO "
         . "WHERE v_TipoUsuario='{$tipoUsuario}'";
         $usuarios=$this->db->query($sql);
-       
+        return $usuarios;
     }
 
     public function save($tipoUsuario){
@@ -303,7 +304,8 @@ class Usuario{
     public function login(){
         $result = false;
         //Comprueba si el usuario existe
-        $sql = "SELECT v_TipoUsuario as 'rol',id,i_IdPrivilegio as 'Privilegio',v_Password as 'password' FROM usuario " 
+        $sql = "SELECT v_NumeroDocumento,v_Nombres,v_Apellidos,v_Telefono,v_Direccion,v_Username,v_Email,c_Sexo, v_TipoUsuario as 'rol',id,i_IdPrivilegio as 'Privilegio',v_Password as 'password' "
+        . " FROM usuario " 
         . "WHERE (v_Username='{$this->username}' or v_Email='{$this->email}') and b_Estado=1";
         $login = $this->db->query($sql);
 

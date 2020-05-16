@@ -35,11 +35,13 @@ class UsuarioController{
 
     public function mi_cuenta(){
         require_once 'views/mi_cuenta/header.php';
+        $identity = $_SESSION["identity"];
         require_once 'views/mi_cuenta/update.php';
     }
 
     public function mis_datos(){
         require_once 'views/mis_datos/header.php';
+        $identity = $_SESSION["identity"];
         require_once 'views/mis_datos/update.php';
     }
 
@@ -68,7 +70,7 @@ class UsuarioController{
         if(isset($_POST['search'])){
             $search=$_POST["search"];
        
-            $usuarios = $usuario->getByAll($search);
+            $usuarios = $usuario->getByAll('admin',$search);
             require_once 'views/usuario/searching.php';
         }
         require_once 'views/usuario/list.php';
@@ -388,6 +390,14 @@ class UsuarioController{
                 header("Location:".base_url."usuario/list");
             }
         }
+    }
+
+    public function editMyCount(){
+        var_dump($_POST);
+    }
+
+    public function editMyData(){
+        var_dump($_POST);
     }
 
     public function remove(){

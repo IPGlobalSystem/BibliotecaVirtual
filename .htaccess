@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
     #Activar rewrite
     RewriteEngine on
-    ErrorDocument 404 http://localhost/BibliotecaVirtual/error/
+    ErrorDocument 404 http://localhost:81/Libreria/BibliotecaVirtual/error/
 
     RewriteCond  %{SCRIPT_FILENAME} !-d
     RewriteCond  %{SCRIPT_FILENAME} !-f
