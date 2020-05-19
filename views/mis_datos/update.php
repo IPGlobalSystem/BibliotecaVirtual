@@ -28,35 +28,35 @@
                             <div class="col-xs-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">DNI/CEDULA *</label>
-                                    <input pattern="[0-9-]{1,30}" class="form-control" type="text" name="dni-up" required="" value="<?=$identity->v_NumeroDocumento?>" maxlength="30">
+                                    <input pattern="[0-9-]{1,30}" class="form-control" type="text" name="dni" required="" value="<?=$usuario->getNumeroDocumento()?>" maxlength="30">
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'username') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Nombres *</label>
-                                    <input pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" name="nombre-up" value="<?=$identity->v_Nombres?>" required="" maxlength="30">
+                                    <input pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" name="nombre" value="<?=$usuario->getNombre()?>" required="" maxlength="30">
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'username') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Apellidos *</label>
-                                    <input pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" name="apellido-up" value="<?=$identity->v_Apellidos?>" required="" maxlength="30">
+                                    <input pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" name="apellido" value="<?=$usuario->getApellidos()?>" required="" maxlength="30">
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'username') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Teléfono</label>
-                                    <input pattern="[0-9+]{1,15}" class="form-control" type="text" name="telefono-up" value="<?=$identity->v_Telefono?>" maxlength="15">
+                                    <input pattern="[0-9+]{1,15}" class="form-control" type="text" name="telefono" value="<?=$usuario->getTelefono()?>" maxlength="15">
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'username') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Dirección</label>
-                                    <textarea name="direccion-up" class="form-control" rows="2" maxlength="100"> <?=$identity->v_Direccion?></textarea>
+                                    <textarea name="direccion" class="form-control" rows="2" maxlength="100"> <?=$usuario->getDireccion()?></textarea>
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'username') ?>
                                 </div>
                             </div>

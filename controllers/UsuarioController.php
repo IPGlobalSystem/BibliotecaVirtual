@@ -39,10 +39,99 @@ class UsuarioController{
         require_once 'views/mi_cuenta/update.php';
     }
 
+    public function editMyCount(){
+        var_dump($_POST);
+    }
+
     public function mis_datos(){
         require_once 'views/mis_datos/header.php';
-        $identity = $_SESSION["identity"];
+        $usuario = new Usuario();
+        if(isset($_SESSION["form"]) && $_SESSION["form"] != null){
+            $form = $_SESSION["form"];
+            $usuario->setNumeroDocumento($form["dni"]);
+            $usuario->setNombre($form["nombre"]);
+            $usuario->setApellidos($form["apellido"]);
+            $usuario->setTelefono($form["telefono"]);
+            $usuario->setDireccion($form["direccion"]);
+        }else{
+            $identity = $_SESSION["identity"];
+            $usuario->setNumeroDocumento($identity->v_NumeroDocumento);
+            $usuario->setNombre($identity->v_Nombres);
+            $usuario->setApellidos($identity->v_Apellidos);
+            $usuario->setTelefono($identity->v_Telefono);
+            $usuario->setDireccion($identity->v_Direccion);
+        }
         require_once 'views/mis_datos/update.php';
+    }
+
+    public function editMyData(){
+        if(isset($_POST)){
+            ///Recojer los datos
+            $dni = isset($_POST["dni"]) ? $_POST["dni"] : false;
+            $nombre = isset($_POST["nombre"]) ? $_POST["nombre"]:false;
+            $apellido = isset($_POST["apellido"]) ? $_POST["apellido"]:false;
+            $telefono = isset($_POST["telefono"]) ? $_POST["telefono"]:false;
+            $direccion = isset($_POST["direccion"]) ? $_POST["direccion"]:false;
+
+            //declaro arrays que posteriormente sera una variables de session
+            $errores = array();
+            $form = array();
+            $form["dni"] = $dni;
+            $form["nombre"] = $nombre;
+            $form["apellido"] = $apellido;
+            $form["telefono"] = $telefono;
+            $form["direccion"] = $direccion;
+
+            ///validar los datos
+            if(empty($dni) || !is_numeric($dni) || !preg_match("/[0-9]/",$dni)){
+                $errores["dni"] = "el formato de dni no es el correcto!";
+            }
+
+            if(empty($nombre) || is_numeric($nombre) || preg_match("/[0-9]/",$nombre)){
+                $errores["nombre"] = "el formato de nombre no es el correcto!";
+            }
+            
+            if(empty($apellido) || is_numeric($apellido) || preg_match("/[0-9]/",$apellido)){
+                $errores["apellido"] = "el formato de apellido no es el correcto!";
+            }
+
+            if(empty($telefono) || !is_numeric($telefono) || !preg_match("/[0-9]/",$telefono)){
+                $errores["telefono"] = "el formato de telefono no es el correcto!";
+            }
+
+            if(empty($direccion)){
+                $errores["direccion"] = "Debe completar direccion";
+            }
+
+            $usuario = new Usuario();
+            $usuario->setNumeroDocumento($dni);
+            $usuario->setNombre($identity->v_Nombres);
+            $usuario->setApellidos($identity->v_Apellidos);
+            $usuario->setTelefono($identity->v_Telefono);
+            $usuario->setDireccion($identity->v_Direccion);
+             //validar a nivel de base de datos
+             if($usuario->getByDocument()->num_rows > 0){
+                $errores["dni"]="El dni/cedula ya existe en la base de datos";
+            }
+
+            if(count($errores)==0){
+                $update = $usuario->updateMyData();
+
+                if($update){
+                    $_SESSION["register"] = "complete";
+                    $_SESSION["mensaje"] = "Registro guardado con exito!";
+                    header("Location:".base_url.'usuario/list'); 
+                }else{
+                    $_SESSION["register"] = "failed";
+                    $_SESSION["form"] = $form;
+                    header("Location:".base_url."usuario/register");
+                }
+            }else{
+                $_SESSION["errores"] = $errores;
+                $_SESSION["form"] = $form;
+                header('Location:'.base_url.'usuario/mis_datos');
+            }
+        }
     }
 
     public function list(){
@@ -390,14 +479,6 @@ class UsuarioController{
                 header("Location:".base_url."usuario/list");
             }
         }
-    }
-
-    public function editMyCount(){
-        var_dump($_POST);
-    }
-
-    public function editMyData(){
-        var_dump($_POST);
     }
 
     public function remove(){

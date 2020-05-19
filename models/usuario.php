@@ -273,6 +273,25 @@ class Usuario{
 
         return $result;
     }
+
+    public function updateMyData(){
+        $result=false;
+        $sql="UPDATE usuario SET "  
+        . "v_NumeroDocumento='{$this->numeroDocumento}', "
+        . "v_Nombres='{$this->nombre}', "
+        . "v_Apellidos='{$this->apellidos}', "
+        . "v_Telefono='{$this->telefono}', " 
+        . "v_Direccion='{$this->direccion}', "
+        .  "WHERE id='{$this->id}' ";
+        
+        $save=$this->db->query($sql);
+
+        if($save){
+            $result=true;
+        }
+
+        return $result;
+    }
     
     public function delete(){
         $result=false;
