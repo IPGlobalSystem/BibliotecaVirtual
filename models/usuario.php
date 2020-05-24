@@ -281,8 +281,30 @@ class Usuario{
         . "v_Nombres='{$this->nombre}', "
         . "v_Apellidos='{$this->apellidos}', "
         . "v_Telefono='{$this->telefono}', " 
-        . "v_Direccion='{$this->direccion}', "
+        . "v_Direccion='{$this->direccion}' "
         .  "WHERE id='{$this->id}' ";
+        
+        $save=$this->db->query($sql);
+
+        if($save){
+            $result=true;
+        }
+
+        return $result;
+    }
+
+    public function updateMyCount($editarPassword){
+        $result=false;
+        $sql="UPDATE usuario SET "  
+        . "c_Sexo='{$this->sexo}', "
+        . "v_Email='{$this->email}', "
+        . "v_Username='{$this->username}', " 
+        . "i_IdPrivilegio='{$this->privilegio}' ";
+
+        if($editarPassword)
+            $sql .= ", v_Password='{$this->getPassword()}' ";
+
+        $sql .=  "WHERE id='{$this->id}' ";
         
         $save=$this->db->query($sql);
 
@@ -335,6 +357,27 @@ class Usuario{
 
             if($verify){
                 $result=$usuario;
+            }
+        }
+
+        return $result;
+    }
+
+    public function verifyPassword($id,$password_actual){
+        $result = false;
+        //Comprueba si el usuario existe
+        $sql = "SELECT v_Password as 'password' "
+        . " FROM usuario " 
+        . " WHERE id='{$id}'";
+        $password = $this->db->query($sql);
+
+        if($password && $password->num_rows == 1){
+            $usuario = $password->fetch_object();
+
+            $verify = password_verify($password_actual, $usuario->password);
+
+            if($verify){
+                $result=true;
             }
         }
 

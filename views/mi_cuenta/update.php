@@ -12,6 +12,13 @@
     <strong>Error!</strong> Registro fallido! </div>
 <?php endif; ?>
 
+<?php if(isset($_SESSION["errores"]) && trim($_SESSION["errores"]["password_actual"]) != "") : ?>
+    <div class='alert alert-warning alert-dismissible' role='alert'>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span></button>
+    <strong>Error!</strong> El password actual no es valido de la cuenta </div>
+<?php endif; ?>
+
 <!-- Panel mi cuenta -->
 <div class="container-fluid">
 	<div class="panel panel-success">
@@ -26,15 +33,16 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="form-group label-floating">
+									<input type="hidden" name="id" value="<?=$usuario->getId()?>">
 									<label class="control-label">Nombre de usuario *</label>
-									<input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]{1,15}" class="form-control" type="text" name="username" required="" value="<?=$identity->v_Username?>" maxlength="15">
+									<input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]{1,15}" class="form-control" type="text" name="username" required="" value="<?=$usuario->getUsername()?>" maxlength="15">
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'username') ?>
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-6">
 								<div class="form-group label-floating">
 									<label class="control-label">E-mail</label>
-									<input class="form-control" type="email" name="email" maxlength="50" value="<?=$identity->v_Email?>">
+									<input class="form-control" type="email" name="email" maxlength="50" value="<?=$usuario->getEmail()?>">
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'email') ?>
 								</div>
 							</div>
@@ -43,13 +51,13 @@
 									<label class="control-label">Genero</label>
 									<div class="radio radio-primary">
 										<label>
-											<input type="radio" name="sexo" id="optionsRadios1" value="M" <?= $identity->c_Sexo == 'M' ? 'checked' : ''; ?> checked="" >
+											<input type="radio" name="sexo" id="optionsRadios1" value="M" <?= $usuario->getSexo() == 'M' ? 'checked' : ''; ?> checked="" >
 											<i class="zmdi zmdi-male-alt"></i> &nbsp; Masculino
 										</label>
 									</div>
 									<div class="radio radio-primary">
 										<label>
-											<input type="radio" name="sexo" id="optionsRadios2" value="F" <?= $identity->c_Sexo == 'F' ? 'checked' : ''; ?> >
+											<input type="radio" name="sexo" id="optionsRadios2" value="F" <?= $usuario->getSexo() == 'F' ? 'checked' : ''; ?> >
 											<i class="zmdi zmdi-female"></i> &nbsp; Femenino
 										</label>
 									</div>
@@ -75,7 +83,7 @@
 									<div class="form-group label-floating">
 										<label class="control-label">Contraseña actual *</label>
 										<input class="form-control" type="password" name="contraseñaActual"  maxlength="70">
-										<?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'PasswordOld') ?>
+										<?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'password_actual') ?>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6">
@@ -89,7 +97,7 @@
 									<div class="form-group label-floating">
 										<label class="control-label">Repita la nueva contraseña *</label>
 										<input class="form-control" type="password" name="ConfirmacionContraseña" id="ConfirmacionContraseña"  maxlength="70">
-										<?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'password2') ?>
+										<?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'password_confirm') ?>
 										<div id="validar_password" class="valid_form"></div>
 									</div>
 								</div>
@@ -116,19 +124,19 @@
 							<div class="col-xs-12 col-sm-6">
 								<div class="radio radio-primary">
 									<label>
-										<input type="radio" name="Privilegio" id="optionsRadios1" value="1" <?=$identity->Privilegio == "1" ? "checked" : "" ?> checked="">
+										<input type="radio" name="Privilegio" id="optionsRadios1" value="1" <?=$usuario->getPrivilegio() == "1" ? "checked" : "" ?> checked="">
 										<i class="zmdi zmdi-star"></i> &nbsp; Nivel 1
 									</label>
 								</div>
 								<div class="radio radio-primary">
 									<label>
-										<input type="radio" name="Privilegio" id="optionsRadios2" value="2" <?=$identity->Privilegio == "2" ? "checked" : "" ?>>
+										<input type="radio" name="Privilegio" id="optionsRadios2" value="2" <?=$usuario->getPrivilegio() == "2" ? "checked" : "" ?>>
 										<i class="zmdi zmdi-star"></i> &nbsp; Nivel 2
 									</label>
 								</div>
 								<div class="radio radio-primary">
 									<label>
-										<input type="radio" name="Privilegio" id="optionsRadios3" value="3" <?=$identity->Privilegio == "3" ? "checked" : "" ?>>
+										<input type="radio" name="Privilegio" id="optionsRadios3" value="3" <?=$usuario->getPrivilegio() == "3" ? "checked" : "" ?>>
 										<i class="zmdi zmdi-star"></i> &nbsp; Nivel 3
 									</label>
 								</div>

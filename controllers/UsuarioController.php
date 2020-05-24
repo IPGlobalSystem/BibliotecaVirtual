@@ -35,12 +35,101 @@ class UsuarioController{
 
     public function mi_cuenta(){
         require_once 'views/mi_cuenta/header.php';
-        $identity = $_SESSION["identity"];
+
+        $usuario = new Usuario();
+        if(isset($_SESSION["form"]) && $_SESSION["form"] != null){
+            $form = $_SESSION["form"];
+            $usuario->setId($form["id"]);
+            $usuario->setUsername($form["username"]);
+            $usuario->setEmail($form["email"]);
+            $usuario->setSexo($form["sexo"]);
+            $usuario->setPrivilegio($form["Privilegio"]);
+        }else{
+            $identity = $_SESSION["identity"];
+            $usuario->setId($identity->id);
+            $usuario->setUsername($identity->v_Username);
+            $usuario->setEmail($identity->v_Email);
+            $usuario->setSexo($identity->c_Sexo);
+            $usuario->setPrivilegio($identity->Privilegio);
+        }
+
         require_once 'views/mi_cuenta/update.php';
     }
 
     public function editMyCount(){
-        var_dump($_POST);
+        if(isset($_POST)){
+            $editarPassword = false;
+            ///Recojer los datos
+            $id = isset($_POST["id"]) ? $_POST["id"] : false;
+            $username = isset($_POST["username"]) ? $_POST["username"] : false;
+            $email = isset($_POST["email"]) ? $_POST["email"] : false;
+            $sexo = isset($_POST["sexo"]) ? $_POST["sexo"] : false;
+            $contraseñaActual = isset($_POST["contraseñaActual"]) ? $_POST["contraseñaActual"] : false;
+            $NuevaContraseña = isset($_POST["NuevaContraseña"]) ? $_POST["NuevaContraseña"] : false;
+            $ConfirmacionContraseña = isset($_POST["ConfirmacionContraseña"]) ? $_POST["ConfirmacionContraseña"] : false;
+            $Privilegio = isset($_POST["Privilegio"]) ? $_POST["Privilegio"] : false;
+
+            //declaro arrays que posteriormente sera una variables de session
+            $form = array();
+            $errores = array();
+            $form["id"] = $id;
+            $form["username"] = $username;
+            $form["email"] = $email;
+            $form["sexo"] = $sexo;
+            $form["Privilegio"] = $Privilegio;
+
+            ///validar los datos
+            if(empty(trim($username))){
+                $errores["username"] = "Debe completar usuario";
+            }
+
+            if(empty(trim($email)) || !filter_var($email,FILTER_VALIDATE_EMAIL)){
+                $errores["email"] = "El formato email no es el correcto";
+            }
+            
+            if(!empty($NuevaContraseña)){
+                
+                if(empty($contraseñaActual)){
+                    $errores["password_actual"] = "Debe completar password actual";
+                }
+
+                if($NuevaContraseña != $ConfirmacionContraseña){
+                    $errores["password_confirm"] = "Debe repetir la misma contraseña";
+                }
+                $editarPassword = true;
+            }
+            
+            $usuario = new Usuario();
+            $usuario->setId($id);
+            $usuario->setUsername($username);
+            $usuario->setEmail($email);
+            $usuario->setSexo($sexo);
+            $usuario->setPrivilegio($Privilegio);
+            if(!empty($NuevaContraseña)){
+                $usuario->setPassword($NuevaContraseña);
+                if(!$usuario->verifyPassword($id,$contraseñaActual)){
+                    $errores["password_actual"]="El password actual no es valido de la cuenta";
+                }
+            }
+
+            if(count($errores)==0){
+                $update = $usuario->updateMyCount($editarPassword);
+
+                if($update){
+                    $_SESSION["register"] = "complete";
+                    $_SESSION["mensaje"] = "Registro guardado con exito!";
+                    header("Location:".base_url.'usuario/mi_cuenta'); 
+                }else{
+                    $_SESSION["register"] = "failed";
+                    $_SESSION["form"] = $form;
+                    header("Location:".base_url."usuario/mi_cuenta");
+                }
+            }else{
+                $_SESSION["errores"] = $errores;
+                $_SESSION["form"] = $form;
+                header('Location:'.base_url.'usuario/mi_cuenta');
+            }
+        }
     }
 
     public function mis_datos(){
@@ -53,8 +142,10 @@ class UsuarioController{
             $usuario->setApellidos($form["apellido"]);
             $usuario->setTelefono($form["telefono"]);
             $usuario->setDireccion($form["direccion"]);
+            $_SESSION["form"]=null;
         }else{
             $identity = $_SESSION["identity"];
+            $usuario->setId($identity->id);
             $usuario->setNumeroDocumento($identity->v_NumeroDocumento);
             $usuario->setNombre($identity->v_Nombres);
             $usuario->setApellidos($identity->v_Apellidos);
@@ -67,6 +158,7 @@ class UsuarioController{
     public function editMyData(){
         if(isset($_POST)){
             ///Recojer los datos
+            $id = isset($_POST["id"]) ? $_POST["id"] : false;
             $dni = isset($_POST["dni"]) ? $_POST["dni"] : false;
             $nombre = isset($_POST["nombre"]) ? $_POST["nombre"]:false;
             $apellido = isset($_POST["apellido"]) ? $_POST["apellido"]:false;
@@ -76,6 +168,7 @@ class UsuarioController{
             //declaro arrays que posteriormente sera una variables de session
             $errores = array();
             $form = array();
+            $form["id"] = $id;
             $form["dni"] = $dni;
             $form["nombre"] = $nombre;
             $form["apellido"] = $apellido;
@@ -83,27 +176,28 @@ class UsuarioController{
             $form["direccion"] = $direccion;
 
             ///validar los datos
-            if(empty($dni) || !is_numeric($dni) || !preg_match("/[0-9]/",$dni)){
+            if(empty(trim($dni)) || !is_numeric($dni) || !preg_match("/[0-9]/",$dni)){
                 $errores["dni"] = "el formato de dni no es el correcto!";
             }
 
-            if(empty($nombre) || is_numeric($nombre) || preg_match("/[0-9]/",$nombre)){
+            if(empty(trim($nombre)) || is_numeric($nombre) || preg_match("/[0-9]/",$nombre)){
                 $errores["nombre"] = "el formato de nombre no es el correcto!";
             }
             
-            if(empty($apellido) || is_numeric($apellido) || preg_match("/[0-9]/",$apellido)){
+            if(empty(trim($apellido)) || is_numeric($apellido) || preg_match("/[0-9]/",$apellido)){
                 $errores["apellido"] = "el formato de apellido no es el correcto!";
             }
 
-            if(empty($telefono) || !is_numeric($telefono) || !preg_match("/[0-9]/",$telefono)){
+            if(empty(trim($telefono)) || !is_numeric($telefono) || !preg_match("/[0-9]/",$telefono)){
                 $errores["telefono"] = "el formato de telefono no es el correcto!";
             }
 
-            if(empty($direccion)){
+            if(empty(trim($direccion))){
                 $errores["direccion"] = "Debe completar direccion";
             }
 
             $usuario = new Usuario();
+            $usuario->setId($id);
             $usuario->setNumeroDocumento($dni);
             $usuario->setNombre($identity->v_Nombres);
             $usuario->setApellidos($identity->v_Apellidos);
@@ -120,11 +214,11 @@ class UsuarioController{
                 if($update){
                     $_SESSION["register"] = "complete";
                     $_SESSION["mensaje"] = "Registro guardado con exito!";
-                    header("Location:".base_url.'usuario/list'); 
+                    header("Location:".base_url.'usuario/mis_datos'); 
                 }else{
                     $_SESSION["register"] = "failed";
                     $_SESSION["form"] = $form;
-                    header("Location:".base_url."usuario/register");
+                    header("Location:".base_url."usuario/mis_datos");
                 }
             }else{
                 $_SESSION["errores"] = $errores;

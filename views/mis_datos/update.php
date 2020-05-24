@@ -27,6 +27,7 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group label-floating">
+                                    <input type="hidden" name="id" value="<?=$usuario->getId();?>">
                                     <label class="control-label">DNI/CEDULA *</label>
                                     <input pattern="[0-9-]{1,30}" class="form-control" type="text" name="dni" required="" value="<?=$usuario->getNumeroDocumento()?>" maxlength="30">
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'username') ?>
