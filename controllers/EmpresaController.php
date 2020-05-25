@@ -5,9 +5,13 @@ class EmpresaController{
 
     public function list(){
         require_once "views/empresa/header.php";
-        require_once "views/empresa/list.php";
-    }
 
+        $empresa = new empresa();
+        $empresas = $empresa->getAll();
+       
+        require_once "views/empresa/list.php";
+       
+    }
     public function register(){
         require_once "views/empresa/header.php";
 

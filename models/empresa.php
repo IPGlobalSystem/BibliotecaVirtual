@@ -111,14 +111,23 @@ class Empresa{
         . "direccion: " . $this->direccion
         . "simbolo_moneda: " . $this->simbolo_moneda
         . "anio: " . $this->anio
-        . "id_usuario: " . $this->id_usuario;
+        . "id_usuario: " . $this->id_usuario
+        . "director: " . $this->director;
     }
 
     //CODIGO SQL
+    public function getAll(){
+        $sql = "SELECT * FROM empresa";
+        $empresa = $this->db->query($sql);
+        return $empresa;
+        
+    }
+
+
     public function save(){
         $result=false;
-        $sql = "INSERT INTO empresa(codigo, nombre, telefono, email, direccion, simbolo_moneda, anio)"  
-        . "VALUES('{$this->codigo}', '{$this->nombre}', '{$this->telefono}', '{$this->email}', '{$this->direccion}', '{$this->simbolo_moneda}', '{$this->anio}')"; 
+        $sql = "INSERT INTO empresa(codigo, nombre, telefono, email, direccion, simbolo_moneda, anio, director)"  
+        . "VALUES('{$this->codigo}', '{$this->nombre}', '{$this->telefono}', '{$this->email}', '{$this->direccion}', '{$this->simbolo_moneda}', '{$this->anio}', '{$this->director}')"; 
         $save = $this->db->query($sql); 
 
         if($save){
@@ -128,6 +137,8 @@ class Empresa{
         return $result;
    
     }
+
+    
 
         
 

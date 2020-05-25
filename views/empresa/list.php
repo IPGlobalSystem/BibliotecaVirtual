@@ -9,20 +9,33 @@
 						<table class="table table-hover text-center">
 							<thead>
 								<tr>
-									<th class="text-center">#</th>
-									<th class="text-center">CÓDIGO DE REGISTRO</th>
+									<th class="text-center">CODIGO DE REGISTRO</th>
 									<th class="text-center">NOMBRE</th>
+									<th class="text-center">TELEFONO</th>
 									<th class="text-center">EMAIL</th>
-									<th class="text-center">ACTUALIZAR</th>
+									<th class="text-center">DIRECCION</th>
+									<th class="text-center">SIMBOLO MONEDA</th>
+									<th class="text-center">YEAR</th>
+									<th class="text-center">DIRECTOR</th>
+									<th class="text-center">EDITAR</th>
 									<th class="text-center">ELIMINAR</th>
+									
 								</tr>
 							</thead>
 							<tbody>
+								<?php if($empresas->num_rows>0) :?>
+								<?php while($empresa = $empresas->fetch_object()):?>
+	
 								<tr>
-									<td>1</td>
-									<td>1243567890</td>
-									<td>EL SALVADOR</td>
-									<td>bibliotecasv@gmail.com</td>
+									<td><?=$empresa->codigo?></td>
+									<td><?=$empresa->nombre?></td>
+									<td><?=$empresa->telefono?></td>
+									<td><?=$empresa->email?></td>
+									<td><?=$empresa->direccion?></td>
+									<td><?=$empresa->simbolo_moneda?></td>
+									<td><?=$empresa->anio?></td>
+									<td><?=$empresa->director?></td>
+									
 									<td>
 										<a href="#!" class="btn btn-success btn-raised btn-xs">
 											<i class="zmdi zmdi-refresh"></i>
@@ -36,24 +49,10 @@
 										</form>
 									</td>
 								</tr>
-								<tr>
-									<td>2</td>
-									<td>9876543212</td>
-									<td>EE.UU</td>
-									<td>bibliotecaeeuu@gmail.com</td>
-									<td>
-										<a href="#!" class="btn btn-success btn-raised btn-xs">
-											<i class="zmdi zmdi-refresh"></i>
-										</a>
-									</td>
-									<td>
-										<form>
-											<button type="submit" class="btn btn-danger btn-raised btn-xs">
-												<i class="zmdi zmdi-delete"></i>
-											</button>
-										</form>
-									</td>
-								</tr>
+								<?php endwhile; ?>
+								<?php else : ?>
+									<td colspan="10">No hay ningun registro</td> 
+								<?php endif; ?>
 							</tbody>
 						</table>
 					</div>
