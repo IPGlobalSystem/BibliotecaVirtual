@@ -98,8 +98,18 @@ class EmpresaController{
             $empresa->setAnio($year);
 
             if(count($errores)==0){
-                    //Guardar
 
+                //Guardar
+               $save =  $empresa->save();
+               if($save){
+                    $_SESSION["register"] = "complete";
+                    $_SESSION["mensaje"] = "Registro guardado con exito!";
+                header("Location:".base_url.'empresa/register'); 
+                }else{
+                    $_SESSION["register"] = "failed";
+                    $_SESSION["form"] = $form;
+                    header("Location:".base_url."empresa/register");
+                }           
             }else{
                 $_SESSION["errores"]= $errores;
                 $_SESSION["form"] = $form;

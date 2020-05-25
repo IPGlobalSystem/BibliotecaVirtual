@@ -15,7 +15,7 @@ class Empresa{
     private $db;
 
     ////CONSTRUCT////
-    public function __contruct(){
+    public function __construct(){
         $this->db = Database::connect();
     }
 
@@ -115,6 +115,21 @@ class Empresa{
     }
 
     //CODIGO SQL
+    public function save(){
+        $result=false;
+        $sql = "INSERT INTO empresa(codigo, nombre, telefono, email, direccion, simbolo_moneda, anio)"  
+        . "VALUES('{$this->codigo}', '{$this->nombre}', '{$this->telefono}', '{$this->email}', '{$this->direccion}', '{$this->simbolo_moneda}', '{$this->anio}')"; 
+        $save = $this->db->query($sql); 
+
+        if($save){
+            $result=true;
+        }
+
+        return $result;
+   
+    }
+
+        
 
 }
 
