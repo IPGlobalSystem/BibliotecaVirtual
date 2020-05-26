@@ -20,7 +20,8 @@
 					<h3 class="panel-title"><i class="zmdi zmdi-plus"></i> &nbsp; DATOS DE LA EMPRESA</h3>
 				</div>
 				<div class="panel-body">
-					<form action="<?=base_url?>empresa/save" method="POST">
+					<form action="<?=base_url?>empresa/<?=isset($edit) ? 'edit' : 'save' ?>" method="POST">
+						<!-- Cuando Se Crea Edit, Permite Ingresar al Controlador Edit o en el Caso de que No Se Guarda -->
 				    	<fieldset>
 				    		<legend><i class="zmdi zmdi-assignment"></i> &nbsp; Datos básicos</legend>
 				    		<div class="container-fluid">
@@ -94,8 +95,8 @@
 				    	</fieldset>
 				    	<br>
 					    <p class="text-center" style="margin-top: 20px;">
-					    	<button type="submit" class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Guardar</button>
-					    </p>
+							<button type="submit" class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i><?=isset($edit)?' Actualizar' : ' Guardar'?></button>
+						</p>
 					</form>
 					<?php Utils::borrarErrores();?>
 				</div>

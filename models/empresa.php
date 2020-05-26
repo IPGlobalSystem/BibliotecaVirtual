@@ -116,13 +116,18 @@ class Empresa{
     }
 
     //CODIGO SQL
+    public function getById(){
+        $sql = "SELECT * FROM empresa WHERE id='{$this->id}';";
+        $empresa = $this->db->query($sql);
+        return $empresa->fetch_object();
+    }
+
     public function getAll(){
         $sql = "SELECT * FROM empresa";
         $empresa = $this->db->query($sql);
         return $empresa;
         
     }
-
 
     public function save(){
         $result=false;

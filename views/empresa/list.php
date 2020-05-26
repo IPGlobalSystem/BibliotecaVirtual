@@ -34,10 +34,9 @@
 									<td><?=$empresa->direccion?></td>
 									<td><?=$empresa->simbolo_moneda?></td>
 									<td><?=$empresa->anio?></td>
-									<td><?=$empresa->director?></td>
-									
+									<td><?=$empresa->director?></td>		
 									<td>
-										<a href="#!" class="btn btn-success btn-raised btn-xs">
+										<a href="<?=base_url?>empresa/select&id=<?=$empresa->id?>" class="btn btn-success btn-raised btn-xs">
 											<i class="zmdi zmdi-refresh"></i>
 										</a>
 									</td>

@@ -123,7 +123,34 @@ class EmpresaController{
         }
     }
 
+    public function select(){
+    // Repoblo Los Campos del Formulario y los Seteo para Posteriormente Poder Repoblarlos y Creo EDIT
+    $edit = true;
+    require_once "views/empresa/header.php";
+    if(isset($_GET)){
+         $empresa = new empresa();
+         $empresa->setId($_GET["id"]);
+         $emp = $empresa->getById();
+         $empresa->setCodigo($emp->codigo);
+         $empresa->setNombre($emp->nombre);
+         $empresa->setTelefono($emp->telefono);
+         $empresa->setEmail($emp->email);
+         $empresa->setDireccion($emp->direccion);
+         $empresa->setDirector($emp->director);
+         $empresa->setSimboloMoneda($emp->simbolo_moneda);
+         $empresa->setAnio($emp->anio);
+        }
+        require_once "views/empresa/register.php";
+    }
+
+    public function edit(){
+
+        var_dump($_POST);
+        
+    }
+    
 
 }
+
 
 ?>
