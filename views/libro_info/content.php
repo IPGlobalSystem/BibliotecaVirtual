@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
-                    <img src="assets/book/book-cover.jpg" alt="book" class="img-responsive">
+                    <img src="<?=base_url?>assets/book/book-cover.jpg" alt="book" class="img-responsive">
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div class="container-fluid">

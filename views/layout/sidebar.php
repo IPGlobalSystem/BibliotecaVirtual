@@ -70,7 +70,7 @@
 					</ul>
 				</li>
 				<li>
-					<a href="catalog.html">
+					<a href="<?=base_url?>catalogo/index">
 						<i class="zmdi zmdi-book-image zmdi-hc-fw"></i> Catalogo
 					</a>
 				</li>
