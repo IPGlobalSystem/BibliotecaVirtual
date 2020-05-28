@@ -10,26 +10,27 @@
     <span aria-hidden='true'>&times;</span></button>
     <strong>Error!</strong> Registro fallido! </div>
 <?php endif; ?>
-
+			
 		<!-- Content page -->
 		<!-- Content Body  -->
 		<!-- panel datos de la empresa -->
 		<div class="container-fluid">
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<h3 class="panel-title"><i class="zmdi zmdi-plus"></i> &nbsp; DATOS DE LA EMPRESA</h3>
+					<h3 class="panel-title"><i class="zmdi zmdi-plus"></i> &nbsp; DATOS DE LA EMPRESA</h3>					
 				</div>
 				<div class="panel-body">
-					<form action="<?=base_url?>empresa/<?=isset($edit) ? 'edit' : 'save' ?>" method="POST">
+					<form action="<?=base_url?>empresa/<?=isset($edit) ? '/edit' : '/save' ?>" method="POST">
 						<!-- Cuando Se Crea Edit, Permite Ingresar al Controlador Edit o en el Caso de que No Se Guarda -->
+						<input type="hidden" name="id" value="<?=$empresa->getId(); ?>"/>
 				    	<fieldset>
 				    		<legend><i class="zmdi zmdi-assignment"></i> &nbsp; Datos básicos</legend>
-				    		<div class="container-fluid">
+				    		<div class="container-fluid">			
 				    			<div class="row">
 				    				<div class="col-xs-12 col-sm-6">
 								    	<div class="form-group label-floating">
-										  	<label class="control-label">DNI/CÓDIGO/NÚMERO DE REGISTRO *</label>
-											  <input pattern="[0-9+]{1,30}" class="form-control" type="text" name="codigo" value="<?=$empresa->getCodigo();?>" maxlength="30">
+											  <label class="control-label">DNI/CÓDIGO/NÚMERO DE REGISTRO *</label>															
+											  <input pattern="[0-9+]{1,30}" class="form-control" type="text" name="codigo" value="<?=$empresa->getCodigo();?>" maxlength="30">			
 											  <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'codigo') ?>
 										</div>
 				    				</div>

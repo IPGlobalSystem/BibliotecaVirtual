@@ -115,11 +115,31 @@ class Empresa{
         . "director: " . $this->director;
     }
 
+
     //CODIGO SQL
-    public function getById(){
-        $sql = "SELECT * FROM empresa WHERE id='{$this->id}';";
-        $empresa = $this->db->query($sql);
-        return $empresa->fetch_object();
+
+    public function getByCodigo(){
+        $sql ="SELECT * FROM empresa WHERE codigo='{$this->codigo}'";
+        $codigo =$this->db->query($sql);
+        return $codigo; 
+    }
+
+    public function getByNombre(){
+        $sql ="SELECT * FROM empresa WHERE nombre='{$this->nombre}'";
+        $nombre =$this->db->query($sql);
+        return $nombre; 
+    }   
+ 
+    public function getByEmail(){
+        $sql ="SELECT * FROM empresa WHERE email='{$this->email}'";
+        $email =$this->db->query($sql);
+        return $email; 
+    }  
+    
+    public function getOneById(){
+        $sql = "SELECT * FROM empresa WHERE id ='{$this->id}'";
+        $id = $this->db->query($sql);
+        return $id->fetch_object();
     }
 
     public function getAll(){
@@ -141,6 +161,30 @@ class Empresa{
 
         return $result;
    
+    }
+
+    public function edit(){
+
+        $result=false;
+        $sql="UPDATE empresa SET "  
+        . "codigo='{$this->codigo}', "
+        . "nombre='{$this->nombre}', "
+        . "telefono='{$this->telefono}', "
+        . "email='{$this->email}', " 
+        . "direccion='{$this->direccion}', "
+        . "simbolo_moneda='{$this->simbolo_moneda}', "
+        . "anio='{$this->anio}', "
+        . "director='{$this->director}' "
+        .  "WHERE id='{$this->id}' "; 
+
+        $save=$this->db->query($sql);
+
+        if($save){
+            $result=true;
+        }
+
+        return $result;
+        
     }
 
     

@@ -559,7 +559,7 @@ class UsuarioController{
                         header("Location:".base_url.'usuario/list'); 
                     }else{
                         $_SESSION["register"] = "failed";
-                        $_SESSION["form"] = $form;
+                        $_SESSION["form"] = $form;      
                         header("Location:".base_url."usuario/select&id=". $id);
                     }
                 }else{

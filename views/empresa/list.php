@@ -1,3 +1,17 @@
+<!--Mensaje de alerta o registro-->
+<?php if(isset($_SESSION["register"]) && $_SESSION["register"] == 'complete'):?>
+    <div class='alert alert-success alert-dismissible' role='alert'>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span></button>
+    <strong>Exitosa!</strong> <?= $_SESSION["mensaje"] ?>  </div>
+<?php elseif(isset($_SESSION["register"]) && $_SESSION["register"] == 'failed'): ?>
+    <div class='alert alert-warning alert-dismissible' role='alert'>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span></button>
+    <strong>Error!</strong> Registro fallido! </div>
+<?php endif; ?>
+
+
 		<!-- panel lista de empresas -->
 		<div class="container-fluid">
 			<div class="panel panel-success">
@@ -69,3 +83,4 @@
 				</div>
 			</div>
 		</div>
+<?php Utils::borrarErrores(); ?>
