@@ -54,10 +54,31 @@ class Catalogo{
         return $catalogos;
     }
 
+    public function getOne(){
+        $sql = "SELECT c.*, cat.id as 'idCategoria', cat.nombre as 'categoria' "
+        . "FROM catalogo c "
+        . "INNER JOIN categoria cat on cat.id=c.id_categoria "
+        . "WHERE c.id={$this->id}";
+        $catalogo = $this->db->query($sql);
+        return $catalogo->fetch_object();
+    }
+
     public function save(){
         $result = false;
         $sql = "INSERT INTO catalogo(id_categoria,id_libro) "
         . " VALUES ('{$this->id_categoria}','{$this->id_libro}')";
+        $save = $this->db->query($sql);
+        
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    public function update(){
+        $result = false;
+        $sql = "UPDATE catalogo SET id_categoria='{$this->id_categoria}', id_libro='{$this->id_libro}'";
         $save = $this->db->query($sql);
         
         if($save){

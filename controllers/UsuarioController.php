@@ -121,6 +121,7 @@ class UsuarioController{
                     header("Location:".base_url.'usuario/mi_cuenta'); 
                 }else{
                     $_SESSION["register"] = "failed";
+                    $_SESSION["mensaje"] = "Registro fallido";
                     $_SESSION["form"] = $form;
                     header("Location:".base_url."usuario/mi_cuenta");
                 }
@@ -199,10 +200,10 @@ class UsuarioController{
             $usuario = new Usuario();
             $usuario->setId($id);
             $usuario->setNumeroDocumento($dni);
-            $usuario->setNombre($identity->v_Nombres);
-            $usuario->setApellidos($identity->v_Apellidos);
-            $usuario->setTelefono($identity->v_Telefono);
-            $usuario->setDireccion($identity->v_Direccion);
+            $usuario->setNombre($nombre);
+            $usuario->setApellidos($apellido);
+            $usuario->setTelefono($telefono);
+            $usuario->setDireccion($direccion);
              //validar a nivel de base de datos
              if($usuario->getByDocument()->num_rows > 0){
                 $errores["dni"]="El dni/cedula ya existe en la base de datos";
@@ -217,6 +218,7 @@ class UsuarioController{
                     header("Location:".base_url.'usuario/mis_datos'); 
                 }else{
                     $_SESSION["register"] = "failed";
+                    $_SESSION["mensaje"] = "Registro fallido";
                     $_SESSION["form"] = $form;
                     header("Location:".base_url."usuario/mis_datos");
                 }
@@ -379,6 +381,7 @@ class UsuarioController{
                     header("Location:".base_url.'usuario/list'); 
                 }else{
                     $_SESSION["register"] = "failed";
+                    $_SESSION["mensaje"] = "Registro fallido";
                     $_SESSION["form"] = $form;
                     header("Location:".base_url."usuario/register");
                 }
@@ -392,15 +395,23 @@ class UsuarioController{
 
     public function cancel(){
         require_once 'views/usuario/header.php';
+        $identity = $_SESSION["identity"];
+        $id_user_session = $identity->id; 
+        
+        if(isset($_GET["id"])){
+            $id = $_GET["id"];
+            if($id != $id_user_session){
+                $title = "ANULAR ADMINISTRADOR";
+                $action = "ANULAR";
+                require_once 'views/usuario/delete.php';
+            }else{
+                $_SESSION["register"] = "failed";
+                $_SESSION["mensaje"] = "No se puede anular el usuario que esta usando la sesión!";
+            }
+        }
 
         $usuario = new Usuario();
         $usuarios = $usuario->getAll('admin');
-        if(isset($_GET["id"])){
-            $id = $_GET["id"];
-            $title = "ANULAR ADMINISTRADOR";
-            $action = "ANULAR";
-            require_once 'views/usuario/delete.php';
-        }
 
         require_once 'views/usuario/list.php';
     }
@@ -408,7 +419,7 @@ class UsuarioController{
 
     public function canceling(){
         require_once 'views/usuario/header.php';
-
+    
         $usuario = new Usuario();
         if(isset($_GET["id"])){
             $usuario->setId($_GET["id"]);
@@ -559,6 +570,7 @@ class UsuarioController{
                         header("Location:".base_url.'usuario/list'); 
                     }else{
                         $_SESSION["register"] = "failed";
+                        $_SESSION["mensaje"] = "Registro fallido";
                         $_SESSION["form"] = $form;      
                         header("Location:".base_url."usuario/select&id=". $id);
                     }
@@ -566,10 +578,12 @@ class UsuarioController{
                     $_SESSION["errores"] = $errores;
                     $_SESSION["form"] = $form;
                     $_SESSION["register"] = "failed";
+                    $_SESSION["mensaje"] = "Registro fallido";
                     header("Location:".base_url."usuario/select&id=". $id);
                 }
             }else{
                 $_SESSION["register"] = "failed";
+                $_SESSION["mensaje"] = "Registro fallido";
                 header("Location:".base_url."usuario/list");
             }
         }
@@ -577,12 +591,18 @@ class UsuarioController{
 
     public function remove(){
         require_once 'views/usuario/header.php';
-
+        $identity = $_SESSION["identity"];
+        $id_user_session = $identity->id; 
         if(isset($_GET["id"])){
             $id = $_GET["id"];
-            $title = "ELIMINAR ADMINISTRADOR";
-            $action = "ELIMINAR";
-            require_once 'views/usuario/delete.php';
+            if($id != $id_user_session){
+                $title = "ELIMINAR ADMINISTRADOR";
+                $action = "ELIMINAR";
+                require_once 'views/usuario/delete.php';
+            }else{
+                $_SESSION["register"] = "failed";
+                $_SESSION["mensaje"] = "No se puede eliminar el usuario que esta usando la sesión!";
+            }
         }
 
         $usuario = new Usuario();
