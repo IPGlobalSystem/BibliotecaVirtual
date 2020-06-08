@@ -418,8 +418,6 @@ class UsuarioController{
 
 
     public function canceling(){
-        require_once 'views/usuario/header.php';
-    
         $usuario = new Usuario();
         if(isset($_GET["id"])){
             $usuario->setId($_GET["id"]);
@@ -612,7 +610,6 @@ class UsuarioController{
     }
 
     public function delete(){
-        require_once 'views/usuario/header.php';
         $usuario = new Usuario();
 
         if(isset($_GET["id"])){

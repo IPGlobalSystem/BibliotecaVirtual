@@ -49,10 +49,16 @@ class Categoria{
         return $categoria;
     }
 
-    public function getAll(){
-        $sql = "SELECT * FROM categoria;";
+    public function getAll($registros_por_paginas, $ultimo_registro){
+        $sql = "SELECT * FROM categoria WHERE id > $ultimo_registro ORDER BY id ASC LIMIT $registros_por_paginas";
         $categorias = $this->db->query($sql);
         return $categorias;
+    }
+
+    public function getCountAll(){
+        $sql = "SELECT count(id) as 'registros_totales' FROM categoria";
+        $registros_totales = $this->db->query($sql);
+        return $registros_totales->fetch_object();
     }
 
     public function save(){
