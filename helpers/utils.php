@@ -27,7 +27,7 @@ class Utils{
 
     public static function paginar($registros_por_paginas,$registros_totales,$pagina_actual,$controlado_lista){
         //Una funcion para paginar las listas 
-        $html = '';
+        $html = "<li></li>";
         $paginas = $registros_totales/$registros_por_paginas;
         $paginas = ceil($paginas);
 

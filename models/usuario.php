@@ -212,7 +212,7 @@ class Usuario{
         return $usuarios;
     }
 
-    public function getAll($tipoUsuario){
+    public function getAll($tipoUsuario,$registros_por_paginas, $ultimo_registro){
         $sql="SELECT id, " 
         . "v_NumeroDocumento as numeroDocumento, " 
         . "v_Nombres as nombre, " 
@@ -227,9 +227,16 @@ class Usuario{
         // . "i_IdPrivilegio as privilegio, "
         // . "b_Estado as estado " 
         . "FROM USUARIO "
-        . "WHERE v_TipoUsuario='{$tipoUsuario}'";
+        . "WHERE v_TipoUsuario='{$tipoUsuario}' "
+        . "and id > $ultimo_registro ORDER BY id ASC LIMIT $registros_por_paginas";
         $usuarios=$this->db->query($sql);
         return $usuarios;
+    }
+
+    public function getCountAll($tipoUsuario){
+        $sql = "SELECT count(id) as 'registros_totales' FROM USUARIO WHERE v_TipoUsuario='{$tipoUsuario}'";
+        $registros_totales = $this->db->query($sql);
+        return $registros_totales->fetch_object();
     }
 
     public function save($tipoUsuario){

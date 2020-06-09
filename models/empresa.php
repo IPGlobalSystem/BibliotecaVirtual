@@ -142,11 +142,16 @@ class Empresa{
         return $id->fetch_object();
     }
 
-    public function getAll(){
-        $sql = "SELECT * FROM empresa";
+    public function getAll($registros_por_paginas, $ultimo_registro){
+        $sql = "SELECT * FROM empresa WHERE id > $ultimo_registro ORDER BY id ASC LIMIT $registros_por_paginas";
         $empresa = $this->db->query($sql);
         return $empresa;
-        
+    }
+
+    public function getCountAll(){
+        $sql = "SELECT count(id) as 'registros_totales' FROM empresa";
+        $registros_totales = $this->db->query($sql);
+        return $registros_totales->fetch_object();
     }
 
     public function save(){
