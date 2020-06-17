@@ -9,11 +9,11 @@ class CategoriaController{
         //DECLARAMOS LAS VARIABLES DE LA PAGINACION 
         //E INICIALIZAMOS CON VALORES PRIMARIOS PREDETERMINADOS
         $pag = 1;
-        $registros_por_paginas = 5;
+        $registros_por_paginas = 3;
         $registros_totales = 0;
         $ultimo_registro = 0; 
 
-        if(isset($_GET)){
+        if(isset($_GET["pag"])){
             $pag = $_GET["pag"];
         }
         $ultimo_registro = ($pag - 1) * $registros_por_paginas;

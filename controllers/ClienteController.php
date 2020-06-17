@@ -14,7 +14,7 @@ class ClienteController{
         $registros_totales = 0;
         $ultimo_registro = 0; 
 
-        if(isset($_GET)){
+        if(isset($_GET["pag"])){
             $pag = $_GET["pag"];
         }
         $ultimo_registro = ($pag - 1) * $registros_por_paginas;
@@ -39,7 +39,7 @@ class ClienteController{
         $registros_totales = 0;
         $ultimo_registro = 0; 
 
-        if(isset($_GET)){
+        if(isset($_GET["pag"])){
             $pag = $_GET["pag"];
         }
         $ultimo_registro = ($pag - 1) * $registros_por_paginas;
@@ -64,7 +64,7 @@ class ClienteController{
         $registros_totales = 0;
         $ultimo_registro = 0; 
 
-        if(isset($_GET)){
+        if(isset($_GET["pag"])){
             $pag = $_GET["pag"];
         }
         $ultimo_registro = ($pag - 1) * $registros_por_paginas;
@@ -224,7 +224,7 @@ class ClienteController{
         $registros_totales = 0;
         $ultimo_registro = 0; 
 
-        if(isset($_GET)){
+        if(isset($_GET["pag"])){
             $pag = $_GET["pag"];
         }
         $ultimo_registro = ($pag - 1) * $registros_por_paginas;
@@ -437,7 +437,7 @@ class ClienteController{
         $registros_totales = 0;
         $ultimo_registro = 0; 
 
-        if(isset($_GET)){
+        if(isset($_GET["pag"])){
             $pag = $_GET["pag"];
         }
         $ultimo_registro = ($pag - 1) * $registros_por_paginas;

@@ -13,7 +13,7 @@ class EmpresaController{
         $registros_totales = 0;
         $ultimo_registro = 0; 
 
-        if(isset($_GET)){
+        if(isset($_GET["pag"])){
             $pag = $_GET["pag"];
         }
         $ultimo_registro = ($pag - 1) * $registros_por_paginas;
@@ -285,8 +285,40 @@ class EmpresaController{
     public function remove(){
         $title = "ELIMINAR REGISTRO";
         require_once "views/empresa/header.php";
-        require_once "views/empresa/delete.php";
+        if(isset($_GET["id"])){
+            $id = $_GET["id"];
+            $title = "ELIMINAR REGISTRO";
+            $action = "ELIMINAR";
+            require_once 'views/empresa/delete.php';
+        }
+
+        $pag = 1;
+        $registros_por_paginas = 5;
+        $registros_totales = 0;
+        $ultimo_registro = 0; 
+
+        if(isset($_GET["pag"])){
+            $pag = $_GET["pag"];
+        }
+
+        $ultimo_registro = ($pag - 1) * $registros_por_paginas;
+
+        $empresa = new Empresa();
+        $empresas = $empresa->getAll($registros_por_paginas,$ultimo_registro);
+        $registros_totales = $empresa->getCountAll()->registros_totales;
         require_once "views/empresa/list.php";
+    }
+
+    public function delete(){
+        if(isset($_GET["id"])){
+            $empresa = new Empresa();
+            $empresa->setId($_GET["id"]);
+            $empresa->delete();
+            
+            $_SESSION["register"] = "complete";
+            $_SESSION["mensaje"] = "Registro eliminado con exito!";
+        }
+        header('Location:'.base_url.'empresa/list');
     }
 
 }

@@ -1,7 +1,7 @@
 <!-- Panel eliminar -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-6 col-xs-12">
+        <div class="col-sm-12 col-xs-12">
             <div class="panel panel-danger">
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="zmdi zmdi-delete"></i> &nbsp; <?=$title?> </h3>
@@ -11,7 +11,7 @@
                         ¿Esta seguro de eliminar el registro?
                     </p>
                     <p class="text-center">
-                        <a href="<?=base_url?>usuario/delete" class="btn btn-raised btn-danger">
+                        <a href="<?=base_url?>empresa/delete&id=<?=$id?>" class="btn btn-raised btn-danger">
                             <i class="zmdi zmdi-delete"></i> &nbsp; ELIMINAR REGISTRO
                         </a>	
                     </p>
