@@ -5,10 +5,25 @@ class CategoriaController{
 
     public function list(){
         require_once "views/categoria/header.php";
+        
+        //DECLARAMOS LAS VARIABLES DE LA PAGINACION 
+        //E INICIALIZAMOS CON VALORES PRIMARIOS PREDETERMINADOS
+        $pag = 1;
+        $registros_por_paginas = 5;
+        $registros_totales = 0;
+        $ultimo_registro = 0; 
+
+        if(isset($_GET)){
+            $pag = $_GET["pag"];
+        }
+        $ultimo_registro = ($pag - 1) * $registros_por_paginas;
 
         $categoria =  new Categoria();
-        $categorias = $categoria->getAll();
-
+        $categorias = $categoria->getAll($registros_por_paginas, $ultimo_registro);
+        $registros_totales = $categoria->getCountAll()->registros_totales; // obtengo el conteo total de todos los registro de la tabla
+        // $registros_totales = $registros_totales->registros_totales; 
+        // comente para simplificar el codigo añadi la ultima parte (->registros_totales) 
+        // ver arriba linea 23. 
         require_once "views/categoria/list.php";
     }
 

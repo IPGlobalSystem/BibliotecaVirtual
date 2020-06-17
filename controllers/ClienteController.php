@@ -6,26 +6,77 @@ class ClienteController{
 
     public function list(){
         require_once 'views/cliente/header.php';
+
+        //DECLARAMOS LAS VARIABLES DE LA PAGINACION 
+        //E INICIALIZAMOS CON VALORES PRIMARIOS PREDETERMINADOS
+        $pag = 1;
+        $registros_por_paginas = 5;
+        $registros_totales = 0;
+        $ultimo_registro = 0; 
+
+        if(isset($_GET)){
+            $pag = $_GET["pag"];
+        }
+        $ultimo_registro = ($pag - 1) * $registros_por_paginas;
+
         $usuario = new Usuario();
-        $usuarios= $usuario->getAll('user');
+        $usuarios= $usuario->getAll('user',$registros_por_paginas, $ultimo_registro);
+        $registros_totales = $usuario->getCountAll('user')->registros_totales; // obtengo el conteo total de todos los registro de la tabla
+        // $registros_totales = $registros_totales->registros_totales; 
+        // comente para simplificar el codigo añadi la ultima parte (->registros_totales) 
+        // ver arriba linea 23. 
         require_once 'views/cliente/list.php';
     }
 
     public function search(){
         require_once 'views/cliente/header.php';
         require_once 'views/cliente/search.php';
+
+        //DECLARAMOS LAS VARIABLES DE LA PAGINACION 
+        //E INICIALIZAMOS CON VALORES PRIMARIOS PREDETERMINADOS
+        $pag = 1;
+        $registros_por_paginas = 5;
+        $registros_totales = 0;
+        $ultimo_registro = 0; 
+
+        if(isset($_GET)){
+            $pag = $_GET["pag"];
+        }
+        $ultimo_registro = ($pag - 1) * $registros_por_paginas;
+
         $usuario = new Usuario();
-        $usuarios= $usuario->getAll('user');
+        $usuarios= $usuario->getAll('user',$registros_por_paginas, $ultimo_registro);
+        $registros_totales = $usuario->getCountAll('user')->registros_totales; // obtengo el conteo total de todos los registro de la tabla
+        // $registros_totales = $registros_totales->registros_totales; 
+        // comente para simplificar el codigo añadi la ultima parte (->registros_totales) 
+        // ver arriba linea 23. 
+
         require_once 'views/cliente/list.php';
     }
 
     public function searching(){
         require_once 'views/cliente/header.php';
 
+        //DECLARAMOS LAS VARIABLES DE LA PAGINACION 
+        //E INICIALIZAMOS CON VALORES PRIMARIOS PREDETERMINADOS
+        $pag = 1;
+        $registros_por_paginas = 5;
+        $registros_totales = 0;
+        $ultimo_registro = 0; 
+
+        if(isset($_GET)){
+            $pag = $_GET["pag"];
+        }
+        $ultimo_registro = ($pag - 1) * $registros_por_paginas;
+
         $usuario = new Usuario();
-        $usuarios = $usuario->getAll('user');
+        $usuarios= $usuario->getAll('user',$registros_por_paginas, $ultimo_registro);
+        $registros_totales = $usuario->getCountAll('user')->registros_totales; // obtengo el conteo total de todos los registro de la tabla
+        // $registros_totales = $registros_totales->registros_totales; 
+        // comente para simplificar el codigo añadi la ultima parte (->registros_totales) 
+        // ver arriba linea 23. 
         if(isset($_POST['search'])){
-            $search=$_POST["search"];
+            $search=trim($_POST["search"]);
        
             $usuarios = $usuario->getByAll('user',$search);
             require_once 'views/cliente/searching.php';
@@ -166,8 +217,25 @@ class ClienteController{
     public function cancel(){
         require_once 'views/cliente/header.php';
 
+        //DECLARAMOS LAS VARIABLES DE LA PAGINACION 
+        //E INICIALIZAMOS CON VALORES PRIMARIOS PREDETERMINADOS
+        $pag = 1;
+        $registros_por_paginas = 5;
+        $registros_totales = 0;
+        $ultimo_registro = 0; 
+
+        if(isset($_GET)){
+            $pag = $_GET["pag"];
+        }
+        $ultimo_registro = ($pag - 1) * $registros_por_paginas;
+
         $usuario = new Usuario();
-        $usuarios = $usuario->getAll('user');
+        $usuarios= $usuario->getAll('user',$registros_por_paginas, $ultimo_registro);
+        $registros_totales = $usuario->getCountAll('user')->registros_totales; // obtengo el conteo total de todos los registro de la tabla
+        // $registros_totales = $registros_totales->registros_totales; 
+        // comente para simplificar el codigo añadi la ultima parte (->registros_totales) 
+        // ver arriba linea 23. 
+
         if(isset($_GET["id"])){
             $id = $_GET["id"];
             $title = "ANULAR USUARIO";
@@ -181,8 +249,8 @@ class ClienteController{
     public function canceling(){
         require_once 'views/cliente/header.php';
 
-        $usuario = new Usuario();
         if(isset($_GET["id"])){
+            $usuario = new Usuario();
             $usuario->setId($_GET["id"]);
             $usuario->cancel();
             
@@ -362,8 +430,24 @@ class ClienteController{
             require_once 'views/cliente/delete.php';
         }
 
+        //DECLARAMOS LAS VARIABLES DE LA PAGINACION 
+        //E INICIALIZAMOS CON VALORES PRIMARIOS PREDETERMINADOS
+        $pag = 1;
+        $registros_por_paginas = 5;
+        $registros_totales = 0;
+        $ultimo_registro = 0; 
+
+        if(isset($_GET)){
+            $pag = $_GET["pag"];
+        }
+        $ultimo_registro = ($pag - 1) * $registros_por_paginas;
+
         $usuario = new Usuario();
-        $usuarios = $usuario->getAll('user');
+        $usuarios= $usuario->getAll('user',$registros_por_paginas, $ultimo_registro);
+        $registros_totales = $usuario->getCountAll('user')->registros_totales; // obtengo el conteo total de todos los registro de la tabla
+        // $registros_totales = $registros_totales->registros_totales; 
+        // comente para simplificar el codigo añadi la ultima parte (->registros_totales) 
+        // ver arriba linea 23. 
 
         require_once 'views/cliente/list.php';
     }

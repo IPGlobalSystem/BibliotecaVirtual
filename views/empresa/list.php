@@ -71,13 +71,7 @@
 					</div>
 					<nav class="text-center">
 						<ul class="pagination pagination-sm">
-							<li class="disabled"><a href="javascript:void(0)">«</a></li>
-							<li class="active"><a href="javascript:void(0)">1</a></li>
-							<li><a href="javascript:void(0)">2</a></li>
-							<li><a href="javascript:void(0)">3</a></li>
-							<li><a href="javascript:void(0)">4</a></li>
-							<li><a href="javascript:void(0)">5</a></li>
-							<li><a href="javascript:void(0)">»</a></li>
+							<?php echo Utils::paginar($registros_por_paginas,$registros_totales, $pag,"empresa/list"); ?>
 						</ul>
 					</nav>
 				</div>
