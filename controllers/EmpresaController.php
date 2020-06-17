@@ -265,6 +265,14 @@ class EmpresaController{
         }
 
     }
+
+    public function remove(){
+        $title = "ELIMINAR REGISTRO";
+        require_once "views/empresa/header.php";
+        require_once "views/empresa/delete.php";
+        require_once "views/empresa/list.php";
+    }
+
 }
 
 

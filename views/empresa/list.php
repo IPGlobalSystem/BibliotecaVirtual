@@ -56,9 +56,9 @@
 									</td>
 									<td>
 										<form>
-											<button type="submit" class="btn btn-danger btn-raised btn-xs">
+											<a href="<?=base_url?>empresa/remove&id=<?=$empresa->id?>" class="btn btn-danger btn-raised btn-xs">
 												<i class="zmdi zmdi-delete"></i>
-											</button>
+											</a>
 										</form>
 									</td>
 								</tr>

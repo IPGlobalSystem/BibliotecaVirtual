@@ -4,7 +4,7 @@
     <div class='alert alert-success alert-dismissible' role='alert'>
     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
     <span aria-hidden='true'>&times;</span></button>
-    <strong>Exitosa!</strong> Registro guardado con exito! </div>
+    <strong>Borrado con Exito!</strong> Registro guardado con exito! </div>
 <?php elseif(isset($_SESSION["register"]) && $_SESSION["register"] == 'failed'): ?>
     <div class='alert alert-warning alert-dismissible' role='alert'>
     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -19,7 +19,7 @@
             <h3 class="panel-title"><i class="zmdi zmdi-plus"></i> &nbsp; NUEVO ADMINISTRADOR</h3>
         </div>
         <div class="panel-body">
-            <form action="<?=base_url?>usuario<?= !isset($edit) ? '/save' : '/edit' ?>"  method="POST" onsubmit="return valida(this)">
+            <form action="<?=base_url?>usuario<?= !isset($edit) ? '/save' : '/edit' ?>" method="POST" onsubmit="return valida(this)">
                 <input type="hidden" name="id" value="<?=$usuario->getId(); ?>" />
                 <fieldset>
                     <legend><i class="zmdi zmdi-account-box"></i> &nbsp; Información personal</legend>
