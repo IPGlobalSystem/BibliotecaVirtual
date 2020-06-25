@@ -143,7 +143,8 @@ class Empresa{
     }
 
     public function getAll($registros_por_paginas, $ultimo_registro){
-        $sql = "SELECT * FROM empresa WHERE id > $ultimo_registro ORDER BY id ASC LIMIT $registros_por_paginas";
+        //$sql = "SELECT * FROM empresa WHERE id > $ultimo_registro ORDER BY id ASC LIMIT $registros_por_paginas";
+        $sql = "SELECT * FROM empresa LIMIT $ultimo_registro, $registros_por_paginas;";
         $empresa = $this->db->query($sql);
         return $empresa;
     }

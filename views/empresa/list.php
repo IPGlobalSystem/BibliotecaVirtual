@@ -36,7 +36,7 @@
 									
 								</tr>
 							</thead>
-							<tbody>
+							<tbody>							
 								<?php if($empresas->num_rows>0) :?>
 								<?php while($empresa = $empresas->fetch_object()):?>
 	
@@ -68,12 +68,12 @@
 								<?php endif; ?>
 							</tbody>
 						</table>
-					</div>
-					<nav class="text-center">
+					</div>																
+					<nav class="text-center">					
 						<ul class="pagination pagination-sm">
-							<?php echo Utils::paginar($registros_por_paginas,$registros_totales, $pag,"empresa/list"); ?>
-						</ul>
-					</nav>
+							<?php echo Utils::paginar($registros_por_paginas,$registros_totales, $pag,"empresa/list"); ?>							
+						</ul>					
+					</nav>					
 				</div>
 			</div>
 		</div>

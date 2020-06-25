@@ -39,18 +39,19 @@ class Categoria{
     //CODIGO SQL 
     public function getById(){
         $sql = "SELECT * FROM categoria WHERE id='{$this->id}';";
-        $categoria = $this->db->query($sql);
-        return $categoria->fetch_object();
+        $id = $this->db->query($sql);
+        return $id->fetch_object();
     }
 
     public function getByNombre(){
-        $sql = "SELECT * FROM categoria WHERE nombre='{$this->getNombre()}';";
+        $sql = "SELECT * FROM categoria WHERE nombre='{$this->getNombre()}' and id<>'{$this->id}';";
         $categoria = $this->db->query($sql);
         return $categoria;
     }
 
     public function getAll($registros_por_paginas, $ultimo_registro){
-        $sql = "SELECT * FROM categoria WHERE id > $ultimo_registro ORDER BY id ASC LIMIT $registros_por_paginas";
+        //$sql = "SELECT * FROM categoria WHERE id > $ultimo_registro ORDER BY id ASC LIMIT $registros_por_paginas";
+        $sql = "SELECT * FROM categoria LIMIT $ultimo_registro, $registros_por_paginas;";
         $categorias = $this->db->query($sql);
         return $categorias;
     }
@@ -73,7 +74,21 @@ class Categoria{
         return $result;
     }
 
+    public function edit(){
 
+        $result=false;
+
+        $sql="UPDATE categoria SET "          
+        . "nombre='{$this->nombre}' " 
+        . "WHERE id='{$this->id}' ";     
+        $edit=$this->db->query($sql);
+
+        if($edit){
+            $result=true;
+        }
+
+        return $result;
+    }
 }
 
 ?>

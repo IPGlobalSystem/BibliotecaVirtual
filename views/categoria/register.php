@@ -18,16 +18,17 @@
 		<div class="panel-heading">
 			<h3 class="panel-title"><i class="zmdi zmdi-plus"></i> &nbsp; NUEVA CATEORÍA</h3>
 		</div>
-		<div class="panel-body">
-			<form action="<?=base_url?>categoria/<?=isset($edit) ? 'edit' : 'save' ?>" method="POST">
+		<div class="panel-body">		
+			<form action="<?=base_url?>categoria/<?=isset($edit) ? 'edit'  : 'save' ?>" method="POST">
+				<input type="hidden" name="id" value="<?=$categoria->getId();?>" />
 				<fieldset>
 					<legend><i class="zmdi zmdi-assignment-o"></i> &nbsp; Información de la categoría</legend>
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
-								<div class="form-group label-floating">
+								<div class="form-group label-floating">								
 									<label class="control-label">Código *</label>
-									<input pattern="[0-9]{1,7}" class="form-control" type="text" name="codigo" value='<?=$categoria->getId();?>' disabled maxlength="7">
+									<input pattern="[0-9]{1,7}" class="form-control" type="text" name="id" value='<?=$categoria->getId();?>' disabled maxlength="7">
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-6">

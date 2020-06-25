@@ -9,22 +9,21 @@ class EmpresaController{
         //DECLARAMOS LAS VARIABLES DE LA PAGINACION 
         //E INICIALIZAMOS CON VALORES PRIMARIOS PREDETERMINADOS
         $pag = 1;
-        $registros_por_paginas = 5;
+        $registros_por_paginas = 3;
         $registros_totales = 0;
         $ultimo_registro = 0; 
 
         if(isset($_GET["pag"])){
-            $pag = $_GET["pag"];
+            $pag = $_GET["pag"];    
         }
         $ultimo_registro = ($pag - 1) * $registros_por_paginas;
-
+           
         $empresa = new empresa();
         $empresas = $empresa->getAll($registros_por_paginas, $ultimo_registro);
         $registros_totales = $empresa->getCountAll()->registros_totales; // obtengo el conteo total de todos los registro de la tabla
         // $registros_totales = $registros_totales->registros_totales; 
         // comente para simplificar el codigo añadi la ultima parte (->registros_totales) 
-        // ver arriba linea 23. 
-       
+        // ver arriba linea 23.        
         require_once "views/empresa/list.php";
     }
 
@@ -159,7 +158,7 @@ class EmpresaController{
                 $empresa->setSimboloMoneda($form["moneda"]);
                 $empresa->setAnio($form["year"]);
                 $_SESSION["form"]=null;
-            }else { // Y Si no Hay Error, Pues Con el GET[id] Repoblas.
+            }else { // Y cuando no Haya Error, Pues Con el GET[id] Repoblas Con La Finalidad de Hacer la Consulta.
                 $empresa->setId($_GET["id"]);
                 $emp = $empresa->getOneById(); // Consulta.    
                 $empresa->setCodigo($emp->codigo);
@@ -238,9 +237,7 @@ class EmpresaController{
             if(empty($year) ||  !is_numeric($year)){
                 $errores['year'] = "El Formato de la Año no es correcto"; 
             }
-            
-            if(isset($id)){   
-
+                         
             //Anexa los datos de empresa al objeto
             $empresa = new empresa();
             $empresa->setId($id);
@@ -254,30 +251,22 @@ class EmpresaController{
             $empresa->setAnio($year);
                    
                 if(count($errores)==0) {
-                     
-                $edit = $empresa->edit();
-                    
+                   
+                    //Editar
+                $edit = $empresa->edit();                    
                     if($edit){
                         $_SESSION["register"] = "complete";
                         $_SESSION["mensaje"] = "Empresa Actualizada con exito";
                         header("location:".base_url.'empresa/list');
                     }else{
                         $_SESSION["register"] = "failed";
-                        header("location:" .base_url. 'empresa/select&id=' . $id);
+                        header("Location:".base_url."empresa/register");
                     }
-
                 }else{
                     $_SESSION["errores"] = $errores;
                     $_SESSION["register"] = "failed";
-                    header("location:" .base_url. 'empresa/select&id=' . $id);
-                }
-                
-
-            }else{
-                $no = "NO";
-                var_dump($no); 
-            } 
-
+                    header("location:" .base_url. "empresa/register");
+                }                
         }
 
     }

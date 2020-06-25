@@ -54,7 +54,7 @@
 						<?php endif; ?>
 					</tbody>
 				</table>
-			</div>
+			</div>			
 			<nav class="text-center">
 				<ul class="pagination pagination-sm">
 					<?php echo Utils::paginar($registros_por_paginas,$registros_totales, $pag,"categoria/list"); ?>
