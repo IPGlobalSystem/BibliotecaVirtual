@@ -46,25 +46,24 @@ public function setId($id){
     $this->id = $id;
 }
 
-
 public function setNombre($nombre){
-    $this->nombre;
+    $this->nombre = $nombre;
 }
 
 public function setResponsable($responsable){
-   $this->responsable;
+   $this->responsable = $responsable;
 }
 
 public function setTelefono($telefono){
-    $this->telefono;
+    $this->telefono = $telefono;
 }
 
 public function setEmail($email){
-    $this->email;
+    $this->email = $email;
 }
 
 public function setDireccion($direccion){
-    $this->direccion;
+    $this->direccion = $direccion;
 }
 
 //// TOSTRING //// 
@@ -76,5 +75,18 @@ public function toString(){
             . ', email:' . $this->email
             . ', direccion:' . $this->direccion;        
         }
+
+public function save(){
+    $result=false;
+    $sql = "INSERT INTO proveedor(nombre, responsable, telefono, email, direccion) "  
+    . "VALUES('{$this->nombre}', '{$this->responsable}', '{$this->telefono}', '{$this->email}', '{$this->direccion}')"; 
+    $save = $this->db->query($sql); 
+    
+    if($save){
+        $result=true;
+    }
+
+    return $result;
+}
 
 }

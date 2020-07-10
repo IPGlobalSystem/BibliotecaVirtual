@@ -31,8 +31,9 @@ class EmpresaController{
         require_once "views/empresa/header.php";
 
         $empresa = new Empresa();
+        
+        //repobla los datos en caso de que el formulario haya arrojado un error
         if(isset($_SESSION["form"]) && $_SESSION["form"] != null){
-            
             $empresa->setCodigo($_SESSION["form"]["codigo"]);
             $empresa->setNombre($_SESSION["form"]["nombre"]);
             $empresa->setTelefono($_SESSION["form"]["telefono"]);
@@ -51,6 +52,7 @@ class EmpresaController{
         
         if(isset($_POST)){
 
+            //Captura la informacion que llega por post
             $codigo = isset($_POST['codigo'])? trim($_POST['codigo']): false;
             $nombre = isset($_POST['nombre'])? trim($_POST['nombre']): false;
             $telefono = isset($_POST['telefono'])? trim($_POST['telefono']): false;
@@ -105,7 +107,7 @@ class EmpresaController{
                 $errores['year'] = "El Formato de la Año no es correcto"; 
             }
 
-            //Anexa los datos de empresa al objeto
+            //Anexa los datos de empresa al objeto para guardar
             $empresa = new empresa();
             $empresa->setCodigo($codigo);
             $empresa->setNombre($nombre);

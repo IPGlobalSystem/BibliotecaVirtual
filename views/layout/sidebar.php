@@ -49,7 +49,7 @@
 							<a href="<?=base_url?>categoria/list"><i class="zmdi zmdi-labels zmdi-hc-fw"></i> Categorías</a>
 						</li>
 						<li>
-							<a href="provider.html"><i class="zmdi zmdi-truck zmdi-hc-fw"></i> Proveedores</a>
+							<a href="<?=base_url?>proveedor/list"><i class="zmdi zmdi-truck zmdi-hc-fw"></i> Proveedores</a>
 						</li>
 						<li>
 							<a href="book.html"><i class="zmdi zmdi-book zmdi-hc-fw"></i> Nuevo libro</a>
