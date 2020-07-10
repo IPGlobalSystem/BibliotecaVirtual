@@ -152,9 +152,50 @@ class CategoriaController{
                 $_SESSION["form"] = $form;
                 header("location:" . base_url . "categoria/select&id=".$id);
             }
-        }
-       
+        }       
     } 
+
+    public function remove(){
+
+        $title = "ELIMINAR REGISTRO";
+
+        require_once "views/categoria/header.php";
+
+        if(isset($_GET["id"])){
+            $id = $_GET["id"];
+            $title = "ELIMINAR REGISTRO";
+            $action = "ELIMINAR";
+            require_once 'views/categoria/delete.php';
+        }
+
+        $pag = 1;
+        $registros_por_paginas = 5;
+        $registros_totales = 0;
+        $ultimo_registro = 0; 
+
+        if(isset($_GET["pag"])){
+            $pag = $_GET["pag"];
+        }
+
+        $ultimo_registro = ($pag - 1) * $registros_por_paginas;
+
+        $categoria = new Categoria();
+        $categorias = $categoria->getAll($registros_por_paginas,$ultimo_registro);
+        $registros_totales = $categoria->getCountAll()->registros_totales;
+        require_once "views/categoria/list.php";
+    }
+
+    public function delete(){
+        if(isset($_GET["id"])){
+            $categoria = new Categoria();
+            $categoria->setId($_GET["id"]);
+            $categoria->delete();
+            
+            $_SESSION["register"] = "complete";
+            $_SESSION["mensaje"] = "Registro eliminado con exito!";
+        }
+        header('Location:'.base_url.'categoria/list');
+    }
     
 
 }

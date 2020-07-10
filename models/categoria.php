@@ -89,6 +89,16 @@ class Categoria{
 
         return $result;
     }
+
+    public function delete(){
+        $result=false;
+        $sql = "DELETE FROM categoria WHERE id= '{$this->id}'";
+        $delete=$this->db->query($sql);
+        if($delete){
+            $result=true;
+        }
+        return $result;
+    }
 }
 
 ?>
