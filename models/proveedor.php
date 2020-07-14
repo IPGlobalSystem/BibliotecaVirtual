@@ -66,27 +66,58 @@ public function setDireccion($direccion){
     $this->direccion = $direccion;
 }
 
-//// TOSTRING //// 
-public function toString(){
-    return 'Id:' . $this->id  
-            . ', nombre:' . $this->nombre
-            . ', responsable:' . $this->responsable
-            . ', telefono:' . $this->telefono
-            . ', email:' . $this->email
-            . ', direccion:' . $this->direccion;        
-        }
+    //// TOSTRING //// 
+    public function toString(){
+        return 'Id:' . $this->id  
+                . ', nombre:' . $this->nombre
+                . ', responsable:' . $this->responsable
+                . ', telefono:' . $this->telefono
+                . ', email:' . $this->email
+                . ', direccion:' . $this->direccion;        
+            }
 
-public function save(){
-    $result=false;
-    $sql = "INSERT INTO proveedor(nombre, responsable, telefono, email, direccion) "  
-    . "VALUES('{$this->nombre}', '{$this->responsable}', '{$this->telefono}', '{$this->email}', '{$this->direccion}')"; 
-    $save = $this->db->query($sql); 
-    
-    if($save){
-        $result=true;
+
+    public function getAll(){    
+        $sql = "SELECT * FROM proveedor";
+        $proveedor = $this->db->query($sql);
+        return $proveedor;        
     }
 
-    return $result;
-}
+    public function save(){
+        $result=false;
+        $sql = "INSERT INTO proveedor(nombre, responsable, telefono, email, direccion) "  
+        . "VALUES('{$this->nombre}', '{$this->responsable}', '{$this->telefono}', '{$this->email}', '{$this->direccion}')"; 
+        $save = $this->db->query($sql); 
+        
+        if($save){
+            $result=true;
+        }
+
+        return $result;
+    }
+
+    public function edit(){
+
+        $result=false;
+        $sql="UPDATE proveedor SET "  
+        . "codigo='{$this->codigo}', "
+        . "nombre='{$this->nombre}', "
+        . "telefono='{$this->telefono}', "
+        . "email='{$this->email}', " 
+        . "direccion='{$this->direccion}', "
+        . "simbolo_moneda='{$this->simbolo_moneda}', "
+        . "anio='{$this->anio}', "
+        . "director='{$this->director}' "
+        .  "WHERE id='{$this->id}' "; 
+
+        $save=$this->db->query($sql);
+
+        if($save){
+            $result=true;
+        }
+
+        return $result;
+        
+    }
 
 }
