@@ -84,16 +84,15 @@ class ProveedorController{
                 $save = $proveedor->save();
                 
                 if($save){
-                    $_SESSION["register"] = "complete";
-                    $_SESSION["mensaje"] = "Registro guardado con exito!";
+                    $_SESSION["register"] = "complete";                    
                     header("location:".base_url."proveedor/register");
                 }else{
-                    $_SESSION["register"] = "failed"; // Muestra, Error de Sessiones
+                    $_SESSION["register"] = "failed"; // Muestra, Error de Sessiones (Bostra)
                     $_SESSION["form"] = $form;
                     header("Location:".base_url. "proveedor/register");
                 }
             }else{                
-                $_SESSION["errores"]= $errores; // Muestra , Validaciones dell Formulario
+                $_SESSION["errores"]= $errores; // Muestra , Validaciones del Formulario
                 $_SESSION["form"] = $form;
                 header("location: ".base_url. "proveedor/register");
             }
@@ -104,14 +103,35 @@ class ProveedorController{
 
     public function select(){
         require_once 'views/proveedor/header.php'; 
-        $edit = true;
-        $proveedor = new proveedor();        
+        $edit = true; 
+        $proveedor = new proveedor(); 
+            if(isset($_SESSION["form"]) && $_SESSION["form"] != null){  // Seteo Cuando Hay un Error y Repoblar
+            $form = $_SESSION["form"];
+            $proveedor->setId($_GET["id"]);        
+            $proveedor->setNombre($form["nombre"]);
+            $proveedor->setResponsable($form["responsable"]);
+            $proveedor->setTelefono($form["telefono"]);
+            $proveedor->setEmail($form["email"]);
+            $proveedor->setDireccion($form["direccion"]);
+            $_SESSION["form"]=null;
+            }else{
+            $proveedor->setId($_GET["id"]);
+            $pro = $proveedor->getOneById(); // Consulta; con el Id Setiado para Repoblar            
+            $proveedor->setId($pro->id);
+            $proveedor->setNombre($pro->nombre);
+            $proveedor->setResponsable($pro->responsable);
+            $proveedor->setTelefono($pro->telefono);
+            $proveedor->setEmail($pro->email);
+            $proveedor->setDireccion($pro->direccion);
+            }            
         require_once "views/proveedor/register.php";
     }  
 
     public function edit(){
 
         if(isset($_POST)){
+        
+            $id = isset($_POST['id'])? trim($_POST['id']): false;
             $nombre = isset($_POST['nombre'])? trim($_POST['nombre']): false;
             $responsable = isset($_POST['responsable'])? trim($_POST['responsable']): false;
             $telefono = isset($_POST['telefono'])? trim($_POST['telefono']): false;
@@ -148,8 +168,69 @@ class ProveedorController{
                 $errores['direccion'] = "El formato de direccion no es correcto";
             }
 
+            
+            //Anexa los datos de empresa al objeto
+            $proveedor = new proveedor();
+            $proveedor->setId($id);
+            $proveedor->setNombre($nombre);
+            $proveedor->setResponsable($responsable);
+            $proveedor->setTelefono($telefono);
+            $proveedor->setEmail($email);
+            $proveedor->setDireccion($direccion);
+
+                if(count($errores)==0) {
+                    
+                    //Editar
+                    $edit = $proveedor->edit();
+
+                    if($edit){
+                        $_SESSION["register"] = "complete";
+                        $_SESSION["mensaje"] = "Registro actualizado con exito!";                                                                                         
+                        header("location:".base_url.'proveedor/list');
+                    }else{
+                        $_SESSION["register"] = "failed";  
+                        $_SESSION["mensaje"] = "Registro fallido";                                             
+                        $_SESSION["form"] = $form; 
+                        header("Location:".base_url."proveedor/select&id=". $id);
+                    }
+                }else{
+                    $_SESSION["errores"] = $errores;
+                    $_SESSION["form"] = $form;
+                    $_SESSION["register"] = "failed"; 
+                    $_SESSION["mensaje"] = "Registro fallido";                   
+                    header("location:" .base_url. "proveedor/select&id=". $id);
+                }   
+
         }  
     } 
+
+    public function remove(){
+        require_once "views/proveedor/header.php";
+        if(isset($_GET["id"])){
+            $id = $_GET["id"];
+            $title = "ELIMINAR REGISTRO";
+            $action = "ELIMINAR";
+        require_once 'views/proveedor/delete.php';
+        require_once "views/proveedor/list.php";
+        }
+    }
+
+    public function delete(){
+        if(isset($_GET["id"])){
+            $proveedor = new Proveedor();
+            $proveedor->setId($_GET["id"]);
+            $proveedor->delete();
+            
+            $_SESSION["register"] = "complete";
+            $_SESSION["mensaje"] = "Registro eliminado con exito!";
+        }
+        header('Location:'.base_url.'proveedor/list');
+
+    }
+
+
+
+
 }
 
         

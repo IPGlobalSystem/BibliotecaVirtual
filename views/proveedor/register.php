@@ -9,8 +9,7 @@
     <span aria-hidden='true'>&times;</span></button>
     <strong>Error!</strong> Registro fallido! </div>
 <?php endif; ?>
-
-
+ 
 		<!-- Panel nuevo proveedor -->
 		<div class="container-fluid">
 			<div class="panel panel-info">
@@ -19,7 +18,7 @@
 				</div>
 				<div class="panel-body">
 					<form action="<?=base_url?>proveedor<?=isset($edit) ? '/edit' : '/save' ?>" method="POST">
-						
+					<input type="hidden" name="id" value="<?=$proveedor->getId(); ?>"/>					
 				    	<fieldset>
 				    		<legend><i class="zmdi zmdi-assignment-o"></i> &nbsp; Información del proveedor</legend>
 				    		<div class="container-fluid">
@@ -63,7 +62,7 @@
 				    		</div>
 				    	</fieldset>
 					    <p class="text-center" style="margin-top: 20px;">
-					    	<button type="submit" class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Guardar</button>
+					    	<button type="submit" class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i><?= !isset($edit)? "Guardar" : "Actualizar"  ?></button>
 					    </p>
 					</form>
 					<?php Utils::borrarErrores();?>

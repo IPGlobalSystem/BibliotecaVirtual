@@ -76,7 +76,11 @@ public function setDireccion($direccion){
                 . ', direccion:' . $this->direccion;        
             }
 
-
+    public function getOneById(){
+        $sql = "SELECT * FROM proveedor WHERE id ='{$this->id}'";
+        $id = $this->db->query($sql);
+        return $id->fetch_object();
+    }
     public function getAll(){    
         $sql = "SELECT * FROM proveedor";
         $proveedor = $this->db->query($sql);
@@ -100,16 +104,12 @@ public function setDireccion($direccion){
 
         $result=false;
         $sql="UPDATE proveedor SET "  
-        . "codigo='{$this->codigo}', "
         . "nombre='{$this->nombre}', "
+        . "responsable='{$this->responsable}', "
         . "telefono='{$this->telefono}', "
         . "email='{$this->email}', " 
-        . "direccion='{$this->direccion}', "
-        . "simbolo_moneda='{$this->simbolo_moneda}', "
-        . "anio='{$this->anio}', "
-        . "director='{$this->director}' "
+        . "direccion='{$this->direccion}' "
         .  "WHERE id='{$this->id}' "; 
-
         $save=$this->db->query($sql);
 
         if($save){
@@ -118,6 +118,16 @@ public function setDireccion($direccion){
 
         return $result;
         
+    }
+
+    public function delete(){
+        $result=false;
+        $sql = "DELETE FROM proveedor WHERE id= '{$this->id}'";
+        $delete=$this->db->query($sql);
+        if($delete){
+            $result=true;
+        }
+        return $result;
     }
 
 }

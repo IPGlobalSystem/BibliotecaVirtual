@@ -162,7 +162,8 @@ class EmpresaController{
                 $_SESSION["form"]=null;
             }else { // Y cuando no Haya Error, Pues Con el GET[id] Repoblas Con La Finalidad de Hacer la Consulta.
                 $empresa->setId($_GET["id"]);
-                $emp = $empresa->getOneById(); // Consulta.    
+                $emp = $empresa->getOneById(); // Consulta Con el Id Setiado
+
                 $empresa->setCodigo($emp->codigo);
                 $empresa->setNombre($emp->nombre);
                 $empresa->setTelefono($emp->telefono);
@@ -262,12 +263,16 @@ class EmpresaController{
                         header("location:".base_url.'empresa/list');
                     }else{
                         $_SESSION["register"] = "failed";
-                        header("Location:".base_url."empresa/register");
+                        $_SESSION["mensaje"] = "Registro fallido";
+                        $_SESSION["form"] = $form; 
+                        header("Location:".base_url."empresa/select&id=". $id);
                     }
                 }else{
                     $_SESSION["errores"] = $errores;
+                    $_SESSION["form"] = $form;
                     $_SESSION["register"] = "failed";
-                    header("location:" .base_url. "empresa/register");
+                    $_SESSION["mensaje"] = "Registro fallido";
+                    header("location:" .base_url. "empresa/select&id=". $id);
                 }                
         }
 
