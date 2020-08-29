@@ -149,6 +149,12 @@ class Empresa{
         return $empresa;
     }
 
+    public function getAllForSelect(){
+        $sql = "SELECT * FROM empresa";
+        $empresa = $this->db->query($sql);
+        return $empresa;
+    }
+
     public function getCountAll(){
         $sql = "SELECT count(id) as 'registros_totales' FROM empresa";
         $registros_totales = $this->db->query($sql);

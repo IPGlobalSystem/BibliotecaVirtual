@@ -81,10 +81,22 @@ public function setDireccion($direccion){
         $id = $this->db->query($sql);
         return $id->fetch_object();
     }
-    public function getAll(){    
-        $sql = "SELECT * FROM proveedor";
+    public function getAll($registros_por_paginas, $ultimo_registro){ 
+        $sql = "SELECT * FROM proveedor LIMIT $ultimo_registro, $registros_por_paginas;"; 
         $proveedor = $this->db->query($sql);
         return $proveedor;        
+    }
+
+    public function getAllForSelect(){
+        $sql = "SELECT * FROM proveedor";
+        $proveedores = $this->db->query($sql);
+        return $proveedores;
+    }
+
+    public function getCountAll(){
+        $sql = "SELECT count(id) as 'registros_totales' FROM proveedor";
+        $registros_totales = $this->db->query($sql);
+        return $registros_totales->fetch_object();
     }
 
     public function save(){

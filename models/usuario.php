@@ -154,7 +154,7 @@ class Usuario{
                 . ', password:' . $this->getPassword();
     }
 
-    public function getByDocument(){
+    public function getByDocument() {
         $sql ="SELECT *,v_NumeroDocumento as numeroDocumento FROM usuario WHERE v_NumeroDocumento='{$this->numeroDocumento}' AND id<>'{$this->id}'";
         $user =$this->db->query($sql);
         return $user; 

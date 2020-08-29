@@ -56,6 +56,12 @@ class Categoria{
         return $categorias;
     }
 
+    public function getAllForSelect(){
+        $sql = "SELECT * FROM categoria";
+        $categorias = $this->db->query($sql);
+        return $categorias;
+    }
+
     public function getCountAll(){
         $sql = "SELECT count(id) as 'registros_totales' FROM categoria";
         $registros_totales = $this->db->query($sql);

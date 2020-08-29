@@ -5,13 +5,23 @@ class ProveedorController{
 
     public function list(){
         require_once "views/proveedor/header.php";
+      
+        //DECLARAMOS LAS VARIABLES DE LA PAGINACION 
+        //E INICIALIZAMOS CON VALORES PRIMARIOS PREDETERMINADOS
+        $pag = 1;
+        $registros_por_paginas = 3;
+        $registros_totales = 0;
+        $ultimo_registro = 0; 
+
+        if(isset($_GET["pag"])){
+            $pag = $_GET["pag"];    
+        }        
+        $ultimo_registro = ($pag - 1) * $registros_por_paginas;
 
         $proveedor = new Proveedor();
-        $proveedores = $proveedor->getAll();
-       
-
-        require_once "views/proveedor/list.php";
-        
+        $proveedores = $proveedor->getAll($registros_por_paginas, $ultimo_registro);
+        $registros_totales = $proveedor->getCountAll()->registros_totales; // obtengo el conteo total de todos los registro de la tabla
+        require_once "views/proveedor/list.php";        
     }
 
     public function register(){

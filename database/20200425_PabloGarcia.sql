@@ -65,7 +65,5 @@ constraint FK_libro foreign key (id_libro) references libro(id),
 constraint UQ_idlibro unique(id_libro),
 constraint UQ_codigo unique(codigo)
 )
+        
 
-
-
- 
