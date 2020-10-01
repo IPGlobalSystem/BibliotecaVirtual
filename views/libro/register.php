@@ -5,7 +5,7 @@
             <h3 class="panel-title"><i class="zmdi zmdi-plus"></i> &nbsp; NUEVO LIBRO</h3>
         </div>
         <div class="panel-body">
-            <form>
+            <form action="<?=base_url?>Libro/save" method="POST">
                 <fieldset>
                     <legend><i class="zmdi zmdi-library"></i> &nbsp; Información básica</legend>
                     <div class="container-fluid">
@@ -63,7 +63,7 @@
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Empresa</label>
-                                    <select name="categoria" class="form-control">
+                                    <select name="empresa" class="form-control">
                                         <option value="0"> ---SELECCIONE--- </option>
                                         <?php if($empresas->num_rows > 0): ?>
                                             <?php while($empresa = $empresas->fetch_object()): ?>
