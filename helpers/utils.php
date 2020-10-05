@@ -2,6 +2,20 @@
 
 class Utils{
 
+    public static function subirImagen($imagen){
+        $nombreImagen = $imagen["imagen"]["name"];
+        $nombreTemporalImagen = $imagen["imagen"]["tmp_name"];
+        $rutaEnvio = "uploads/imagenes/" . $nombreImagen;
+        move_uploaded_file($nombreTemporalImagen,$rutaEnvio);
+    }
+
+    public static function subirArchivo($archivo){
+        $nombreArchivo = $archivo["pdf"]["name"];
+        $nombreTemporalArchivo = $archivo["pdf"]["tmp_name"];
+        $rutaEnvio = "uploads/pdf/" . $nombreArchivo;
+        move_uploaded_file($nombreTemporalArchivo,$rutaEnvio);
+    }
+
     public static function mostrarError($errores,$campo){
         $alerta='';
         

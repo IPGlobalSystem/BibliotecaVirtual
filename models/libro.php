@@ -2,22 +2,24 @@
 
 class libro{
 
+    private $id;
     private $codigo;
-    private $titulo;
-    private $pais;
-    private $year;
-    private $editorial;
-    private $edicion;
-    private $empresa;
-    private $categoria;
-    private $proveedor;
     private $precio;
     private $ejemplares;
     private $ubicacion;
     private $resumen;
+    private $titulo;
+    private $autor;
+    private $pais;
+    private $anio;
+    private $editorial;
+    private $edicion;
     private $imagen;
     private $pdf;
-    private $optionsPDF;   
+    private $descargable;
+    private $empresa;
+    private $categoria;
+    private $proveedor; 
     private $db;
 
     ////CONSTRUCT////
@@ -26,6 +28,11 @@ class libro{
     }
 
     ////GETTERS////
+
+    public function id(){
+        return $this->id;
+    }
+
     public function getCodigo(){
         return $this->codigo;
     }
@@ -34,12 +41,16 @@ class libro{
         return $this->titulo;
     }
 
+    public function getAutor(){
+        return $this->autor;
+    }
+
     public function getPais(){
         return $this->pais;
     }
 
-    public function getYear(){
-        return $this->year;
+    public function getAnio(){
+        return $this->anio;
     }
 
     public function getEditorial(){
@@ -86,7 +97,7 @@ class libro{
         return $this->pdf;
     }
 
-    public function getOptionsPDF(){
+    public function getDescargable(){
         return $this->optionsPDF;
     }
 
@@ -99,12 +110,16 @@ class libro{
         $this->titulo = $titulo;
     }
 
+    public function setAutor($autor){
+        $this->autor = $autor;
+    }
+
     public function setPais($pais){
         $this->pais = $pais;
     }
 
-    public function setYear($year){
-        $this->year = $year;
+    public function setAnio($anio){
+        $this->anio = $anio;
     }
 
     public function setEditorial($editorial){
@@ -151,9 +166,80 @@ class libro{
         $this->pdf = $pdf;
     }
 
-    public function setOptionsPDF($optionsPDF){
-        $this->optionsPDF = $optionsPDF;
+    public function setDescargable($descargable){
+        $this->descargable = $descargable;
     }
+
+    //// TOSTRING //// 
+    public function tostring(){
+        return "id: " . $this->id
+        . "codigo: " . $this->codigo
+        . "precio: " .  $this->precio
+        . "ejemplares: " . $this->ejemplares
+        . "ubicacion: " . $this->ubicacion
+        . "resumen: " . $this->resumen
+        . "titulo: " . $this->titulo
+        . "autor: " . $this->autor
+        . "pais: " . $this->pais
+        . "anio: " . $this->anio
+        . "editorial: " . $this->editorial
+        . "edicion: " . $this->edicion
+        . "imagen: " . $this->imagen
+        . "pdf: " . $this->pdf
+        . "descargable: " . $this->descargable
+        . "empresa: " . $this->empresa
+        . "categoria: " . $this->categoria
+        . "proveedores: " . $this->proveedores;
+    }
+
+    //// CODIGO SQL
+    public function save(){
+        $result = false;
+        $sql = "INSERT INTO libro(codigo,
+                                precio,  
+                                ejemplares,                                                                                                                   
+                                ubicacion,
+                                resumen,
+                                titulo,
+                                autor,
+                                pais,
+                                anio,
+                                editorial,                                
+                                edicion,
+                                imagen,
+                                pdf,
+                                descargable,
+                                empresa,
+                                categoria,
+                                proveedores)";
+                               
+        $sql.= "VALUES( '{$this->codigo}',
+                        '{$this->precio}',   
+                        '{$this->ejemplares}',
+                        '{$this->ubicacion}',
+                        '{$this->resumen}',
+                        '{$this->titulo}',
+                        '{$this->autor}',
+                        '{$this->pais}',
+                        '{$this->anio}',
+                        '{$this->editorial}',  
+                        '{$this->edicion},
+                        '{$this->imagen},  
+                        '{$this->pdf}, 
+                        '{$this->descargable}, 
+                        '{$this->empresa}, 
+                        '{$this->categoria}, 
+                        '{$this->proveedor}')";
+        $save = $this->db->query($sql);
+        
+        if($save){
+            $result=true;
+
+        }
+        return $result;
+     
+    }
+   
 }
 
 ?>

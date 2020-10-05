@@ -5,7 +5,7 @@
             <h3 class="panel-title"><i class="zmdi zmdi-plus"></i> &nbsp; NUEVO LIBRO</h3>
         </div>
         <div class="panel-body">
-            <form action="<?=base_url?>Libro/save" method="POST">
+            <form action="<?=base_url?>Libro/save" method="POST" enctype="multipart/form-data">
                 <fieldset>
                     <legend><i class="zmdi zmdi-library"></i> &nbsp; Información básica</legend>
                     <div class="container-fluid">
@@ -148,7 +148,8 @@
                     <div class="col-xs-12">
                         <div class="form-group">
                             <span class="control-label">Imágen</span>
-                            <input type="file" name="imagen" accept=".jpg, .png, .jpeg">
+                            <!-- <input type="image" name="imagen" accept=".jpg, .png, .jpeg"> -->
+                            <input type="file" id="imagen" name="imagen" accept="image/png, image/jpg, image/jpeg">
                             <div class="input-group">
                                 <input type="text" readonly="" class="form-control" placeholder="Elija la imágen...">
                                 <span class="input-group-btn input-group-sm">
@@ -180,13 +181,13 @@
                             <label class="control-label">¿El archivo PDF será descargable para los clientes?</label>
                             <div class="radio radio-primary">
                                 <label>
-                                    <input type="radio" name="optionsPDF" id="optionsRadios1" value="Si" checked="">
+                                    <input type="radio" name="descargable" id="optionsRadios1" value="1" checked="">
                                     <i class="zmdi zmdi-cloud-download"></i> &nbsp; Si, PDF descargable
                                 </label>
                             </div>
                             <div class="radio radio-primary">
                                 <label>
-                                    <input type="radio" name="optionsPDF" id="optionsRadios2" value="No">
+                                    <input type="radio" name="descargable" id="optionsRadios2" value="No">
                                     <i class="zmdi zmdi-cloud-off"></i> &nbsp; No, PDF no descargable
                                 </label>
                             </div>
