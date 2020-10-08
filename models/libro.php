@@ -98,7 +98,7 @@ class libro{
     }
 
     public function getDescargable(){
-        return $this->optionsPDF;
+        return $this->descargable;
     }
 
     ////SETTERS////
@@ -189,32 +189,32 @@ class libro{
         . "descargable: " . $this->descargable
         . "empresa: " . $this->empresa
         . "categoria: " . $this->categoria
-        . "proveedores: " . $this->proveedores;
+        . "proveedor: " . $this->proveedor;
     }
 
     //// CODIGO SQL
-    public function save(){
+    public function save(){        
         $result = false;
-        $sql = "INSERT INTO libro(codigo,
-                                precio,  
-                                ejemplares,                                                                                                                   
-                                ubicacion,
-                                resumen,
-                                titulo,
-                                autor,
-                                pais,
-                                anio,
-                                editorial,                                
-                                edicion,
-                                imagen,
-                                pdf,
-                                descargable,
-                                empresa,
-                                categoria,
-                                proveedores)";
-                               
-        $sql.= "VALUES( '{$this->codigo}',
-                        '{$this->precio}',   
+        $sql = "INSERT INTO libro(codigo, 
+                                  precio,
+                                  ejemplares, 
+                                  ubicacion,
+                                  resumen,
+                                  titulo,
+                                  autor,
+                                  pais,
+                                  anio, 
+                                  editorial,
+                                  edicion,
+                                  url_imagen,
+                                  url_pdf,
+                                  descargable,
+                                  id_empresa,
+                                  id_categoria,
+                                  id_proveedor)";
+
+        $sql.= "VALUES ('{$this->codigo}',
+                        '{$this->precio}',
                         '{$this->ejemplares}',
                         '{$this->ubicacion}',
                         '{$this->resumen}',
@@ -222,20 +222,22 @@ class libro{
                         '{$this->autor}',
                         '{$this->pais}',
                         '{$this->anio}',
-                        '{$this->editorial}',  
-                        '{$this->edicion},
-                        '{$this->imagen},  
-                        '{$this->pdf}, 
-                        '{$this->descargable}, 
-                        '{$this->empresa}, 
-                        '{$this->categoria}, 
-                        '{$this->proveedor}')";
+                        '{$this->editorial}',
+                        '{$this->edicion}',
+                        '{$this->imagen}',
+                        '{$this->pdf}',
+                         {$this->descargable},
+                         {$this->empresa},
+                         {$this->categoria},
+                         {$this->proveedor})"; 
+
         $save = $this->db->query($sql);
         
         if($save){
             $result=true;
-
         }
+
+
         return $result;
      
     }

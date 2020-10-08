@@ -19,6 +19,31 @@ class LibroController{
         $proveedor = new Proveedor();
         $proveedores = $proveedor->getAllForSelect();
 
+        $libro = new Libro();
+        if(isset($_SESSION["form"]) && $_SESSION["form"] != null){
+            $form=$_SESSION["form"];
+            $libro->setCodigo($form["codigo"]);
+            $libro->setPrecio($form["precio"]);
+            $libro->setEjemplares($form["ejemplares"]);
+            $libro->setUbicacion($form["ubicacion"]);
+            $libro->setResumen($form["resumen"]);                 
+            $libro->setTitulo($form["titulo"]);
+            $libro->setAutor($form["autor"]);
+            $libro->setPais($form["pais"]);
+            $libro->setAnio($form["anio"]);
+            $libro->setEditorial($form["editorial"]);
+            $libro->setEdicion($form["edicion"]);
+            $libro->setImagen($form["imagen"]);
+            $libro->setPdf($form["pdf"]);                   
+            $libro->setDescargable($form["descargable"]);
+            $libro->setEmpresa($form["empresa"]);
+            $libro->setCategoria($form["categoria"]);
+            $libro->setProveedor($form["proveedor"]);
+            // $rutaImagen = $form["rutaimagen"];
+            // $rutaPdf = $form["rutapdf"];
+            $_SESSION["form"]=null;
+        }
+       
         require_once 'views/libro/register.php';
     }
 
@@ -43,7 +68,11 @@ class LibroController{
             $empresa = isset($_POST['empresa']) ? $_POST['empresa'] : false;
             $categoria = isset($_POST['categoria']) ? $_POST['categoria'] : false;
             $proveedor = isset($_POST['proveedor']) ? $_POST['proveedor'] : false;
-
+            
+            //para traducir valores boleanos
+            // $descargable = filter_var($descargable,  FILTER_VALIDATE_BOOLEAN); 
+            // $descargable =  ($descargable == '1' ? true : false);
+        
             //declaro arrays que posteriormente sera una variables de session
             $errores = array();
             $form = array();
@@ -59,13 +88,15 @@ class LibroController{
             $form["editorial"]=$editorial;
             $form["edicion"]=$edicion;
             $form["imagen"]=$imagen;
+            $form["rutaimagen"]=$_FILES['imagen']["tmp_name"];
             $form["pdf"]=$pdf;
+            $form["rutapdf"]=$_FILES['imagen']["tmp_name"];
             $form["descargable"]=$descargable;
             $form["empresa"]=$empresa;
             $form["categoria"]=$categoria;
             $form["proveedor"]=$proveedor;
             
-           
+            
             //Validar los datos
             if(empty(trim($codigo))){
                 $errores["codigo"] = "Debe completar codigo";
@@ -108,7 +139,7 @@ class LibroController{
             }
 
             if(empty(trim($edicion))){
-                $errores["edicion"] = "El formato edicion no es el correcto";
+                $errores["edicion"] = "El campo edicion esta vacio";
             }
 
             if(trim($empresa) == "0" ){
@@ -122,7 +153,6 @@ class LibroController{
             if(trim($proveedor) == "0" ){
                 $errores["proveedor"] = "Debe seleccionar una proveedor";
             }
-
 
             if(empty(trim($pdf))){
                 $errores["pdf"] = "Debe adjuntar PDF";
@@ -146,7 +176,7 @@ class LibroController{
                     Utils::subirImagen($_FILES);
                 }
             }
-
+            
             //Anexa los datos de libro al objeto para guardar
             $libro = new Libro();
             $libro->setCodigo($codigo);
@@ -160,19 +190,32 @@ class LibroController{
             $libro->setAnio($anio);
             $libro->setEditorial($editorial);
             $libro->setEdicion($edicion);
-            $libro->setImagen($imagen);
-            $libro->setPdf($pdf);
+            $rutaImagen = Utils::rutaImagen($_FILES);
+            $libro->setImagen($rutaImagen);
+            $rutaPdf = Utils::rutaPdf($_FILES);
+            $libro->setPdf($rutaPdf);                      
             $libro->setDescargable($descargable);
             $libro->setEmpresa($empresa);
             $libro->setCategoria($categoria);
             $libro->setProveedor($proveedor);
-
+           
             if(count($errores)==0){
                 //Guardar
                 $save = $libro->save();
-
+                if($save){
+                    $_SESSION["register"] = "complete";
+                    $_SESSION["mensaje"] = "Registro guardado con exito!";
+                    header("Location:".base_url.'libro/register'); 
+                }else{
+                    $_SESSION["register"] = "failed";
+                    $_SESSION["mensaje"] = "Registro fallido";
+                    $_SESSION["form"] = $form;
+                    header("Location:".base_url."libro/register");
+                }
             }else{
-                
+                $_SESSION["errores"] = $errores;
+                $_SESSION["form"] = $form;
+                header("Location:".base_url."libro/register");
             }
         }
         

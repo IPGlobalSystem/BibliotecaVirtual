@@ -9,11 +9,24 @@ class Utils{
         move_uploaded_file($nombreTemporalImagen,$rutaEnvio);
     }
 
+    public static function rutaImagen($imagen){
+        $nombreImagen = $imagen["imagen"]["name"];
+        $rutaEnvio = "uploads/imagenes/" . $nombreImagen;
+        return $rutaEnvio;
+    }
+
+
     public static function subirArchivo($archivo){
-        $nombreArchivo = $archivo["pdf"]["name"];
-        $nombreTemporalArchivo = $archivo["pdf"]["tmp_name"];
+        $nombreArchivo = $archivo["pdf"]["name"];       
+        $nombreTemporalArchivo = $archivo["pdf"]["tmp_name"];        
         $rutaEnvio = "uploads/pdf/" . $nombreArchivo;
         move_uploaded_file($nombreTemporalArchivo,$rutaEnvio);
+    }
+
+    public static function rutaPdf($archivo){
+        $nombrePdf = $archivo["pdf"]["name"];
+        $rutaEnvio = "uploads/pdf/" . $nombrePdf;
+        return $rutaEnvio;
     }
 
     public static function mostrarError($errores,$campo){

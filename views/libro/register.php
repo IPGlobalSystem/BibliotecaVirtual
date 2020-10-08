@@ -1,3 +1,17 @@
+<!--Mensaje de alerta o registro-->
+<?php if(isset($_SESSION["register"]) && $_SESSION["register"] == 'complete'):?>
+    <div class='alert alert-success alert-dismissible' role='alert'>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span></button>
+    <strong>Exitosa!</strong> <?= $_SESSION["mensaje"] ?>  </div>
+<?php elseif(isset($_SESSION["register"]) && $_SESSION["register"] == 'failed'): ?>
+    <div class='alert alert-warning alert-dismissible' role='alert'>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span></button>
+    <strong>Error!</strong> <?= $_SESSION["mensaje"] ?> </div>
+<?php endif; ?>
+
+
 <!-- Panel nuevo libro -->
 <div class="container-fluid">
     <div class="panel panel-info">
@@ -13,43 +27,50 @@
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Código de libro *</label>
-                                    <input pattern="[a-zA-Z0-9-]{1,30}" class="form-control" type="text" name="codigo" required="" maxlength="30">
+                                    <input pattern="[a-zA-Z0-9-]{1,30}" class="form-control" value="<?=$libro->getCodigo();?>" type="text" name="codigo" required="" maxlength="30">
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'codigo') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Título *</label>
-                                    <input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" name="titulo" required="" maxlength="30">
+                                    <input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" value="<?=$libro->getTitulo();?>" type="text" name="titulo" required="" maxlength="30">
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'titulo') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Autor *</label>
-                                    <input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" name="autor" required="" maxlength="30">
+                                    <input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" value="<?=$libro->getAutor();?>" type="text" name="autor" required="" maxlength="30">
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'autor') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">País</label>
-                                    <input pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" name="pais" maxlength="30">
+                                    <input pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" value="<?=$libro->getPais();?>" type="text" name="pais" maxlength="30">
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'pais') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Año</label>
-                                    <input pattern="[0-9]{1,4}" class="form-control" type="text" name="year" maxlength="4">
+                                    <input pattern="[0-9]{1,4}" class="form-control" type="text" value="<?=$libro->getAnio();?>" name="year" maxlength="4">
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'anio') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Editorial</label>
-                                    <input pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" name="editorial" maxlength="30">
+                                    <input pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" value="<?=$libro->getEditorial();?>" type="text" name="editorial" maxlength="30">
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'editorial') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Edición</label>
-                                    <input pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" name="edicion" maxlength="30">
+                                    <input pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" value="<?=$libro->getEdicion();?>" name="edicion" maxlength="30">
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'edicion') ?>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +88,7 @@
                                         <option value="0"> ---SELECCIONE--- </option>
                                         <?php if($empresas->num_rows > 0): ?>
                                             <?php while($empresa = $empresas->fetch_object()): ?>
-                                                <option value="<?=$empresa->id?>"><?=$empresa->nombre?></option>
+                                                <option value="<?=$empresa->id?>" <?php if($libro -> getEmpresa() == $empresa->id) echo"selected"; ?> ><?=$empresa->nombre?></option>
                                             <?php endwhile; ?>
                                         <?php endif; ?>
                                     </select>
@@ -80,7 +101,7 @@
                                         <option value="0"> ---SELECCIONE--- </option>
                                         <?php if($categorias->num_rows > 0): ?>
                                             <?php while($categoria = $categorias->fetch_object()): ?>
-                                                <option value="<?=$categoria->id?>"><?=$categoria->nombre?></option>
+                                                <option value="<?=$categoria->id?>" <?php if($libro -> getCategoria() == $categoria->id) echo"selected"; ?>><?=$categoria->nombre?></option>
                                             <?php endwhile; ?>
                                         <?php endif;?>
                                     </select>
@@ -93,7 +114,7 @@
                                         <option value="0"> ---SELECCIONE--- </option>
                                         <?php if($proveedores->num_rows > 0): ?>
                                             <?php while($proveedor = $proveedores->fetch_object()): ?>
-                                                <option value="<?=$proveedor->id?>"><?=$proveedor->nombre?></option>
+                                                <option value="<?=$proveedor->id?>"  <?php if($libro -> getProveedor() == $proveedor->id) echo"selected"; ?>><?=$proveedor->nombre?></option>
                                             <?php endwhile;?>    
                                         <?php endif;?>
                                     </select>
@@ -110,19 +131,22 @@
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Precio</label>
-                                    <input pattern="[0-9.]{1,7}" class="form-control" type="text" name="precio" maxlength="7">
+                                    <input pattern="[0-9.]{1,7}" class="form-control" value="<?=$libro->getPrecio();?>" type="text" name="precio" maxlength="7">
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'precio') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Ejemplares</label>
-                                    <input pattern="[0-9]{1,3}" class="form-control" type="text" name="ejemplares" maxlength="3">
+                                    <input pattern="[0-9]{1,3}" class="form-control" value="<?=$libro->getEjemplares();?>" type="text" name="ejemplares" maxlength="3">
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'ejemplares') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Ubicación</label>
-                                    <input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" type="text" name="ubicacion" maxlength="30">
+                                    <input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" value="<?=$libro->getUbicacion();?>" type="text" name="ubicacion" maxlength="30">
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'ubicacion') ?>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +160,8 @@
                             <div class="col-xs-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Resumen</label>
-                                    <textarea name="resumen" class="form-control" rows="3"></textarea>
+                                    <textarea name="resumen" class="form-control"  rows="3"><?=$libro->getResumen();?></textarea>
+                                    <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'resumen') ?>                                                                      
                                 </div>
                             </div>
                         </div>
@@ -181,13 +206,13 @@
                             <label class="control-label">¿El archivo PDF será descargable para los clientes?</label>
                             <div class="radio radio-primary">
                                 <label>
-                                    <input type="radio" name="descargable" id="optionsRadios1" value="1" checked="">
+                                    <input type="radio" name="descargable" id="optionsRadios1" value="1" <?php if($libro->getDescargable() == 1) echo "checked";?>>                                   
                                     <i class="zmdi zmdi-cloud-download"></i> &nbsp; Si, PDF descargable
                                 </label>
                             </div>
                             <div class="radio radio-primary">
                                 <label>
-                                    <input type="radio" name="descargable" id="optionsRadios2" value="No">
+                                    <input type="radio" name="descargable" id="optionsRadios2" value="0" <?php if($libro->getDescargable() == 0) echo "checked";?>>
                                     <i class="zmdi zmdi-cloud-off"></i> &nbsp; No, PDF no descargable
                                 </label>
                             </div>
@@ -201,3 +226,4 @@
         </div>
     </div>
 </div>
+<?php Utils::borrarErrores(); ?>
