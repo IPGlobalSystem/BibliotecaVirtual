@@ -11,6 +11,7 @@ class UsuarioController{
 
     public function logining(){
         ///HACER EL LOGIN AQUI 
+
         if(isset($_POST)){
             $usuario = new Usuario();
             $usuario->setUsername($_POST["username"]);

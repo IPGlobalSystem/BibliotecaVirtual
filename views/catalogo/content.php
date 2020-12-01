@@ -4,36 +4,23 @@
 				<div class="col-xs-12">
 					<div class="list-group">
 						<div class="list-group-item">
+							<?php while($libro = $libros->fetch_object()): ?>
 							<div class="row-picture">
 								<img class="circle" src="<?=base_url?>assets/book/book-default.png" alt="icon">
 							</div>
 							<div class="row-content">
-								<h4 class="list-group-item-heading">1 - Título completo del libro</h4>
-								<p class="list-group-item-text">
-									<strong>Autor: </strong>Nombre Autor del libro <br>
-									<a href="<?=base_url?>libro/info" class="btn btn-primary" title="Más información"><i class="zmdi zmdi-info"></i></a>
+								<h4 class="list-group-item-heading"><?=$libro->titulo?></h4>
+								<p class="list-group-item-text">													
+									<strong>Autor: </strong><?=$libro->autor?> <br>
+									<a href="<?=base_url?>libro/info&id=<?=$libro->id?>" class="btn btn-primary" title="Más información"><i class="zmdi zmdi-info"></i></a>
 									<a href="#!" class="btn btn-primary" title="Ver PDF"><i class="zmdi zmdi-file"></i></a>
 									<a href="#!" class="btn btn-primary" title="Descargar PDF"><i class="zmdi zmdi-cloud-download"></i></a>
 									<a href="<?=base_url?>libro/config" class="btn btn-primary" title="Gestionar libro"><i class="zmdi zmdi-wrench"></i></a>
 								</p>
 							</div>
+							<?php endwhile; ?>
 						</div>
-						<div class="list-group-separator"></div>
-						<div class="list-group-item">
-							<div class="row-picture">
-								<img src="<?=base_url?>assets/book/book-cover.jpg" alt="icon">
-							</div>
-							<div class="row-content">
-								<h4 class="list-group-item-heading">2 - Título completo del libro</h4>
-								<p class="list-group-item-text">
-									<strong>Autor: </strong>Nombre Autor del libro <br>
-									<a href="<?=base_url?>libro/index" class="btn btn-primary" title="Más información"><i class="zmdi zmdi-info"></i></a>
-									<a href="#!" class="btn btn-primary" title="Ver PDF"><i class="zmdi zmdi-file"></i></a>
-									<a href="#!" class="btn btn-primary" title="Descargar PDF"><i class="zmdi zmdi-cloud-download"></i></a>
-									<a href="<?=base_url?>libro/config" class="btn btn-primary" title="Gestionar libro"><i class="zmdi zmdi-wrench"></i></a>
-								</p>
-							</div>
-						</div>
+						<div class="list-group-separator"></div>				
 						<div class="list-group-separator"></div>
 					</div>
 					<nav class="text-center">

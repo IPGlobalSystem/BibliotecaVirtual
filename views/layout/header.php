@@ -8,4 +8,5 @@
 	<link rel="stylesheet" href="<?=base_url?>/css/style.css">
 </head>
 <body>
-	<?php Utils::verSession(); ?>
+	<!--comenta esta parte si no hay usuarios aun en el sistema -->
+ 	<?php Utils::verificarSiExisteLaSession(); ?> 

@@ -29,7 +29,7 @@ class libro{
 
     ////GETTERS////
 
-    public function id(){
+    public function getId(){
         return $this->id;
     }
 
@@ -102,6 +102,10 @@ class libro{
     }
 
     ////SETTERS////
+    public function setId($id){
+        $this->id = $id;
+    }
+
     public function setCodigo($codigo){
         $this->codigo = $codigo;
     }
@@ -236,11 +240,22 @@ class libro{
         if($save){
             $result=true;
         }
-
-
         return $result;
      
     }
+
+    public function getAll(){
+        $sql = "SELECT * FROM libro";
+        $libro = $this->db->query($sql);
+        return $libro;
+    }
+
+    public function getAllById(){
+        $sql = "SELECT * FROM libro where id={$this->id}";
+        $libro = $this->db->query($sql);
+        return $libro->fetch_object();
+    }
+
    
 }
 

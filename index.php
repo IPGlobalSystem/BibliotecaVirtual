@@ -28,7 +28,7 @@ if(isset($_GET['controller'])){
 }else if(!isset($_GET['controller']) && !isset($_GET['action'])){
     $nombre_controlador = controller_default;
 }else{
-    show_error();
+    show_error();   
     exit();
 }
 

@@ -50,7 +50,7 @@ class Catalogo{
         . "INNER JOIN categoria cat on cat.id=c.id_categoria "
         . "INNER JOIN libro l on l.id = c.id_libro "
         . "INNER JOIN libro_info linf on linf.id_libro = l.id ";
-        $catalogos = $this->db->query($sql);
+        $catalogos = $this->db->query($sql);     
         return $catalogos;
     }
 

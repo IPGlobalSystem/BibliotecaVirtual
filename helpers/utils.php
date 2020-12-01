@@ -46,7 +46,7 @@ class Utils{
         // session_unset($_SESSION["errores"]);
     }
 
-    public static function verSession(){
+    public static function verificarSiExisteLaSession(){
         if($_SESSION["identity"]==null){
             header("location:".base_url."usuario/login");
         }
