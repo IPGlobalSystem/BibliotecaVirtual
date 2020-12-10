@@ -175,7 +175,7 @@ class LibroController{
                 }else{
                     Utils::subirImagen($_FILES);
                 }
-            }
+            }           
             
             //Anexa los datos de libro al objeto para guardar
             $libro = new Libro();
@@ -199,9 +199,10 @@ class LibroController{
             $libro->setCategoria($categoria);
             $libro->setProveedor($proveedor);
            
+         
             if(count($errores)==0){
                 //Guardar
-                $save = $libro->save();
+                $save = $libro->save();               
                 if($save){
                     $_SESSION["register"] = "complete";
                     $_SESSION["mensaje"] = "Registro guardado con exito!";
@@ -221,14 +222,15 @@ class LibroController{
         
     }
 
-    public function info(){      
+    public function info(){ 
         $id = $_GET['id'];
         $libro = new libro();
         $libro->setId($id);
         $libro = $libro->getAllbyId(); 
-        require_once 'views/libro_info/header.php';
+        require_once 'views/libro_info/header.php';    
         require_once 'views/libro_info/content.php';
     }
+
 
     public function config(){
         require_once 'views/libro_config/header.php';

@@ -6,7 +6,7 @@ class CategoriaController{
     public function list(){
         require_once "views/categoria/header.php";
         
-        //DECLARAMOS LAS VARIABLES DE LA PAGINACION 
+        // DECLARAMOS LAS VARIABLES DE LA PAGINACION 
         //E INICIALIZAMOS CON VALORES PRIMARIOS PREDETERMINADOS
         $pag = 1;
         $registros_por_paginas = 3;

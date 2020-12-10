@@ -236,7 +236,11 @@ class libro{
                          {$this->proveedor})"; 
 
         $save = $this->db->query($sql);
-        
+    /* echo $sql;
+      echo "</br>";
+      echo $this->db->error;
+      die(); */
+
         if($save){
             $result=true;
         }
@@ -250,11 +254,30 @@ class libro{
         return $libro;
     }
 
-    public function getAllById(){
+    public function getAllbyId(){
         $sql = "SELECT * FROM libro where id={$this->id}";
         $libro = $this->db->query($sql);
         return $libro->fetch_object();
     }
+    
+    public function getAllByLimit($registros_por_paginas, $ultimo_registro){        
+        $sql = "SELECT * FROM libro LIMIT $ultimo_registro, $registros_por_paginas;";
+        $categorias = $this->db->query($sql);
+        return $categorias;
+    }
+
+    public function getCountAll(){
+        $sql = "SELECT count(id) as 'registros_totales' FROM libro";
+        $registros_totales = $this->db->query($sql);
+        return $registros_totales->fetch_object();
+    }
+
+    public function getAllByIdCategoria(){
+        $sql = "SELECT * FROM libro where id_categoria={$this->id}";
+        $libro = $this->db->query($sql);
+        return $libro;
+    }
+
 
    
 }

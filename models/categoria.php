@@ -68,6 +68,12 @@ class Categoria{
         return $registros_totales->fetch_object();
     }
 
+    public function getAllByIdLimit(){
+        $sql = "SELECT * FROM libro where id_categoria={$this->id};";
+        $libro = $this->db->query($sql);
+        return $libro;
+    }
+
     public function save(){
         $result=false;
         $sql = "INSERT INTO categoria(nombre) VALUES('{$this->nombre}')";
@@ -105,6 +111,7 @@ class Categoria{
         }
         return $result;
     }
+
 }
 
 ?>

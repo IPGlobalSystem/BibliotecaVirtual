@@ -16,7 +16,11 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
-                    <img src="<?=base_url?>assets/book/book-cover.jpg" alt="book" class="img-responsive">
+                    
+                    <?php var_dump($libro)?>         
+                    <img src="<?=base_url?>uploads/imagenes/<?=$libro->url_imagen?>"  class="img-responsive">
+
+                    
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div class="container-fluid">

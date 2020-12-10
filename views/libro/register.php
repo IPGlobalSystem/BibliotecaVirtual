@@ -27,21 +27,21 @@
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Código de libro *</label>
-                                    <input pattern="[a-zA-Z0-9-]{1,30}" class="form-control" value="<?=$libro->getCodigo();?>" type="text" name="codigo" required="" maxlength="30">
+                                    <input pattern="[a-zA-Z0-9-]{1,30}" class="form-control" value="<?=$libro->getCodigo();?>" type="text" name="codigo"  maxlength="30">
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'codigo') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Título *</label>
-                                    <input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" value="<?=$libro->getTitulo();?>" type="text" name="titulo" required="" maxlength="30">
+                                    <input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" value="<?=$libro->getTitulo();?>" type="text" name="titulo"  maxlength="30">
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'titulo') ?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Autor *</label>
-                                    <input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" value="<?=$libro->getAutor();?>" type="text" name="autor" required="" maxlength="30">
+                                    <input pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}" class="form-control" value="<?=$libro->getAutor();?>" type="text" name="autor"  maxlength="30">
                                     <?php if(isset($_SESSION["errores"])) echo Utils::mostrarError($_SESSION["errores"],'autor') ?>
                                 </div>
                             </div>
@@ -199,22 +199,22 @@
                                 </span>
                             </div>
                             <span><small>Tamaño máximo de los archivos adjuntos 5MB. Tipos de archivos permitidos: documentos PDF</small></span>
-                        </div>
+                        </div>                    
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group">
                             <label class="control-label">¿El archivo PDF será descargable para los clientes?</label>
                             <div class="radio radio-primary">
                                 <label>
-                                    <input type="radio" name="descargable" id="optionsRadios1" value="1" <?php if($libro->getDescargable() == 1) echo "checked";?>>                                   
+                                    <input type="radio" name="descargable" id="optionsRadios1" value="1" <?php if($libro->getDescargable() == 1) echo "checked";?>> 
                                     <i class="zmdi zmdi-cloud-download"></i> &nbsp; Si, PDF descargable
-                                </label>
+                                </label>                                                                
                             </div>
                             <div class="radio radio-primary">
                                 <label>
                                     <input type="radio" name="descargable" id="optionsRadios2" value="0" <?php if($libro->getDescargable() == 0) echo "checked";?>>
                                     <i class="zmdi zmdi-cloud-off"></i> &nbsp; No, PDF no descargable
-                                </label>
+                                </label>                            
                             </div>
                         </div>
                     </div>

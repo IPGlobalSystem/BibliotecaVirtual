@@ -87,6 +87,7 @@ class Catalogo{
 
         return $result;
     }
+
 }
 
 ?>

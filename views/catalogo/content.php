@@ -6,7 +6,7 @@
 						<div class="list-group-item">
 							<?php while($libro = $libros->fetch_object()): ?>
 							<div class="row-picture">
-								<img class="circle" src="<?=base_url?>assets/book/book-default.png" alt="icon">
+								<img class="circle" src="<?=base_url?>assets/book/book-default.png" alt="icon">							
 							</div>
 							<div class="row-content">
 								<h4 class="list-group-item-heading"><?=$libro->titulo?></h4>
@@ -25,13 +25,15 @@
 					</div>
 					<nav class="text-center">
 						<ul class="pagination pagination-sm">
-							<li class="disabled"><a href="javascript:void(0)">«</a></li>
+						<?php echo Utils::pag($registros_por_paginas,$registros_totales, $pagina_actual,"catalogo/index")?>
+
+						<!-- 	<li class="disabled"><a href="javascript:void(0)">«</a></li>
 							<li class="active"><a href="javascript:void(0)">1</a></li>
 							<li><a href="javascript:void(0)">2</a></li>
 							<li><a href="javascript:void(0)">3</a></li>
 							<li><a href="javascript:void(0)">4</a></li>
 							<li><a href="javascript:void(0)">5</a></li>
-							<li><a href="javascript:void(0)">»</a></li>
+							<li><a href="javascript:void(0)">»</a></li> -->
 						</ul>
 					</nav>
 				</div>
