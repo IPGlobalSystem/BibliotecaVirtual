@@ -2,6 +2,13 @@
 
 class Utils{
 
+    public static function seleccionarImagen($imagen){
+        if(is_null($imagen) || empty(trim($imagen))) 
+            $imagen = 'assets/book/book-default.png';
+            
+        return $imagen;
+    }
+
     public static function subirImagen($imagen){
         $nombreImagen = $imagen["imagen"]["name"];
         $nombreTemporalImagen = $imagen["imagen"]["tmp_name"];

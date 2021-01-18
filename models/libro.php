@@ -266,6 +266,12 @@ class libro{
         return $categorias;
     }
 
+    public function getAllByCategoriesWithLimit($registros_por_paginas, $ultimo_registro){        
+        $sql = "SELECT * FROM libro WHERE id_categoria={$this->categoria} LIMIT $ultimo_registro, $registros_por_paginas;";
+        $categorias = $this->db->query($sql);
+        return $categorias;
+    }
+
     public function getCountAll(){
         $sql = "SELECT count(id) as 'registros_totales' FROM libro";
         $registros_totales = $this->db->query($sql);
@@ -273,13 +279,12 @@ class libro{
     }
 
     public function getAllByIdCategoria(){
-        $sql = "SELECT * FROM libro where id_categoria={$this->id}";
-        $libro = $this->db->query($sql);
+        $sql = "SELECT * FROM libro where id_categoria={$this->categoria}";            
+        $libro = $this->db->query($sql);        
+        
         return $libro;
     }
 
-
-   
 }
 
 ?>

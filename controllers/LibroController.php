@@ -222,16 +222,6 @@ class LibroController{
         
     }
 
-    public function info(){ 
-        $id = $_GET['id'];
-        $libro = new libro();
-        $libro->setId($id);
-        $libro = $libro->getAllbyId(); 
-        require_once 'views/libro_info/header.php';    
-        require_once 'views/libro_info/content.php';
-    }
-
-
     public function config(){
         require_once 'views/libro_config/header.php';
         require_once 'views/libro_config/list.php';
