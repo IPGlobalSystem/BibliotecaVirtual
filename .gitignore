@@ -1,1 +1,3 @@
-conexion_parametros.txt
+.env
+*config/pruebagithub.php
+*pruebainicial.php
